@@ -9,16 +9,18 @@ class AcoesBancoDadosTabelas {
 
   static const acaoDeletarTabela = 'deletarTabela';
   static const acaoExibirTabelas = 'exibirTabelas';
+  static const acaoCriarTabelas = 'criarTabela';
 
 //metodo para criar tabela
-  static Future<String> criarTabela(String nomeTabela, String acao) async {
+  static Future<String> criarTabela(String nomeTabela) async {
     try {
       //instanciando map
       var map = <String, dynamic>{};
       //passando um map
-      map['action'] = acao;
+      map['action'] = acaoCriarTabelas;
       map['tabela'] = nomeTabela;
-      //definindo que a variavel vai receber os seguintes parametros
+      //definindo que a variavel vai receber
+      // os seguintes parametros
       final response =
           await http.post(root, body: map).timeout(const Duration(seconds: 10));
       if (200 == response.statusCode) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:senturionscale/Uteis/AcoesBancoDadosTabelas.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/ajustar_visualizacao.dart';
-import 'package:senturionscale/Uteis/conexao_banco_dados.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 import 'package:senturionscale/Uteis/estilo.dart';
 import 'package:senturionscale/Uteis/textos.dart';
@@ -22,32 +22,52 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
   final _formKeyTabela = GlobalKey<FormState>();
   final TextEditingController _controllerCadastrarTabela =
       TextEditingController(text: "");
-  ConexaoBancoDados conexaoBancoDados = ConexaoBancoDados();
 
   criarTabelaBancoDados() async {
-    String retorno =
-        await conexaoBancoDados.criarTabela(_controllerCadastrarTabela.text);
-    if (retorno == Constantes.sucessoCriarTabela) {
-      final snackBar = SnackBar(content: Text(Textos.sucessoMsgCriarTabela));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    setState(() {
+      exibirTelaCarregamento = true;
+    });
+    String retorno = await AcoesBancoDadosTabelas.criarTabela(
+        _controllerCadastrarTabela.text);
+    if (retorno == Constantes.retornoSucessoBancoDado) {
+      exibirMsg(Textos.sucessoMsgCriarTabela);
+      redirecionarTela();
     } else {
-      final snackBar = SnackBar(content: Text(Textos.erroMsgCriarTabela));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      exibirMsg(Textos.erroMsgCriarTabela);
+      setState(() {
+        exibirTelaCarregamento = false;
+      });
     }
+  }
+
+  redirecionarTela() {
+    Navigator.pushReplacementNamed(context, Constantes.rotaTelaCadastro,
+        arguments: _controllerCadastrarTabela.text);
+  }
+
+  exibirMsg(String msg) {
+    final snackBar = SnackBar(content: Text(msg));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
   Widget build(BuildContext context) {
     double alturaTela = MediaQuery.of(context).size.height;
     double larguraTela = MediaQuery.of(context).size.width;
-    double alturaBarraStatus = MediaQuery.of(context).padding.top;
-    double alturaAppBar = AppBar().preferredSize.height;
 
     return Theme(
         data: estilo.estiloGeral,
         child: Scaffold(
           appBar: AppBar(
             title: Text(Textos.tituloTelaCriarTabela),
+            leading: IconButton(
+                //setando tamanho do icone
+                iconSize: 30,
+                onPressed: () {
+                  Navigator.pushReplacementNamed(
+                      context, Constantes.rotaTelaInical);
+                },
+                icon: const Icon(Icons.arrow_back_ios)),
           ),
           body: GestureDetector(onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
@@ -56,7 +76,7 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
               if (exibirTelaCarregamento) {
                 return const TelaCarregamento();
               } else {
-                return Container(
+                return SizedBox(
                   width: larguraTela,
                   height: alturaTela,
                   child: Column(
@@ -65,20 +85,6 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
                           flex: 9,
                           child: Column(
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  const Text("Recarregar"),
-                                  SizedBox(
-                                    width: 45,
-                                    height: 45,
-                                    child: FloatingActionButton(
-                                      onPressed: () {},
-                                      child: const Icon(Icons.update_outlined),
-                                    ),
-                                  )
-                                ],
-                              ),
                               Container(
                                 margin: const EdgeInsets.all(10),
                                 width: larguraTela,

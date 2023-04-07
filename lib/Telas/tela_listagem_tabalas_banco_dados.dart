@@ -9,7 +9,7 @@ import 'package:senturionscale/Widgets/barra_navegacao_widget.dart';
 import 'package:senturionscale/Widgets/tela_carregamento.dart';
 
 class TelaListagemTabelasBancoDados extends StatefulWidget {
-  TelaListagemTabelasBancoDados({Key? key}) : super(key: key);
+  const TelaListagemTabelasBancoDados({Key? key}) : super(key: key);
 
   @override
   State<TelaListagemTabelasBancoDados> createState() =>
@@ -27,7 +27,6 @@ class _TelaListagemTabelasBancoDadosState
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fazerConsultaTabelasBancoDados();
   }
