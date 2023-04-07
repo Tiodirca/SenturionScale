@@ -18,7 +18,9 @@ class BarraNavegacao extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(10))),
         ),
         onPressed: () {
-          if (tipoIcone == Constantes.tipoIconeAdicionar) {
+          if (tipoIcone == Constantes.tipoIconeHome) {
+            Navigator.pushReplacementNamed(context, Constantes.rotaTelaInical);
+          }else if (tipoIcone == Constantes.tipoIconeAdicionar) {
             Navigator.pushReplacementNamed(context, Constantes.rotaTelaCriarTabela);
           } else if (tipoIcone == Constantes.tipoIconeLista) {
             Navigator.pushReplacementNamed(context, Constantes.rotaTelaListagemTabelas);
@@ -29,7 +31,12 @@ class BarraNavegacao extends StatelessWidget {
         },
         child: LayoutBuilder(
           builder: (context, constraints) {
-           if (tipoIcone == Constantes.tipoIconeLista) {
+            if (tipoIcone == Constantes.tipoIconeHome) {
+              return const Icon(
+                Icons.home_filled,
+                size: 30,
+              );
+            } else if (tipoIcone == Constantes.tipoIconeLista) {
               return const Icon(
                 Icons.list_alt_outlined,
                 size: 30,
@@ -64,6 +71,7 @@ class BarraNavegacao extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            botoesIcones(Constantes.tipoIconeHome, context),
             botoesIcones(Constantes.tipoIconeAdicionar, context),
             botoesIcones(Constantes.tipoIconeLista, context),
             botoesIcones(Constantes.tipoIconeConfiguracao, context),
