@@ -20,7 +20,7 @@ class AjustarVisualizacao {
     double tamanho = 150;
     //verificando qual o tamanho da tela
     if (larguraTela <= 600) {
-      tamanho = 220;
+      tamanho = 190;
     } else {
       tamanho = 500;
     }

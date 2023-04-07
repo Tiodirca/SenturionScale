@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:senturionscale/Telas/Tabelas/tela_criar_tabela_banco.dart';
+import 'package:senturionscale/Telas/Tabelas/tela_listagem_tabalas_banco_dados.dart';
 import 'package:senturionscale/Telas/telaCadastro.dart';
-import 'package:senturionscale/Telas/tela_criar_tabela_banco.dart';
 import 'package:senturionscale/Telas/tela_inicial.dart';
-import 'package:senturionscale/Telas/tela_listagem_tabalas_banco_dados.dart';
 import 'package:senturionscale/Telas/tela_splash.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
@@ -19,7 +19,7 @@ class Rotas {
         return MaterialPageRoute(builder: (_) => TelaInicial());
       case Constantes.rotaTelaListagemTabelas:
         return MaterialPageRoute(
-            builder: (_) =>  TelaListagemTabelasBancoDados());
+            builder: (_) =>  const TelaListagemTabelasBancoDados());
       case Constantes.rotaTelaCriarTabela:
         return MaterialPageRoute(
             builder: (_) =>  const TelaCriarTabelaBanco());

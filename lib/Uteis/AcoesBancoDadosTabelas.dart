@@ -47,7 +47,6 @@ class AcoesBancoDadosTabelas {
           await http.post(root, body: map).timeout(const Duration(seconds: 10));
       if (200 == response.statusCode) {
         List<ExibirTabelas> list = parseResponseTabelas(response.body);
-        print(list.toString());
         return list;
       }
     } catch (e) {

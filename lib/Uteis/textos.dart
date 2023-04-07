@@ -23,6 +23,17 @@ class Textos {
 
   // CADASTRO
   static String tituloTelaCadastro = "Cadastro de item na Escala";
+  static String descricaoTelaCadastro = "Preencha os campos abaixo para adicionar "
+      "um item a lista que ira compor a escala";
+  static String descricaoDataPicker = "Selecione uma data que contenha culto";
+  static String descricaoDataSelecionada = "A data Selecionada foi : ";
+
+  static String labelSwitchCooperadora = "Cooperadora";
+  static String labelSwitchServirSantaCeia = "Servir Santa Ceia";
+  static String labelSwitchIrmaoReserva = "Irmão(a) Reserva";
+
+  // GERAIS
+
   static String labelPrimeiroHoraPulpito = "1° Hora Pulpito";
   static String labelSegundoHoraPulpito = "2° Hora Pulpito";
   static String labelPrimeiroHoraEntrada = "1° Hora Entrada";
@@ -41,7 +52,6 @@ class Textos {
       "Sucesso ao excluir escala do banco de dados";
 
   // ERROS
-
   static String descricaoErroConsultasBancoDados =
       "A consulta a base de dados, não encontrou"
       " nenhuma informação. tente realizar uma nova consulta ou"

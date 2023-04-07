@@ -19,6 +19,9 @@ class Constantes {
   static const tipoIconeExclusao = "exclusao";
   static const tipoIconeRecarregar = "recarregar";
 
+  static const tipoIconeSalvar = "salvar";
+  static const tipoIconeDataCulto = "dataCulto";
+
   static const erroAcaoBancoDados = "erroAcaoBancoDados";
 
   static const sucessoCriarTabela = "sucessoCriarTabela";

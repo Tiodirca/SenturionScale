@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:senturionscale/Uteis/Rotas.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 
@@ -18,6 +19,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      //definicoes usadas no date picker
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      //setando o suporte da lingua usada no data picker
+      supportedLocales: const [Locale('pt', 'BR')],
       initialRoute: Constantes.rotaTelaSplashScreen,
       onGenerateRoute: Rotas.generateRoute,
     );

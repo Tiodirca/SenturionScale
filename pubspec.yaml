@@ -31,6 +31,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   # necessario
   mysql1: ^0.20.0
   http: ^0.13.4
