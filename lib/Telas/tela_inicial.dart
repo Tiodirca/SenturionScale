@@ -1,56 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:senturionscale/Modelos/TabelaModelo.dart';
-import 'package:senturionscale/Uteis/conexao_banco_dados.dart';
+import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 import 'package:senturionscale/Uteis/estilo.dart';
 import 'package:senturionscale/Uteis/textos.dart';
-import 'package:senturionscale/Widgets/Tabelas/criar_tabela_widget.dart';
-import 'package:senturionscale/Widgets/Tabelas/listagem_tabelas_banco_dados_widget.dart';
 import 'package:senturionscale/Widgets/barra_navegacao_widget.dart';
-import 'package:senturionscale/Widgets/tela_carregamento.dart';
 
-class TelaInicial extends StatefulWidget {
-  TelaInicial({Key? key, required this.tipoExibicao}) : super(key: key);
+class TelaInicial extends StatelessWidget {
+  TelaInicial({Key? key}) : super(key: key);
 
-  String tipoExibicao;
-
-  @override
-  State<TelaInicial> createState() => _TelaInicialState();
-}
-
-class _TelaInicialState extends State<TelaInicial> {
-  List<TabelaModelo> listaTabelasBancoDados = [];
-  bool exibirTelaCarregamento = true;
   Estilo estilo = Estilo();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    if(widget.tipoExibicao == Constantes.tipoExibicaoListagemTabela){
-      recuperarTabelasBancoDados();
-    }else{
-      exibirTelaCarregamento = false;
-    }
-  }
-
-  recuperarTabelasBancoDados() async {
-    await ConexaoBancoDados().recuperarTabelas().then(
-      (value) {
-        if (value == Constantes.erroBuscaBancoDados) {
-         setState(() {
-           widget.tipoExibicao == Constantes.tipoExibicaoCadastroTabela;
-           exibirTelaCarregamento = false;
-         });
-        } else {
-          setState(() {
-            listaTabelasBancoDados = value;
-            exibirTelaCarregamento = false;
-          });
-        }
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +21,7 @@ class _TelaInicialState extends State<TelaInicial> {
         data: estilo.estiloGeral,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(listaTabelasBancoDados.isEmpty
-                ? Textos.tituloTelaCriarTabela
-                : Textos.tituloTelaSelecaoTabelas),
+            title: Text(Textos.nomeAplicacao),
           ),
           body: GestureDetector(
               onTap: () {
@@ -74,47 +30,35 @@ class _TelaInicialState extends State<TelaInicial> {
               child: SizedBox(
                   width: larguraTela,
                   height: alturaTela - alturaAppBar - alturaBarraStatus,
-                  child: LayoutBuilder(
-                    builder: (p0, p1) {
-                      if (exibirTelaCarregamento) {
-                        return Center(
-                          child: SizedBox(
-                            height: alturaTela * 0.2,
-                            width: larguraTela,
-                            child: const TelaCarregamento(),
-                          ),
-                        );
-                      } else {
-                        return Column(
-                          children: [
-                            Expanded(
-                                flex: 9,
-                                child: Column(
-                                  children: [
-                                    SingleChildScrollView(
-                                      child: LayoutBuilder(
-                                        builder: (p0, p1) {
-                                          if (listaTabelasBancoDados.isEmpty) {
-                                            return const CriarTabela();
-                                          } else {
-                                            return SizedBox(
-                                              width: larguraTela,
-                                              child:
-                                                  ListagemTabelasBancoDadosWidget(
-                                                tabelas: listaTabelasBancoDados,
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                            const Expanded(flex: 1, child: BarraNavegacao())
-                          ],
-                        );
-                      }
-                    },
+                  child: Column(
+                    children: [
+                      Expanded(
+                          flex: 9,
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.all(20),
+                                width: 150,
+                                height: 70,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          PaletaCores.corVerdeCiano),
+                                  child: Text(
+                                    Textos.btnCriarTabela,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(fontSize: 18),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushReplacementNamed(context,
+                                        Constantes.rotaTelaListagemTabelas);
+                                  },
+                                ),
+                              ),
+                            ],
+                          )),
+                      const Expanded(flex: 1, child: BarraNavegacao())
+                    ],
                   ))),
         ));
   }

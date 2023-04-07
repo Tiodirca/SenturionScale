@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:senturionscale/Telas/telaCadastro.dart';
+import 'package:senturionscale/Telas/tela_criar_tabela_banco.dart';
 import 'package:senturionscale/Telas/tela_inicial.dart';
+import 'package:senturionscale/Telas/tela_listagem_tabalas_banco_dados.dart';
 import 'package:senturionscale/Telas/tela_splash.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
@@ -13,18 +15,14 @@ class Rotas {
     switch (settings.name) {
       case Constantes.rotaTelaSplashScreen:
         return MaterialPageRoute(builder: (_) => const TelaSplashScreen());
-      // case Constantes.rotaTelaInical:
-      //   return MaterialPageRoute(builder: (_) =>  TelaInicial());
-      // case Constantes.rotaTelaSplashScreen:
-      //   return MaterialPageRoute(builder: (_) => const SplashScreen());
       case Constantes.rotaTelaInical:
-        if (args is String) {
-          return MaterialPageRoute(
-            builder: (_) => TelaInicial(tipoExibicao: args),
-          );
-        }else {
-          return erroRota(settings);
-        }
+        return MaterialPageRoute(builder: (_) => TelaInicial());
+      case Constantes.rotaTelaListagemTabelas:
+        return MaterialPageRoute(
+            builder: (_) =>  TelaListagemTabelasBancoDados());
+      case Constantes.rotaTelaCriarTabela:
+        return MaterialPageRoute(
+            builder: (_) =>  const TelaCriarTabelaBanco());
       case Constantes.rotaTelaCadastro:
         if (args is String) {
           return MaterialPageRoute(

@@ -91,7 +91,7 @@ class _CriarTabelaState extends State<CriarTabela> {
             ),
             Container(
               margin: const EdgeInsets.all(20),
-              width: 200,
+              width: 150,
               height: 70,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(

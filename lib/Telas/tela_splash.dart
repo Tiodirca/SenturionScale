@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:senturionscale/Uteis/AcoesBancoDadosTabelas.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 import 'package:senturionscale/Widgets/tela_carregamento.dart';
@@ -17,11 +18,11 @@ class _TelaSplashScreenState extends State<TelaSplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(const Duration(seconds: 6), () {
-      Navigator.pushReplacementNamed(context, Constantes.rotaTelaInical,
-          arguments: Constantes.tipoExibicaoListagemTabela);
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacementNamed(context, Constantes.rotaTelaInical);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     double alturaTela = MediaQuery.of(context).size.height;
@@ -41,7 +42,7 @@ class _TelaSplashScreenState extends State<TelaSplashScreen> {
                 Positioned(
                     child: SizedBox(
                         width: larguraTela,
-                        height: alturaTela - alturaBarraStatus - alturaAppBar,
+                        height: alturaTela,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
