@@ -27,15 +27,25 @@ class Constantes {
   static const sucessoCriarTabela = "sucessoCriarTabela";
   static const erroCriarTabela = "erroCriarTabela";
 
-  static const primeiraHoraPulpito = "primeiroPulpito";
-  static const segundaHoraPulpito = "segundoPulpito";
-  static const primeiraHoraEntrada = "primeiroEntrada";
-  static const segundaHoraEntrada = "segundoEntrada";
+  static const primeiraHoraPulpito = "primeiraHoraPulpito";
+  static const segundaHoraPulpito = "segundaHoraPulpito";
+  static const primeiraHoraEntrada = "primeiraHoraEntrada";
+  static const segundaHoraEntrada = "segundaHoraEntrada";
   static const recolherOferta = "recolherOferta";
   static const uniforme = "uniforme";
   static const mesaApoio = "mesaApoio";
   static const servirSantaCeia = "servirSantaCeia";
-  static const dataCulto = "dataSemana";
+  static const dataCulto = "dataCulto";
   static const horarioTroca = "horarioTroca";
   static const irmaoReserva = "irmaoReserva";
+  static const nomeTabela = "tabela";
+
+  // constantes para a definicao de cultos
+  static const String segundaFeira = "segunda-feira";
+  static const String tercaFeira = "terça-feira";
+  static const String quartaFeira = "quarta-feira";
+  static const String quintaFeira = "quinta-feira";
+  static const String sextaFeira = "sexta-feira";
+  static const String domingo = "domingo";
+  static const String sabado = "sábado";
 }

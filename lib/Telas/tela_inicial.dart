@@ -51,7 +51,7 @@ class TelaInicial extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     Navigator.pushReplacementNamed(context,
-                                        Constantes.rotaTelaCadastro,arguments: "fdsfsdf");
+                                        Constantes.rotaTelaCriarTabela);
                                   },
                                 ),
                               ),

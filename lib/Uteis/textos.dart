@@ -12,7 +12,7 @@ class Textos {
       "Utilize o menu abaixo para selecionar uma "
       "Escala/Tabela para estar sendo utilizada.";
   static String descricaoTabelaSelecionada =
-      "A Escala/Tabela selecionada foi : ";
+      "A Escala selecionada foi : ";
 
   // TELA CRIAR TABELA
   static String tituloTelaCriarTabela = "Criar Escala";
@@ -28,6 +28,7 @@ class Textos {
   static String descricaoDataPicker = "Selecione uma data que contenha culto";
   static String descricaoDataSelecionada = "A data Selecionada foi : ";
 
+  // label dos switch
   static String labelSwitchCooperadora = "Cooperadora";
   static String labelSwitchServirSantaCeia = "Servir Santa Ceia";
   static String labelSwitchIrmaoReserva = "Irmão(a) Reserva";
@@ -50,6 +51,8 @@ class Textos {
       "Sucesso ao criar a escala no banco de dados";
   static String sucessoMsgExcluirEscala =
       "Sucesso ao excluir escala do banco de dados";
+  static String sucessoMsgAdicionarItemEscala =
+      "Sucesso ao adicionar item a escala do banco de dados";
 
   // ERROS
   static String descricaoErroConsultasBancoDados =
@@ -61,4 +64,6 @@ class Textos {
   static String erroMsgCriarTabela = "Erro ao criar a escala no banco de dados";
   static String erroMsgExcluirEscala =
       "Erro ao excluir escala do banco de dados";
+  static String erroMsgAdicionarItemEscala =
+      "Erro ao adicionar item a escala do banco de dados";
 }
