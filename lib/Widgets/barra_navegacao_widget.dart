@@ -25,8 +25,8 @@ class BarraNavegacao extends StatelessWidget {
           } else if (tipoIcone == Constantes.tipoIconeLista) {
             Navigator.pushReplacementNamed(context, Constantes.rotaTelaListagemTabelas);
           } else if (tipoIcone == Constantes.tipoIconeConfiguracao) {
-            // Navigator.pushReplacementNamed(
-            //     context, Constantes.rotaTelaConfiguracoes);
+            Navigator.pushReplacementNamed(
+                context, Constantes.rotaTelaConfiguracoes);
           }
         },
         child: LayoutBuilder(

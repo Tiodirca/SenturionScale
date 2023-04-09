@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:senturionscale/Uteis/AcoesBancoDadosTabelas.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
+import 'package:senturionscale/Uteis/metodos_share_preferences.dart';
 import 'package:senturionscale/Widgets/tela_carregamento.dart';
 
 class TelaSplashScreen extends StatefulWidget {
@@ -18,6 +18,8 @@ class _TelaSplashScreenState extends State<TelaSplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    MetodosSharePreferences sharePreferences = MetodosSharePreferences();
+    sharePreferences.gravarDadosPadrao();
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacementNamed(context, Constantes.rotaTelaInical);
     });

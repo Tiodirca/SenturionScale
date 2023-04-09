@@ -4,6 +4,7 @@ class Constantes {
   static const rotaTelaCadastro = "telaCadastro";
   static const rotaTelaCriarTabela = "telaCriarTabela";
   static const rotaTelaListagemTabelas = "telaListagemTabelas";
+  static const rotaTelaConfiguracoes = "telaConfiguracoes";
 
   static const tipoExibicaoCadastroTabela = "cadastroTabela";
   static const tipoExibicaoListagemTabela = "listagemTabeela";
@@ -21,6 +22,22 @@ class Constantes {
 
   static const tipoIconeSalvar = "salvar";
   static const tipoIconeDataCulto = "dataCulto";
+
+  static const tipoIconeDefinirHorarioTroca = "definirHorarioTroca";
+
+  static const horarioInicialSemana = "19:00";
+  static const horarioTrocaSemana = "20:00";
+  static const horarioInicialFSemana = "18:00";
+  static const horarioTrocaFsemana = "19:00";
+  static const horarioMudado = "sim";
+
+  static const shareHorarioInicialSemana = "horarioInicialSemana";
+  static const shareHorarioTrocaSemana = "horarioFinalSemana";
+  static const shareHorarioInicialFSemana = "horarioInicialFSemana";
+  static const shareHorarioTrocaFsemana = "horarioFinalFSemana";
+
+  static const trocarHorarioSemana = "semana";
+  static const trocarHorarioFimSemana = "fimSemana";
 
   static const erroAcaoBancoDados = "erroAcaoBancoDados";
 

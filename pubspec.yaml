@@ -33,9 +33,10 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  # necessario
-  mysql1: ^0.20.0
+  # necessario para fazer comunicacao com o banco de dados
   http: ^0.13.4
+  # necessario para gravar chaves valores
+  shared_preferences: ^2.0.15
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

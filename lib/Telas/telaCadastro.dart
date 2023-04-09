@@ -174,6 +174,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
 
   definirHorarioTroca() {
     String data = formatarData(dataSelecionada).toString();
+    // criar duas variaveis para pegar o horario que comeca e o horario que troca
     if (data.contains(Constantes.quartaFeira) ||
         data.contains(Constantes.sextaFeira)) {
       setState(() {
@@ -251,8 +252,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                 enableFeedback: false,
                 onPressed: () {
                   Navigator.pushReplacementNamed(
-                      context, Constantes.rotaTelaInical,
-                      arguments: Constantes.tipoExibicaoListagemTabela);
+                      context, Constantes.rotaTelaInical);
                 },
                 icon: const Icon(Icons.arrow_back_ios)),
             title: SizedBox(
