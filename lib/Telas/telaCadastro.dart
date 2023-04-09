@@ -79,7 +79,10 @@ class _TelaCadastroState extends State<TelaCadastro> {
               if (_formKeyFormulario.currentState!.validate()) {
                 chamarAdicionarItensBancoDados();
               }
-            } else {
+            } else if(nomeBotao == Constantes.tipoIconeLista){
+              // Navigator.pushReplacementNamed(
+              //     context, Constantes.rotaTelaListagemTabelas);
+            }else {
               exibirDataPicker();
             }
           },
@@ -88,7 +91,10 @@ class _TelaCadastroState extends State<TelaCadastro> {
               if (nomeBotao == Constantes.tipoIconeSalvar) {
                 return const Icon(Icons.save_outlined,
                     color: PaletaCores.corAdtl);
-              } else {
+              } else if (nomeBotao == Constantes.tipoIconeLista) {
+                return const Icon(Icons.view_list,
+                    color: PaletaCores.corAdtl);
+              }else {
                 return const Icon(Icons.date_range_outlined,
                     color: PaletaCores.corAdtl);
               }
@@ -309,6 +315,13 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                   width: larguraTela,
                                   child: Column(
                                     children: [
+                                      SizedBox(
+                                        width: larguraTela,
+                                        child: Text(
+                                            Textos.descricaoTabelaSelecionada +
+                                                widget.nomeTabela,
+                                            textAlign: TextAlign.end),
+                                      ),
                                       Container(
                                         margin: const EdgeInsets.symmetric(
                                             vertical: 10.0, horizontal: 0),
@@ -426,24 +439,17 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                 ))),
                             Expanded(
                               flex: 1,
-                              child: Stack(
-                                alignment: Alignment.bottomRight,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  SizedBox(
-                                    width: 150,
-                                    child: Text(
-                                        Textos.descricaoTabelaSelecionada +
-                                            widget.nomeTabela,
-                                        textAlign: TextAlign.center),
-                                  ),
-                                  Positioned(
-                                      child: Center(
-                                    child: botoesAcoes(
-                                        Constantes.tipoIconeSalvar,
-                                        PaletaCores.corVerdeCiano),
-                                  )),
+                                  botoesAcoes(
+                                      Constantes.tipoIconeSalvar,
+                                      PaletaCores.corVerdeCiano),
+                                  botoesAcoes(
+                                      Constantes.tipoIconeLista,
+                                      PaletaCores.corAdtlLetras),
                                 ],
-                              ),
+                              )
                             ),
                             const Expanded(flex: 1, child: BarraNavegacao())
                           ],
