@@ -84,7 +84,9 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
     TimeOfDay? novoHorario = await showTimePicker(
       context: context,
       initialTime: horario!,
-      helpText: Textos.descricaoTimePicker,
+      helpText: contadorSetarHorario == 1
+          ? Textos.descricaoTimePickerHorarioTroca
+          : Textos.descricaoTimePickerHorarioInicial,
       builder: (context, child) {
         return Theme(
           data: ThemeData.dark().copyWith(
@@ -129,6 +131,10 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
         }
       });
       recuperarValoresSharePreferences();
+    } else {
+      // redefindo valor caso o
+      // usuario cancele a acao
+      contadorSetarHorario = 0;
     }
   }
 

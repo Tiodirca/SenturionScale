@@ -10,7 +10,7 @@ class Textos {
   static String tituloTelaSelecaoTabelas = "Seleção de Escala";
   static String descricaoDropDownTabelas =
       "Utilize o menu abaixo para selecionar uma "
-      "Escala/Tabela para estar sendo utilizada.";
+      "Escala para estar sendo utilizada.";
   static String descricaoTabelaSelecionada = "A Escala selecionada foi : ";
 
   // TELA CRIAR TABELA
@@ -46,13 +46,15 @@ class Textos {
   static String labelDataSemana = "dataSemana";
   static String labelIrmaoReserva = "Irmão(a) Reserva";
 
+  // CONFIGURACOES
   static String tituloTelaConfiguracoes = "Configurações da Aplicação";
   static String descricaoBtnDefinirHorario =
       "Utilize os botões abaixo para definir os"
       " horários que ocorrerão as trocas de cooperadores(as). Inicialmente será pedido para definir o "
       "horário de início da escala e depois o horário que ira ocorrer a troca.";
   static String descricaoTrocaSemana = "Horário durante a semana";
-  static String descricaoTimePicker = "Selecione um horario";
+  static String descricaoTimePickerHorarioInicial = "Defina o Horário de inicio";
+  static String descricaoTimePickerHorarioTroca = "Defina o Horário que ocorrerá a troca";
   static String descricaoTrocaFimSemana =
       "Horário durante o final de semana";
 
