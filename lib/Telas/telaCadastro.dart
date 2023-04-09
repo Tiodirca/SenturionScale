@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:senturionscale/Uteis/textos.dart';
 import 'package:senturionscale/Widgets/barra_navegacao_widget.dart';
 import 'package:senturionscale/Widgets/tela_carregamento.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TelaCadastro extends StatefulWidget {
   TelaCadastro({Key? key, required this.nomeTabela}) : super(key: key);
@@ -72,6 +73,8 @@ class _TelaCadastroState extends State<TelaCadastro> {
                 borderRadius: BorderRadius.all(Radius.circular(10))),
           ),
           onPressed: () async {
+            //verificando o tipo do botao
+            // para fazer acoes diferentes
             if (nomeBotao == Constantes.tipoIconeSalvar) {
               if (_formKeyFormulario.currentState!.validate()) {
                 chamarAdicionarItensBancoDados();
@@ -132,7 +135,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
   @override
   void initState() {
     super.initState();
-    definirHorarioTroca();
+    recuperarHorarioTroca();
   }
 
   chamarAdicionarItensBancoDados() async {
@@ -172,21 +175,33 @@ class _TelaCadastroState extends State<TelaCadastro> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  definirHorarioTroca() {
+  // metodo para recuperar os horarios definidos
+  // e gravados no share preferences
+  recuperarHorarioTroca() async {
     String data = formatarData(dataSelecionada).toString();
-    // criar duas variaveis para pegar o horario que comeca e o horario que troca
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // verificando se a data corresponde a um dia da semana
+    // caso contrario ela corresponde a um dia de final de semana
     if (data.contains(Constantes.quartaFeira) ||
         data.contains(Constantes.sextaFeira)) {
       setState(() {
-        horarioTroca = "1° Hora começa às : 19:00 e troca às : 20:00 ";
+        horarioTroca = "1° Hora começa às : "
+            "${prefs.getString(Constantes.shareHorarioInicialSemana) ?? ''}"
+            " e troca às : "
+            "${prefs.getString(Constantes.shareHorarioTrocaSemana) ?? ''} ";
       });
     } else {
       setState(() {
-        horarioTroca = "1° Hora começa às : 18:00 e troca às : 19:00 ";
+        horarioTroca = "1° Hora começa às : "
+            "${prefs.getString(Constantes.shareHorarioInicialFSemana) ?? ''}"
+            " e troca às : ${prefs.getString(Constantes.shareHorarioTrocaFsemana) ?? ''} ";
       });
     }
   }
 
+  // metodo para limpar valores dos
+  // campos apos cadastrar item
+  // na base de dados
   limparValoresCampos() {
     ctPrimeiroHoraPulpito.text = "";
     ctSegundoHoraPulpito.text = "";
@@ -199,11 +214,15 @@ class _TelaCadastroState extends State<TelaCadastro> {
     ctIrmaoReserva.text = "";
   }
 
+  // metodo para formatar a data e exibir
+  // ela nos moldes exigidos
   formatarData(DateTime data) {
     String dataFormatada = DateFormat("dd/MM/yyyy EEEE", "pt_BR").format(data);
     return dataFormatada;
   }
 
+  // metodo para exibir data picker para
+  // o usuario selecionar uma data
   exibirDataPicker() {
     showDatePicker(
       helpText: Textos.descricaoDataPicker,
@@ -227,11 +246,12 @@ class _TelaCadastroState extends State<TelaCadastro> {
       },
     ).then((date) {
       setState(() {
-        //definindo que a  variavel vai receber o valor selecionado no data picker
+        //definindo que a  variavel vai receber o
+        // valor selecionado no data picker
         dataSelecionada = date!;
       });
       formatarData(dataSelecionada);
-      definirHorarioTroca();
+      recuperarHorarioTroca();
     });
   }
 
@@ -252,7 +272,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                 enableFeedback: false,
                 onPressed: () {
                   Navigator.pushReplacementNamed(
-                      context, Constantes.rotaTelaInical);
+                      context, Constantes.rotaTelaListagemTabelas);
                 },
                 icon: const Icon(Icons.arrow_back_ios)),
             title: SizedBox(
