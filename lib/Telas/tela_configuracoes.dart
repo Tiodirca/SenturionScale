@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 import 'package:senturionscale/Uteis/estilo.dart';
-import 'package:senturionscale/Uteis/metodos_share_preferences.dart';
 import 'package:senturionscale/Uteis/textos.dart';
 import 'package:senturionscale/Widgets/barra_navegacao_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
