@@ -42,8 +42,8 @@ class AcaoBancoDadosItensEscala {
       map[Constantes.horarioTroca] = horarioTroca;
       map[Constantes.irmaoReserva] = irmaoReserva;
       map[Constantes.nomeTabela] = nomeTabela;
-      //definindo que a variavel vai receber os seguintes parametros
-      print("fdsfsdf");
+      //definindo que a variavel vai
+      // receber os seguintes parametros
       final response =
           await http.post(root, body: map).timeout(const Duration(seconds: 20));
       if (200 == response.statusCode) {

@@ -180,21 +180,20 @@ class _TelaCadastroState extends State<TelaCadastro> {
   recuperarHorarioTroca() async {
     String data = formatarData(dataSelecionada).toString();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // verificando se a data corresponde a um dia da semana
-    // caso contrario ela corresponde a um dia de final de semana
-    if (data.contains(Constantes.quartaFeira) ||
-        data.contains(Constantes.sextaFeira)) {
+    // verificando se a data corresponde a um dia do fim de semana
+    if (data.contains(Constantes.sabado) ||
+        data.contains(Constantes.domingo)) {
+      setState(() {
+        horarioTroca = "1° Hora começa às : "
+            "${prefs.getString(Constantes.shareHorarioInicialFSemana) ?? ''}"
+            " e troca às : ${prefs.getString(Constantes.shareHorarioTrocaFsemana) ?? ''} ";
+      });
+    } else {
       setState(() {
         horarioTroca = "1° Hora começa às : "
             "${prefs.getString(Constantes.shareHorarioInicialSemana) ?? ''}"
             " e troca às : "
             "${prefs.getString(Constantes.shareHorarioTrocaSemana) ?? ''} ";
-      });
-    } else {
-      setState(() {
-        horarioTroca = "1° Hora começa às : "
-            "${prefs.getString(Constantes.shareHorarioInicialFSemana) ?? ''}"
-            " e troca às : ${prefs.getString(Constantes.shareHorarioTrocaFsemana) ?? ''} ";
       });
     }
   }
@@ -248,7 +247,9 @@ class _TelaCadastroState extends State<TelaCadastro> {
       setState(() {
         //definindo que a  variavel vai receber o
         // valor selecionado no data picker
-        dataSelecionada = date!;
+        if(date != null){
+          dataSelecionada = date;
+        }
       });
       formatarData(dataSelecionada);
       recuperarHorarioTroca();
