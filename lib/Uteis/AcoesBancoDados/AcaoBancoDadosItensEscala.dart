@@ -85,4 +85,27 @@ class AcaoBancoDadosItensEscala {
         .map<EscalaModelo>((json) => EscalaModelo.fromJson(json))
         .toList();
   }
+  //metodo para deletar os dados
+  static Future<String> deletar(String id, String nomeTabela) async {
+    try {
+      //instanciando map
+      var map = <String, dynamic>{};
+      //passando os parametros para o map
+      map['action'] = acaoDeletarDados;
+      map['id'] = id;
+      map['tabela'] = nomeTabela;
+      //definindo que a variavel vai
+      // receber os seguintes parametros
+      final response =
+      await http.post(root, body: map).timeout(const Duration(seconds: 20));
+      if (200 == response.statusCode) {
+        return response.body;
+      } else {
+        return Constantes.erroAcaoBancoDados;
+      }
+    } catch (e) {
+      return Constantes.erroAcaoBancoDados;
+    }
+  }
+
 }

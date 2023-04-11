@@ -31,6 +31,8 @@ class _TelaListagemTabelasBancoDadosState
     fazerConsultaTabelasBancoDados();
   }
 
+  // metodo para fazer consulta
+  // ao banco de dados
   fazerConsultaTabelasBancoDados() async {
     AcoesBancoDadosTabelas.recuperarTabelas().then(
       (value) {
@@ -48,6 +50,88 @@ class _TelaListagemTabelasBancoDadosState
         }
       },
     );
+  }
+
+  Future<void> alertaExclusao(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            Textos.tituloAlerta,
+            style: const TextStyle(color: Colors.black),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  Textos.descricaoAlerta,
+                  style: const TextStyle(color: Colors.black),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Wrap(
+                  children: [
+                    Text(
+                      nomeTabelaSelecionada,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'Não',
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text(
+                'Sim',
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () {
+                chamarDeletar();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Metodo para chamar deletar tabela
+  chamarDeletar() async {
+    setState(() {
+      exibirTelaCarregamento = true;
+    });
+    String retornoAcao =
+        await AcoesBancoDadosTabelas.deletarTabela(nomeTabelaSelecionada);
+    if (retornoAcao == Constantes.retornoSucessoBancoDado) {
+      // Resetando valores
+      setState(() {
+        tabelasBancoDados = [];
+        nomeItemDrop = "";
+        nomeTabelaSelecionada = "";
+        exibirConfirmacaoTabelaSelecionada = false;
+      });
+      exibirMsg(Textos.sucessoMsgExcluirEscala);
+      fazerConsultaTabelasBancoDados();
+    } else {
+      setState(() {
+        exibirTelaCarregamento = false;
+      });
+      exibirMsg(Textos.erroMsgExcluirEscala);
+    }
   }
 
   exibirMsg(String msg) {
@@ -77,27 +161,7 @@ class _TelaListagemTabelasBancoDadosState
             });
             fazerConsultaTabelasBancoDados();
           } else {
-            setState(() {
-              exibirTelaCarregamento = true;
-            });
-            String retornoAcao = await AcoesBancoDadosTabelas.deletarTabela(
-                nomeTabelaSelecionada);
-            if (retornoAcao == Constantes.retornoSucessoBancoDado) {
-              // Resetando valores
-              setState(() {
-                tabelasBancoDados = [];
-                nomeItemDrop = "";
-                nomeTabelaSelecionada = "";
-                exibirConfirmacaoTabelaSelecionada = false;
-              });
-              exibirMsg(Textos.sucessoMsgExcluirEscala);
-              fazerConsultaTabelasBancoDados();
-            } else {
-              setState(() {
-                exibirTelaCarregamento = false;
-              });
-              exibirMsg(Textos.erroMsgExcluirEscala);
-            }
+            alertaExclusao(context);
           }
         },
         child: LayoutBuilder(
@@ -315,12 +379,6 @@ class _TelaListagemTabelasBancoDadosState
                                                                         18),
                                                           ),
                                                           onPressed: () {
-                                                            // Navigator.pushReplacementNamed(
-                                                            //     context,
-                                                            //     Constantes
-                                                            //         .rotaTelaCadastro,
-                                                            //     arguments:
-                                                            //         nomeTabelaSelecionada);
                                                             Navigator.pushReplacementNamed(
                                                                 context,
                                                                 Constantes

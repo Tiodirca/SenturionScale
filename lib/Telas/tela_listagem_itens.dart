@@ -49,6 +49,18 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
     );
   }
 
+  chamarDeletar(EscalaModelo escalaModelo) {
+    AcaoBancoDadosItensEscala.deletar(escalaModelo.id, widget.nomeTabela).then((result) {
+      if (Constantes.retornoSucessoBancoDado == result) {
+        const snackBarSucesso =
+        SnackBar(content: Text('Item apagado com sucesso.'));
+        ScaffoldMessenger.of(context).showSnackBar(snackBarSucesso);
+        //chamando metodo
+        recuparValoresBancoDados();
+      }
+    });
+  }
+
   Widget botoesAcoes(
           String nomeBotao, Color corBotao, double largura, double altura) =>
       SizedBox(
@@ -172,10 +184,10 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                 style: TextStyle(color: Colors.black),
               ),
               onPressed: () {
-                // setState(() {
-                //   exibirTelas = Constantes.argTelaCarregamento;
-                // });
-                // chamarDeletar(listaModelo);
+                setState(() {
+                  exibirTelaCarregamento = true;
+                });
+                chamarDeletar(escala);
                 Navigator.of(context).pop();
               },
             ),
@@ -540,8 +552,11 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                                                           BorderRadius.all(
                                                                               Radius.circular(10))),
                                                                 ),
-                                                                onPressed:
-                                                                    () {},
+                                                                onPressed: () {
+                                                                  alertaExclusao(
+                                                                      item,
+                                                                      context);
+                                                                },
                                                                 child: const Icon(
                                                                     Icons
                                                                         .close_outlined,
