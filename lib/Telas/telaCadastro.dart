@@ -60,9 +60,9 @@ class _TelaCadastroState extends State<TelaCadastro> {
         ),
       );
 
-  Widget botoesAcoes(String nomeBotao, Color corBotao) => SizedBox(
-      height: 60,
-      width: 60,
+  Widget botoesAcoes(String nomeBotao, Color corBotao,double largura,double altura) => SizedBox(
+      height: altura,
+      width: largura,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             side: BorderSide(color: corBotao),
@@ -79,22 +79,48 @@ class _TelaCadastroState extends State<TelaCadastro> {
               if (_formKeyFormulario.currentState!.validate()) {
                 chamarAdicionarItensBancoDados();
               }
-            } else if(nomeBotao == Constantes.tipoIconeLista){
-              // Navigator.pushReplacementNamed(
-              //     context, Constantes.rotaTelaListagemTabelas);
-            }else {
+            } else if (nomeBotao == Constantes.tipoIconeLista) {
+              Navigator.pushReplacementNamed(
+                  context, Constantes.rotaTelaListagemItens,
+                  arguments: widget.nomeTabela);
+            } else {
               exibirDataPicker();
             }
           },
           child: LayoutBuilder(
             builder: (p0, p1) {
               if (nomeBotao == Constantes.tipoIconeSalvar) {
-                return const Icon(Icons.save_outlined,
-                    color: PaletaCores.corAdtl);
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.save_outlined,
+                        color: PaletaCores.corAdtl, size: 30),
+                    Text(
+                      Textos.btnSalvar,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: PaletaCores.corAdtl),
+                    )
+                  ],
+                );
               } else if (nomeBotao == Constantes.tipoIconeLista) {
-                return const Icon(Icons.view_list,
-                    color: PaletaCores.corAdtl);
-              }else {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.view_list,
+                        color: PaletaCores.corAdtl, size: 30),
+                    Text(
+                      Textos.btnVerLista,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: PaletaCores.corAdtl),
+                    )
+                  ],
+                );
+              } else {
                 return const Icon(Icons.date_range_outlined,
                     color: PaletaCores.corAdtl);
               }
@@ -187,8 +213,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
     String data = formatarData(dataSelecionada).toString();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // verificando se a data corresponde a um dia do fim de semana
-    if (data.contains(Constantes.sabado) ||
-        data.contains(Constantes.domingo)) {
+    if (data.contains(Constantes.sabado) || data.contains(Constantes.domingo)) {
       setState(() {
         horarioTroca = "1° Hora começa às : "
             "${prefs.getString(Constantes.shareHorarioInicialFSemana) ?? ''}"
@@ -253,7 +278,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
       setState(() {
         //definindo que a  variavel vai receber o
         // valor selecionado no data picker
-        if(date != null){
+        if (date != null) {
           dataSelecionada = date;
         }
       });
@@ -315,7 +340,9 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                   width: larguraTela,
                                   child: Column(
                                     children: [
-                                      SizedBox(
+                                      Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 10.0),
                                         width: larguraTela,
                                         child: Text(
                                             Textos.descricaoTabelaSelecionada +
@@ -333,7 +360,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                             textAlign: TextAlign.center),
                                       ),
                                       botoesAcoes(Constantes.tipoIconeDataCulto,
-                                          PaletaCores.corAdtl),
+                                          PaletaCores.corAdtl,60,60),
                                       Container(
                                         margin: const EdgeInsets.symmetric(
                                             vertical: 20.0, horizontal: 0),
@@ -438,19 +465,17 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                   ),
                                 ))),
                             Expanded(
-                              flex: 1,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  botoesAcoes(
-                                      Constantes.tipoIconeSalvar,
-                                      PaletaCores.corVerdeCiano),
-                                  botoesAcoes(
-                                      Constantes.tipoIconeLista,
-                                      PaletaCores.corAdtlLetras),
-                                ],
-                              )
-                            ),
+                                flex: 1,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    botoesAcoes(Constantes.tipoIconeSalvar,
+                                        PaletaCores.corVerdeCiano,80,70),
+                                    botoesAcoes(Constantes.tipoIconeLista,
+                                        PaletaCores.corAdtlLetras,80,70),
+                                  ],
+                                )),
                             const Expanded(flex: 1, child: BarraNavegacao())
                           ],
                         );

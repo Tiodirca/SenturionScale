@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
+import 'package:senturionscale/Uteis/textos.dart';
 
 class BarraNavegacao extends StatelessWidget {
   const BarraNavegacao({Key? key}) : super(key: key);
 
   Widget botoesIcones(String tipoIcone, BuildContext context) => SizedBox(
-      height: 55,
-      width: 60,
+      height: 60,
+      width: 70,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           side: const BorderSide(color: PaletaCores.corAdtl),
@@ -20,10 +21,12 @@ class BarraNavegacao extends StatelessWidget {
         onPressed: () {
           if (tipoIcone == Constantes.tipoIconeHome) {
             Navigator.pushReplacementNamed(context, Constantes.rotaTelaInical);
-          }else if (tipoIcone == Constantes.tipoIconeAdicionar) {
-            Navigator.pushReplacementNamed(context, Constantes.rotaTelaCriarTabela);
+          } else if (tipoIcone == Constantes.tipoIconeAdicionar) {
+            Navigator.pushReplacementNamed(
+                context, Constantes.rotaTelaCriarTabela);
           } else if (tipoIcone == Constantes.tipoIconeLista) {
-            Navigator.pushReplacementNamed(context, Constantes.rotaTelaListagemTabelas);
+            Navigator.pushReplacementNamed(
+                context, Constantes.rotaTelaListagemTabelas);
           } else if (tipoIcone == Constantes.tipoIconeConfiguracao) {
             Navigator.pushReplacementNamed(
                 context, Constantes.rotaTelaConfiguracoes);
@@ -32,24 +35,60 @@ class BarraNavegacao extends StatelessWidget {
         child: LayoutBuilder(
           builder: (context, constraints) {
             if (tipoIcone == Constantes.tipoIconeHome) {
-              return const Icon(
-                Icons.home_filled,
-                size: 30,
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.home_filled,
+                    size: 30,
+                  ),
+                  Text(
+                   Textos.btnHome,
+                    style: const TextStyle(fontSize: 10),
+                  )
+                ],
               );
             } else if (tipoIcone == Constantes.tipoIconeLista) {
-              return const Icon(
-                Icons.list_alt_outlined,
-                size: 30,
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.list_alt_outlined,
+                    size: 30,
+                  ),
+                  Text(
+                    Textos.btnSelecionarEscala,
+                    style: const TextStyle(fontSize: 10),
+                  )
+                ],
               );
             } else if (tipoIcone == Constantes.tipoIconeAdicionar) {
-              return const Icon(
-                Icons.add_circle_outline_outlined,
-                size: 30,
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.add_circle_outline_outlined,
+                    size: 30,
+                  ),
+                  Text(
+                    Textos.btnCriarEscala,
+                    style: const TextStyle(fontSize: 10),
+                  )
+                ],
               );
             } else {
-              return const Icon(
-                Icons.settings,
-                size: 30,
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.settings,
+                    size: 30,
+                  ),
+                  Text(
+                    Textos.btnConfiguracoes,
+                    style: const TextStyle(fontSize: 10),
+                  )
+                ],
               );
             }
           },
@@ -67,7 +106,7 @@ class BarraNavegacao extends StatelessWidget {
       color: PaletaCores.corAdtl,
       child: SizedBox(
         width: larguraTela,
-        height: 60,
+        height: 80,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

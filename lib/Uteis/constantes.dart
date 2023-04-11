@@ -5,6 +5,7 @@ class Constantes {
   static const rotaTelaCriarTabela = "telaCriarTabela";
   static const rotaTelaListagemTabelas = "telaListagemTabelas";
   static const rotaTelaConfiguracoes = "telaConfiguracoes";
+  static const rotaTelaListagemItens = "telaListagem";
 
   static const tipoExibicaoCadastroTabela = "cadastroTabela";
   static const tipoExibicaoListagemTabela = "listagemTabeela";
@@ -19,6 +20,8 @@ class Constantes {
 
   static const tipoIconeExclusao = "exclusao";
   static const tipoIconeRecarregar = "recarregar";
+  static const tipoIconeBaixar = "baixar";
+  static const tipoIconeEditar = "editar";
 
   static const tipoIconeSalvar = "salvar";
   static const tipoIconeDataCulto = "dataCulto";

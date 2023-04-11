@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:senturionscale/Modelos/escala_modelo.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 
 class AcaoBancoDadosItensEscala {
@@ -56,5 +58,32 @@ class AcaoBancoDadosItensEscala {
       print(e.toString());
       return Constantes.erroAcaoBancoDados;
     }
+  }
+  //metodo para recuperar os dados do banco de dados
+  static Future<List<EscalaModelo>> recuperarItens(String tabela) async {
+    try {
+      //instanciando map
+      var map = <String, dynamic>{};
+      //passando os parametros para o map
+      map['action'] = acaoRecupearDados;
+      map['tabela'] = tabela;
+      //definindo que a variavel vai receber os seguintes parametros
+      final response = await http.post(root, body: map).timeout(const Duration(seconds: 20));
+      if (200 == response.statusCode) {
+        print(response.body);
+        List<EscalaModelo> list = parseResponse(response.body);
+        return list;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return <EscalaModelo>[];
+  }
+  //metodo para transformar os dados obtidos pelo json em objetos
+  static List<EscalaModelo> parseResponse(String responseBody) {
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed
+        .map<EscalaModelo>((json) => EscalaModelo.fromJson(json))
+        .toList();
   }
 }

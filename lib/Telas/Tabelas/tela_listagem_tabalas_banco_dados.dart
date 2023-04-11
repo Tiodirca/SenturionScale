@@ -284,12 +284,19 @@ class _TelaListagemTabelasBancoDadosState
                                                             fontSize: 18),
                                                       ),
                                                       onPressed: () {
+                                                        // Navigator.pushReplacementNamed(
+                                                        //     context,
+                                                        //     Constantes
+                                                        //         .rotaTelaCadastro,
+                                                        //     arguments:
+                                                        //         nomeTabelaSelecionada);
                                                         Navigator.pushReplacementNamed(
                                                             context,
                                                             Constantes
-                                                                .rotaTelaCadastro,
+                                                                .rotaTelaListagemItens,
                                                             arguments:
                                                                 nomeTabelaSelecionada);
+
                                                       },
                                                     ),
                                                   )

@@ -4,6 +4,7 @@ import 'package:senturionscale/Telas/Tabelas/tela_listagem_tabalas_banco_dados.d
 import 'package:senturionscale/Telas/telaCadastro.dart';
 import 'package:senturionscale/Telas/tela_configuracoes.dart';
 import 'package:senturionscale/Telas/tela_inicial.dart';
+import 'package:senturionscale/Telas/tela_listagem_itens.dart';
 import 'package:senturionscale/Telas/tela_splash.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
@@ -30,6 +31,14 @@ class Rotas {
         if (args is String) {
           return MaterialPageRoute(
             builder: (_) => TelaCadastro(nomeTabela: args),
+          );
+        } else {
+          return erroRota(settings);
+        }
+      case Constantes.rotaTelaListagemItens:
+        if (args is String) {
+          return MaterialPageRoute(
+            builder: (_) => TelaListagemItens(nomeTabela: args),
           );
         } else {
           return erroRota(settings);

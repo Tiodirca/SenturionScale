@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:senturionscale/Uteis/Rotas.dart';
+import 'package:senturionscale/Uteis/ScrollBehaviorPersonalizado.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 
 void main() {
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      scrollBehavior: ScrollBehaviorPersonalizado(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,

@@ -5,6 +5,15 @@ class Textos {
 
   static String btnUsarTabela = "Usar está Escala";
   static String btnCriarTabela = "Criar Escala";
+  static String btnSalvar = "Salvar";
+  static String btnVerLista = "Ver Escala";
+  static String btnBaixar = "Baixar";
+  static String btnAdicionar = "Adicionar";
+
+  static String btnHome = "Home";
+  static String btnCriarEscala = "Criar";
+  static String btnSelecionarEscala = "Escalas";
+  static String btnConfiguracoes = "Configurações";
 
   // TELA SELECAO TABELAS
   static String tituloTelaSelecaoTabelas = "Seleção de Escala";
@@ -34,7 +43,10 @@ class Textos {
   static String labelSwitchIrmaoReserva = "Irmão(a) Reserva";
 
   // GERAIS
-
+  static String labelEditar = "Editar";
+  static String labelExcluir = "Excluir";
+  static String labelHorarioTroca = "Horários";
+  static String labelData = "Data";
   static String labelPrimeiroHoraPulpito = "1° Hora Pulpito";
   static String labelSegundoHoraPulpito = "2° Hora Pulpito";
   static String labelPrimeiroHoraEntrada = "1° Hora Entrada";
@@ -57,6 +69,10 @@ class Textos {
   static String descricaoTimePickerHorarioTroca = "Defina o Horário que ocorrerá a troca";
   static String descricaoTrocaFimSemana =
       "Horário durante o final de semana";
+
+  // LISTAGEM
+  static String tituloTelaListagemItens = "Listagem Itens";
+  static String descricaoTelaListagemItens = "Listagem de Itens";
 
   // SUCESSOS
   static String sucessoMsgCriarTabela =

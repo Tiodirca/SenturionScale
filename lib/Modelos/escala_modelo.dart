@@ -12,33 +12,33 @@ class EscalaModelo {
   String horarioTroca;
   String irmaoReserva;
 
-  EscalaModelo({required this.id,
-    required this.primeiraHoraPulpito,
-    required this.segundaHoraPulpito,
-    required this.primeiraHoraEntrada,
-    required this.segundaHoraEntrada,
-    required this.recolherOferta,
-    required this.uniforme,
-    required this.mesaApoio,
-    required this.servirSantaCeia,
-    required this.dataCulto,
-    required this.horarioTroca,
-    required this.irmaoReserva});
+  EscalaModelo(
+      {required this.id,
+      required this.primeiraHoraPulpito,
+      required this.segundaHoraPulpito,
+      required this.primeiraHoraEntrada,
+      required this.segundaHoraEntrada,
+      required this.recolherOferta,
+      required this.uniforme,
+      required this.mesaApoio,
+      required this.servirSantaCeia,
+      required this.dataCulto,
+      required this.horarioTroca,
+      required this.irmaoReserva});
 
-  // factory EscalaModelo.fromJson(Map<String, dynamic> json) {
-  //   return EscalaModelo(
-  //     id: json['id'] as String,
-  //     primeiroHorario: json['primeiroHorario'] as String,
-  //     segundoHorario: json['segundoHorario'] as String,
-  //     primeiroHorarioPulpito: json['primeiroHorarioPulpito'] as String,
-  //     segundoHorarioPulpito: json['segundoHorarioPulpito'] as String,
-  //     recolherOferta: json['recolherOferta'] as String,
-  //     uniforme: json['uniforme'] as String,
-  //     mesaApoio: json['mesaApoio'] as String,
-  //     servirCeia: json['servirCeia'] as String,
-  //     dataSemana: json['dataSemana'] as String,
-  //     horario: json['horario'] as String,
-  //     reserva: json['reserva'] as String
-  //   );
-  // }
+  factory EscalaModelo.fromJson(Map<String, dynamic> json) {
+    return EscalaModelo(
+        id: json['id'] as String,
+        primeiraHoraPulpito: json['primeiraHoraPulpito'] as String,
+        segundaHoraPulpito: json['segundaHoraPulpito'] as String,
+        primeiraHoraEntrada: json['primeiraHoraEntrada'] as String,
+        segundaHoraEntrada: json['segundaHoraEntrada'] as String,
+        recolherOferta: json['recolherOferta'] as String,
+        uniforme: json['uniforme'] as String,
+        mesaApoio: json['mesaApoio'] as String,
+        servirSantaCeia: json['servirSantaCeia'] as String,
+        dataCulto: json['dataCulto'] as String,
+        horarioTroca: json['horarioTroca'] as String,
+        irmaoReserva: json['irmaoReserva'] as String);
+  }
 }
