@@ -82,6 +82,11 @@ class Textos {
   static String sucessoMsgAdicionarItemEscala =
       "Sucesso ao adicionar item a escala do banco de dados";
 
+  // ALERTA
+  static String tituloAlerta = "Confirmação de Exclusão";
+  static String descricaoAlerta = "Deseja realmente excluir o seguinte item ?";
+
+
   // ERROS
   static String descricaoErroConsultasBancoDados =
       "A consulta a base de dados, não encontrou"

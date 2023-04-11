@@ -13,6 +13,7 @@ class Constantes {
   static const retornoErroBancoDado = "erro";
 
   static const tipoIconeAdicionar = "adicionar";
+  static const tipoIconeAdicionarEscala = "adicionarEscala";
   static const tipoIconeLista = "lista";
   static const tipoIconeConfiguracao = "configuracao";
 
