@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:senturionscale/Modelos/exibir_tabelas.dart';
-import 'package:senturionscale/Uteis/AcoesBancoDadosTabelas.dart';
+import 'package:senturionscale/Uteis/AcoesBancoDados/AcoesBancoDadosTabelas.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 import 'package:senturionscale/Uteis/estilo.dart';

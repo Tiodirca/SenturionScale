@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:senturionscale/Uteis/AcaoBancoDadosItensEscala.dart';
+import 'package:senturionscale/Uteis/AcoesBancoDados/AcaoBancoDadosItensEscala.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/ajustar_visualizacao.dart';
 import 'package:senturionscale/Uteis/constantes.dart';

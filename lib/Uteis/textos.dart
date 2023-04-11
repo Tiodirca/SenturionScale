@@ -65,14 +65,18 @@ class Textos {
       " horários que ocorrerão as trocas de cooperadores(as). Inicialmente será pedido para definir o "
       "horário de início da escala e depois o horário que ira ocorrer a troca.";
   static String descricaoTrocaSemana = "Horário durante a semana";
-  static String descricaoTimePickerHorarioInicial = "Defina o Horário de inicio";
-  static String descricaoTimePickerHorarioTroca = "Defina o Horário que ocorrerá a troca";
-  static String descricaoTrocaFimSemana =
-      "Horário durante o final de semana";
+  static String descricaoTimePickerHorarioInicial =
+      "Defina o Horário de inicio";
+  static String descricaoTimePickerHorarioTroca =
+      "Defina o Horário que ocorrerá a troca";
+  static String descricaoTrocaFimSemana = "Horário durante o final de semana";
 
   // LISTAGEM
   static String tituloTelaListagemItens = "Listagem Itens";
-  static String descricaoTelaListagemItens = "Listagem de Itens";
+  static String descricaoTelaListagemItens =
+      "Aqui você pode estar vendo a escala completa,"
+      "com todos os itens já adicionados. se for necessario"
+      " araste a lista para os lados para ver os demais campos.";
 
   // SUCESSOS
   static String sucessoMsgCriarTabela =

@@ -70,7 +70,6 @@ class AcaoBancoDadosItensEscala {
       //definindo que a variavel vai receber os seguintes parametros
       final response = await http.post(root, body: map).timeout(const Duration(seconds: 20));
       if (200 == response.statusCode) {
-        print(response.body);
         List<EscalaModelo> list = parseResponse(response.body);
         return list;
       }

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
-import 'package:senturionscale/Uteis/textos.dart';
 
 class BarraNavegacao extends StatelessWidget {
   const BarraNavegacao({Key? key}) : super(key: key);
 
   Widget botoesIcones(String tipoIcone, BuildContext context) => SizedBox(
       height: 60,
-      width: 70,
+      width: 60,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           side: const BorderSide(color: PaletaCores.corAdtl),
@@ -35,60 +34,24 @@ class BarraNavegacao extends StatelessWidget {
         child: LayoutBuilder(
           builder: (context, constraints) {
             if (tipoIcone == Constantes.tipoIconeHome) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.home_filled,
-                    size: 30,
-                  ),
-                  Text(
-                   Textos.btnHome,
-                    style: const TextStyle(fontSize: 10),
-                  )
-                ],
+              return const Icon(
+                Icons.home_filled,
+                size: 30,
               );
             } else if (tipoIcone == Constantes.tipoIconeLista) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.list_alt_outlined,
-                    size: 30,
-                  ),
-                  Text(
-                    Textos.btnSelecionarEscala,
-                    style: const TextStyle(fontSize: 10),
-                  )
-                ],
+              return const Icon(
+                Icons.list_alt_outlined,
+                size: 30,
               );
             } else if (tipoIcone == Constantes.tipoIconeAdicionar) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.add_circle_outline_outlined,
-                    size: 30,
-                  ),
-                  Text(
-                    Textos.btnCriarEscala,
-                    style: const TextStyle(fontSize: 10),
-                  )
-                ],
+              return const Icon(
+                Icons.add_circle_outline_outlined,
+                size: 30,
               );
             } else {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.settings,
-                    size: 30,
-                  ),
-                  Text(
-                    Textos.btnConfiguracoes,
-                    style: const TextStyle(fontSize: 10),
-                  )
-                ],
+              return const Icon(
+                Icons.settings,
+                size: 30,
               );
             }
           },
@@ -106,7 +69,7 @@ class BarraNavegacao extends StatelessWidget {
       color: PaletaCores.corAdtl,
       child: SizedBox(
         width: larguraTela,
-        height: 80,
+        height: 70,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

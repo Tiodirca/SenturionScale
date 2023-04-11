@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:senturionscale/Modelos/escala_modelo.dart';
-import 'package:senturionscale/Uteis/AcaoBancoDadosItensEscala.dart';
+import 'package:senturionscale/Uteis/AcoesBancoDados/AcaoBancoDadosItensEscala.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 import 'package:intl/intl.dart';
@@ -37,10 +37,10 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
           if (escalaBanco.isEmpty) {
             exibirTelaCarregamento = false;
           } else {
-            // escalaBanco.sort((a, b) => DateFormat("dd/MM/yyyy EEEE", "pt_BR")
-            //     .parse(a.dataCulto)
-            //     .compareTo(
-            //         DateFormat("dd/MM/yyyy EEEE", "pt_BR").parse(b.dataCulto)));
+            escalaBanco.sort((a, b) => DateFormat("dd/MM/yyyy EEEE", "pt_BR")
+                .parse(a.dataCulto)
+                .compareTo(
+                    DateFormat("dd/MM/yyyy EEEE", "pt_BR").parse(b.dataCulto)));
             escala = escalaBanco;
             exibirTelaCarregamento = false;
           }
@@ -49,112 +49,107 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
     );
   }
 
-  Widget botoesAcoes(
-          String nomeBotao, Color corBotao) =>
-      SizedBox(
-          height: 70,
-          width: 100,
-          child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                side: BorderSide(color: corBotao),
-                backgroundColor: Colors.white,
-                elevation: 10,
-                shadowColor: PaletaCores.corAdtl,
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-              ),
-              onPressed: () async {
-                if (nomeBotao == Constantes.tipoIconeBaixar) {
-                } else {
-                  Navigator.pushReplacementNamed(
-                      context, Constantes.rotaTelaCadastro,
-                      arguments: widget.nomeTabela);
-                }
-              },
-              child: LayoutBuilder(
-                builder: (p0, p1) {
-                  if (nomeBotao == Constantes.tipoIconeBaixar) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.file_download_outlined,
-                            color: PaletaCores.corAdtl, size: 30),
-                        Text(
-                          Textos.btnBaixar,
-                          style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: PaletaCores.corAdtl),
-                        )
-                      ],
-                    );
-                  } else {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.add_circle_outline,
-                            color: PaletaCores.corAdtl, size: 30),
-                        Text(
-                          Textos.btnAdicionar,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: PaletaCores.corAdtl),
-                        )
-                      ],
-                    );
-                  }
-                },
-              )));
+  Widget botoesAcoes(String nomeBotao, Color corBotao) => SizedBox(
+      height: 70,
+      width: 100,
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            side: BorderSide(color: corBotao),
+            backgroundColor: Colors.white,
+            elevation: 10,
+            shadowColor: PaletaCores.corAdtl,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+          ),
+          onPressed: () async {
+            if (nomeBotao == Constantes.tipoIconeBaixar) {
+            } else {
+              Navigator.pushReplacementNamed(
+                  context, Constantes.rotaTelaCadastro,
+                  arguments: widget.nomeTabela);
+            }
+          },
+          child: LayoutBuilder(
+            builder: (p0, p1) {
+              if (nomeBotao == Constantes.tipoIconeBaixar) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.file_download_outlined,
+                        color: PaletaCores.corAdtl, size: 30),
+                    Text(
+                      Textos.btnBaixar,
+                      style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: PaletaCores.corAdtl),
+                    )
+                  ],
+                );
+              } else {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.add_circle_outline,
+                        color: PaletaCores.corAdtl, size: 30),
+                    Text(
+                      Textos.btnAdicionar,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: PaletaCores.corAdtl),
+                    )
+                  ],
+                );
+              }
+            },
+          )));
 
-  Widget botoesAcoesListagem(
-          String nomeBotao, Color corBotao) =>
-      SizedBox(
-          height: 40,
-          width: 60,
-          child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                side: BorderSide(color: corBotao),
-                backgroundColor: Colors.white,
-                elevation: 10,
-                shadowColor: PaletaCores.corAdtl,
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-              ),
-              onPressed: () async {
-                //verificando o tipo do botao
-                // para fazer acoes diferentes
-                if (nomeBotao == Constantes.tipoIconeAdicionar) {
-                  Navigator.pushReplacementNamed(
-                      context, Constantes.rotaTelaCadastro,
-                      arguments: widget.nomeTabela);
-                } else if (nomeBotao == Constantes.tipoIconeRecarregar) {
-                  setState(() {
-                    exibirTelaCarregamento = true;
-                  });
-                  recuparValoresBancoDados();
-                }
-              },
-              child: LayoutBuilder(
-                builder: (p0, p1) {
-                  if (nomeBotao == Constantes.tipoIconeExclusao) {
-                    return const Icon(Icons.close_outlined,
-                        color: PaletaCores.corAdtl, size: 20);
-                  } else if (nomeBotao == Constantes.tipoIconeEditar) {
-                    return const Icon(Icons.edit_outlined,
-                        color: PaletaCores.corAdtl, size: 20);
-                  } else if (nomeBotao == Constantes.tipoIconeAdicionar) {
-                    return const Icon(
-                      Icons.add_circle_outline_outlined,
-                      color: PaletaCores.corAdtl,
-                    );
-                  } else {
-                    return const Icon(Icons.refresh,
-                        color: PaletaCores.corAdtl);
-                  }
-                },
-              )));
+  Widget botoesAcoesListagem(String nomeBotao, Color corBotao) => SizedBox(
+      height: 40,
+      width: 60,
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            side: BorderSide(color: corBotao),
+            backgroundColor: Colors.white,
+            elevation: 10,
+            shadowColor: PaletaCores.corAdtl,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+          ),
+          onPressed: () async {
+            //verificando o tipo do botao
+            // para fazer acoes diferentes
+            if (nomeBotao == Constantes.tipoIconeAdicionar) {
+              Navigator.pushReplacementNamed(
+                  context, Constantes.rotaTelaCadastro,
+                  arguments: widget.nomeTabela);
+            } else if (nomeBotao == Constantes.tipoIconeRecarregar) {
+              setState(() {
+                exibirTelaCarregamento = true;
+              });
+              recuparValoresBancoDados();
+            }
+          },
+          child: LayoutBuilder(
+            builder: (p0, p1) {
+              if (nomeBotao == Constantes.tipoIconeExclusao) {
+                return const Icon(Icons.close_outlined,
+                    color: PaletaCores.corAdtl, size: 20);
+              } else if (nomeBotao == Constantes.tipoIconeEditar) {
+                return const Icon(Icons.edit_outlined,
+                    color: PaletaCores.corAdtl, size: 20);
+              } else if (nomeBotao == Constantes.tipoIconeAdicionar) {
+                return const Icon(
+                  Icons.add_circle_outline_outlined,
+                  color: PaletaCores.corAdtl,
+                );
+              } else {
+                return const Icon(Icons.refresh, color: PaletaCores.corAdtl);
+              }
+            },
+          )));
 
   Widget conteudoBotao(Icons icone) => Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -386,12 +381,15 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                                                 .center,
                                                             width: 90,
                                                             //SET width
-                                                            child: Text(
-                                                                item
-                                                                    .horarioTroca,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center))),
+                                                            child:
+                                                                SingleChildScrollView(
+                                                              child: Text(
+                                                                  item
+                                                                      .horarioTroca,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center),
+                                                            ))),
                                                         DataCell(SizedBox(
                                                             width: 90,
                                                             //SET width
