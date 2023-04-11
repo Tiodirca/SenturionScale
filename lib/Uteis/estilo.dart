@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 
 class Estilo {
+
   ThemeData get estiloGeral => ThemeData(
       appBarTheme: const AppBarTheme(
         color: PaletaCores.corAdtl,
@@ -43,12 +44,28 @@ class Estilo {
       // estilo dos botoes
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          primary: PaletaCores.corAzul,
           elevation: 10,
+          side: const BorderSide(color: PaletaCores.corVerdeCiano),
+          backgroundColor: Colors.white,
           textStyle: const TextStyle( fontSize: 18),
           shadowColor: Colors.white,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30))),
         ),
-      ));
+      )
+  );
+  ThemeData get estiloBotoes => ThemeData(
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          elevation: 10,
+          side: const BorderSide(color: PaletaCores.corVerdeCiano),
+          backgroundColor: Colors.white,
+          textStyle: const TextStyle( fontSize: 18),
+          shadowColor: Colors.white,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30))),
+        ),
+      )
+  );
+
 }

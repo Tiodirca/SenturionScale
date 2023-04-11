@@ -1,5 +1,4 @@
 class Constantes {
-  static const rotaTelaInical = "telaInicial";
   static const rotaTelaSplashScreen = "telaSplashScreen";
   static const rotaTelaCadastro = "telaCadastro";
   static const rotaTelaCriarTabela = "telaCriarTabela";
@@ -13,7 +12,6 @@ class Constantes {
   static const retornoSucessoBancoDado = "sucesso";
   static const retornoErroBancoDado = "erro";
 
-  static const tipoIconeHome = "home";
   static const tipoIconeAdicionar = "adicionar";
   static const tipoIconeLista = "lista";
   static const tipoIconeConfiguracao = "configuracao";

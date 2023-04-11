@@ -60,14 +60,6 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
         child: Scaffold(
           appBar: AppBar(
             title: Text(Textos.tituloTelaCriarTabela),
-            leading: IconButton(
-                //setando tamanho do icone
-                iconSize: 30,
-                onPressed: () {
-                  Navigator.pushReplacementNamed(
-                      context, Constantes.rotaTelaInical);
-                },
-                icon: const Icon(Icons.arrow_back_ios)),
           ),
           body: GestureDetector(onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());

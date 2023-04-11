@@ -21,7 +21,7 @@ class _TelaSplashScreenState extends State<TelaSplashScreen> {
     MetodosSharePreferences sharePreferences = MetodosSharePreferences();
     sharePreferences.gravarDadosPadrao();
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, Constantes.rotaTelaInical);
+      Navigator.pushReplacementNamed(context, Constantes.rotaTelaCriarTabela);
     });
   }
 

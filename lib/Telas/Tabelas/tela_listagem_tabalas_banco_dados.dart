@@ -128,191 +128,221 @@ class _TelaListagemTabelasBancoDadosState
 
     return Theme(
         data: estilo.estiloGeral,
-        child: Scaffold(
-          appBar: AppBar(title: Text(Textos.tituloTelaSelecaoTabelas)),
-          body: SizedBox(
-              width: larguraTela,
-              height: alturaTela,
-              child: LayoutBuilder(
-                builder: (p0, p1) {
-                  if (exibirTelaCarregamento) {
-                    return const Center(
-                      child: TelaCarregamento(),
-                    );
-                  } else {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                            flex: 9,
-                            child: LayoutBuilder(
-                              builder: (p0, p1) {
-                                if (tabelasBancoDados.isEmpty) {
-                                  return Container(
-                                    margin: const EdgeInsets.all(30),
-                                    width: larguraTela,
-                                    height: alturaTela,
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 20),
-                                          width: larguraTela * 0.5,
-                                          child: Text(
-                                              Textos
-                                                  .descricaoErroConsultasBancoDados,
-                                              style: const TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold),
-                                              textAlign: TextAlign.center),
-                                        ),
-                                        Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              botoesAcoes(
-                                                  Constantes.tipoIconeAdicionar,
-                                                  PaletaCores
-                                                      .corRosaAvermelhado),
-                                              botoesAcoes(
-                                                  Constantes
-                                                      .tipoIconeRecarregar,
-                                                  PaletaCores.corAdtlLetras)
-                                            ]),
-                                      ],
-                                    ),
-                                  );
-                                } else {
-                                  return Column(
-                                    children: [
-                                      SizedBox(
+        child: WillPopScope(
+            onWillPop: () async {
+              Navigator.pushReplacementNamed(
+                  context, Constantes.rotaTelaCriarTabela);
+              return false;
+            },
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  Textos.tituloTelaSelecaoTabelas,
+                ),
+                leading: IconButton(
+                    //setando tamanho do icone
+                    iconSize: 30,
+                    enableFeedback: false,
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(
+                          context, Constantes.rotaTelaCriarTabela);
+                    },
+                    icon: const Icon(Icons.arrow_back_ios)),
+              ),
+              body: SizedBox(
+                  width: larguraTela,
+                  height: alturaTela,
+                  child: LayoutBuilder(
+                    builder: (p0, p1) {
+                      if (exibirTelaCarregamento) {
+                        return const Center(
+                          child: TelaCarregamento(),
+                        );
+                      } else {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                                flex: 9,
+                                child: LayoutBuilder(
+                                  builder: (p0, p1) {
+                                    if (tabelasBancoDados.isEmpty) {
+                                      return Container(
+                                        margin: const EdgeInsets.all(30),
                                         width: larguraTela,
-                                        child: Text(
-                                          textAlign: TextAlign.center,
-                                          Textos.descricaoDropDownTabelas,
-                                          style: const TextStyle(fontSize: 20),
-                                        ),
-                                      ),
-                                      DropdownButton(
-                                        value: nomeItemDrop,
-                                        icon: const Icon(
-                                            Icons.list_alt_outlined,
-                                            size: 30),
-                                        items: tabelasBancoDados
-                                            .map((item) =>
-                                                DropdownMenuItem<String>(
-                                                  value: item.tabelas,
-                                                  child: Text(
-                                                    item.tabelas.toString(),
-                                                    style: const TextStyle(
-                                                        fontSize: 20),
-                                                  ),
-                                                ))
-                                            .toList(),
-                                        onChanged: (String? value) {
-                                          setState(() {
-                                            nomeItemDrop = value!;
-                                            nomeTabelaSelecionada =
-                                                nomeItemDrop;
-                                            exibirConfirmacaoTabelaSelecionada =
-                                                true;
-                                          });
-                                        },
-                                      ),
-                                      Visibility(
-                                          visible:
-                                              exibirConfirmacaoTabelaSelecionada,
-                                          child: Container(
-                                              margin: const EdgeInsets.all(10),
-                                              width: larguraTela,
-                                              child: Column(
+                                        height: alturaTela,
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20),
+                                              width: larguraTela * 0.5,
+                                              child: Text(
+                                                  Textos
+                                                      .descricaoErroConsultasBancoDados,
+                                                  style: const TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                  textAlign: TextAlign.center),
+                                            ),
+                                            Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
                                                 children: [
-                                                  Wrap(
-                                                    crossAxisAlignment:
-                                                        WrapCrossAlignment
-                                                            .center,
-                                                    alignment:
-                                                        WrapAlignment.center,
-                                                    children: [
-                                                      Text(
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        Textos
-                                                            .descricaoTabelaSelecionada,
+                                                  botoesAcoes(
+                                                      Constantes
+                                                          .tipoIconeAdicionar,
+                                                      PaletaCores
+                                                          .corRosaAvermelhado),
+                                                  botoesAcoes(
+                                                      Constantes
+                                                          .tipoIconeRecarregar,
+                                                      PaletaCores.corAdtlLetras)
+                                                ]),
+                                          ],
+                                        ),
+                                      );
+                                    } else {
+                                      return Column(
+                                        children: [
+                                          SizedBox(
+                                            width: larguraTela,
+                                            child: Text(
+                                              textAlign: TextAlign.center,
+                                              Textos.descricaoDropDownTabelas,
+                                              style:
+                                                  const TextStyle(fontSize: 20),
+                                            ),
+                                          ),
+                                          DropdownButton(
+                                            value: nomeItemDrop,
+                                            icon: const Icon(
+                                                Icons.list_alt_outlined,
+                                                size: 30),
+                                            items: tabelasBancoDados
+                                                .map((item) =>
+                                                    DropdownMenuItem<String>(
+                                                      value: item.tabelas,
+                                                      child: Text(
+                                                        item.tabelas.toString(),
                                                         style: const TextStyle(
                                                             fontSize: 20),
                                                       ),
-                                                      Text(
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        nomeTabelaSelecionada,
-                                                        style: const TextStyle(
-                                                            fontSize: 20,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                    ))
+                                                .toList(),
+                                            onChanged: (String? value) {
+                                              setState(() {
+                                                nomeItemDrop = value!;
+                                                nomeTabelaSelecionada =
+                                                    nomeItemDrop;
+                                                exibirConfirmacaoTabelaSelecionada =
+                                                    true;
+                                              });
+                                            },
+                                          ),
+                                          Visibility(
+                                              visible:
+                                                  exibirConfirmacaoTabelaSelecionada,
+                                              child: Container(
+                                                  margin:
+                                                      const EdgeInsets.all(10),
+                                                  width: larguraTela,
+                                                  child: Column(
+                                                    children: [
+                                                      Wrap(
+                                                        crossAxisAlignment:
+                                                            WrapCrossAlignment
+                                                                .center,
+                                                        alignment: WrapAlignment
+                                                            .center,
+                                                        children: [
+                                                          Text(
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            Textos
+                                                                .descricaoTabelaSelecionada,
+                                                            style:
+                                                                const TextStyle(
+                                                                    fontSize:
+                                                                        20),
+                                                          ),
+                                                          Text(
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            nomeTabelaSelecionada,
+                                                            style: const TextStyle(
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          Container(
+                                                            margin:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        20),
+                                                            child: botoesAcoes(
+                                                                Constantes
+                                                                    .tipoIconeExclusao,
+                                                                PaletaCores
+                                                                    .corRosaAvermelhado),
+                                                          )
+                                                        ],
                                                       ),
                                                       Container(
                                                         margin: const EdgeInsets
-                                                                .symmetric(
-                                                            horizontal: 20),
-                                                        child: botoesAcoes(
-                                                            Constantes
-                                                                .tipoIconeExclusao,
-                                                            PaletaCores
-                                                                .corRosaAvermelhado),
+                                                            .all(20),
+                                                        width: 150,
+                                                        height: 70,
+                                                        child: ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                                  backgroundColor:
+                                                                      PaletaCores
+                                                                          .corVerdeCiano),
+                                                          child: Text(
+                                                            Textos
+                                                                .btnUsarTabela,
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style:
+                                                                const TextStyle(
+                                                                    fontSize:
+                                                                        18),
+                                                          ),
+                                                          onPressed: () {
+                                                            // Navigator.pushReplacementNamed(
+                                                            //     context,
+                                                            //     Constantes
+                                                            //         .rotaTelaCadastro,
+                                                            //     arguments:
+                                                            //         nomeTabelaSelecionada);
+                                                            Navigator.pushReplacementNamed(
+                                                                context,
+                                                                Constantes
+                                                                    .rotaTelaListagemItens,
+                                                                arguments:
+                                                                    nomeTabelaSelecionada);
+                                                          },
+                                                        ),
                                                       )
                                                     ],
-                                                  ),
-                                                  Container(
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            20),
-                                                    width: 150,
-                                                    height: 70,
-                                                    child: ElevatedButton(
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                              backgroundColor:
-                                                                  PaletaCores
-                                                                      .corVerdeCiano),
-                                                      child: Text(
-                                                        Textos.btnUsarTabela,
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: const TextStyle(
-                                                            fontSize: 18),
-                                                      ),
-                                                      onPressed: () {
-                                                        // Navigator.pushReplacementNamed(
-                                                        //     context,
-                                                        //     Constantes
-                                                        //         .rotaTelaCadastro,
-                                                        //     arguments:
-                                                        //         nomeTabelaSelecionada);
-                                                        Navigator.pushReplacementNamed(
-                                                            context,
-                                                            Constantes
-                                                                .rotaTelaListagemItens,
-                                                            arguments:
-                                                                nomeTabelaSelecionada);
-
-                                                      },
-                                                    ),
-                                                  )
-                                                ],
-                                              )))
-                                    ],
-                                  );
-                                }
-                              },
-                            )),
-                        const Expanded(flex: 1, child: BarraNavegacao())
-                      ],
-                    );
-                  }
-                },
-              )),
-        ));
+                                                  )))
+                                        ],
+                                      );
+                                    }
+                                  },
+                                )),
+                            const Expanded(flex: 1, child: BarraNavegacao())
+                          ],
+                        );
+                      }
+                    },
+                  )),
+            )));
   }
 }

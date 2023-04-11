@@ -9,10 +9,6 @@ class Textos {
   static String btnVerLista = "Ver Escala";
   static String btnBaixar = "Baixar";
   static String btnAdicionar = "Adicionar";
-
-  static String btnHome = "Home";
-  static String btnCriarEscala = "Criar";
-  static String btnSelecionarEscala = "Escalas";
   static String btnConfiguracoes = "Configurações";
 
   // TELA SELECAO TABELAS

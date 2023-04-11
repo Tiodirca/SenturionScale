@@ -60,72 +60,74 @@ class _TelaCadastroState extends State<TelaCadastro> {
         ),
       );
 
-  Widget botoesAcoes(String nomeBotao, Color corBotao,double largura,double altura) => SizedBox(
-      height: altura,
-      width: largura,
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            side: BorderSide(color: corBotao),
-            backgroundColor: Colors.white,
-            elevation: 10,
-            shadowColor: PaletaCores.corAdtl,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-          ),
-          onPressed: () async {
-            //verificando o tipo do botao
-            // para fazer acoes diferentes
-            if (nomeBotao == Constantes.tipoIconeSalvar) {
-              if (_formKeyFormulario.currentState!.validate()) {
-                chamarAdicionarItensBancoDados();
-              }
-            } else if (nomeBotao == Constantes.tipoIconeLista) {
-              Navigator.pushReplacementNamed(
-                  context, Constantes.rotaTelaListagemItens,
-                  arguments: widget.nomeTabela);
-            } else {
-              exibirDataPicker();
-            }
-          },
-          child: LayoutBuilder(
-            builder: (p0, p1) {
-              if (nomeBotao == Constantes.tipoIconeSalvar) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.save_outlined,
-                        color: PaletaCores.corAdtl, size: 30),
-                    Text(
-                      Textos.btnSalvar,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          color: PaletaCores.corAdtl),
-                    )
-                  ],
-                );
-              } else if (nomeBotao == Constantes.tipoIconeLista) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.view_list,
-                        color: PaletaCores.corAdtl, size: 30),
-                    Text(
-                      Textos.btnVerLista,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          color: PaletaCores.corAdtl),
-                    )
-                  ],
-                );
-              } else {
-                return const Icon(Icons.date_range_outlined,
-                    color: PaletaCores.corAdtl);
-              }
-            },
-          )));
+  Widget botoesAcoes(
+          String nomeBotao, Color corBotao, double largura, double altura) =>
+      SizedBox(
+          height: altura,
+          width: largura,
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                side: BorderSide(color: corBotao),
+                backgroundColor: Colors.white,
+                elevation: 10,
+                shadowColor: PaletaCores.corAdtl,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+              ),
+              onPressed: () async {
+                //verificando o tipo do botao
+                // para fazer acoes diferentes
+                if (nomeBotao == Constantes.tipoIconeSalvar) {
+                  if (_formKeyFormulario.currentState!.validate()) {
+                    chamarAdicionarItensBancoDados();
+                  }
+                } else if (nomeBotao == Constantes.tipoIconeLista) {
+                  Navigator.pushReplacementNamed(
+                      context, Constantes.rotaTelaListagemItens,
+                      arguments: widget.nomeTabela);
+                } else {
+                  exibirDataPicker();
+                }
+              },
+              child: LayoutBuilder(
+                builder: (p0, p1) {
+                  if (nomeBotao == Constantes.tipoIconeSalvar) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.save_outlined,
+                            color: PaletaCores.corAdtl, size: 30),
+                        Text(
+                          Textos.btnSalvar,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: PaletaCores.corAdtl),
+                        )
+                      ],
+                    );
+                  } else if (nomeBotao == Constantes.tipoIconeLista) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.view_list,
+                            color: PaletaCores.corAdtl, size: 30),
+                        Text(
+                          Textos.btnVerLista,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: PaletaCores.corAdtl),
+                        )
+                      ],
+                    );
+                  } else {
+                    return const Icon(Icons.date_range_outlined,
+                        color: PaletaCores.corAdtl);
+                  }
+                },
+              )));
 
   Widget botoesSwitch(String label, bool valorBotao) => SizedBox(
         width: 170,
@@ -296,192 +298,206 @@ class _TelaCadastroState extends State<TelaCadastro> {
 
     return Theme(
         data: estilo.estiloGeral,
-        child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-                //setando tamanho do icone
-                iconSize: 30,
-                enableFeedback: false,
-                onPressed: () {
-                  Navigator.pushReplacementNamed(
-                      context, Constantes.rotaTelaListagemTabelas);
-                },
-                icon: const Icon(Icons.arrow_back_ios)),
-            title: SizedBox(
-              width: larguraTela,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(Textos.tituloTelaCadastro),
-                ],
-              ),
-            ),
-          ),
-          body: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-              },
-              child: SizedBox(
+        child: WillPopScope(
+            onWillPop: () async {
+              Navigator.pushReplacementNamed(
+                  context, Constantes.rotaTelaCriarTabela);
+              return false;
+            },
+            child: Scaffold(
+              appBar: AppBar(
+                leading: IconButton(
+                    //setando tamanho do icone
+                    iconSize: 30,
+                    enableFeedback: false,
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(
+                          context, Constantes.rotaTelaListagemTabelas);
+                    },
+                    icon: const Icon(Icons.arrow_back_ios)),
+                title: SizedBox(
                   width: larguraTela,
-                  height: alturaTela - alturaAppBar - alturaBarraStatus,
-                  child: LayoutBuilder(
-                    builder: (p0, p1) {
-                      if (exibirTelaCarregamento) {
-                        return const TelaCarregamento();
-                      } else {
-                        return Column(
-                          children: [
-                            Expanded(
-                                flex: 8,
-                                child: SingleChildScrollView(
-                                    child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 0, horizontal: 0),
-                                  width: larguraTela,
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 10.0),
-                                        width: larguraTela,
-                                        child: Text(
-                                            Textos.descricaoTabelaSelecionada +
-                                                widget.nomeTabela,
-                                            textAlign: TextAlign.end),
-                                      ),
-                                      Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 10.0, horizontal: 0),
-                                        width: larguraTela,
-                                        child: Text(
-                                            Textos.descricaoTelaCadastro,
-                                            style:
-                                                const TextStyle(fontSize: 20),
-                                            textAlign: TextAlign.center),
-                                      ),
-                                      botoesAcoes(Constantes.tipoIconeDataCulto,
-                                          PaletaCores.corAdtl,60,60),
-                                      Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 20.0, horizontal: 0),
-                                        width: larguraTela,
-                                        child: Text(
-                                            Textos.descricaoDataSelecionada +
-                                                formatarData(dataSelecionada),
-                                            textAlign: TextAlign.center),
-                                      ),
-                                      SizedBox(
-                                        width: larguraTela,
-                                        child: Text(horarioTroca,
-                                            textAlign: TextAlign.center),
-                                      ),
-                                      Form(
-                                        key: _formKeyFormulario,
-                                        child: Wrap(
-                                          children: [
-                                            Visibility(
-                                                visible:
-                                                    !exibirSoCamposCooperadora,
-                                                child: Wrap(
-                                                  children: [
-                                                    camposFormulario(
-                                                        larguraTela,
-                                                        ctPrimeiroHoraPulpito,
-                                                        Textos
-                                                            .labelPrimeiroHoraPulpito),
-                                                    camposFormulario(
-                                                        larguraTela,
-                                                        ctSegundoHoraPulpito,
-                                                        Textos
-                                                            .labelSegundoHoraPulpito),
-                                                  ],
-                                                )),
-                                            camposFormulario(
-                                                larguraTela,
-                                                ctPrimeiroHoraEntrada,
-                                                Textos
-                                                    .labelPrimeiroHoraEntrada),
-                                            camposFormulario(
-                                                larguraTela,
-                                                ctSegundoHoraEntrada,
-                                                Textos.labelSegundoHoraEntrada),
-                                            camposFormulario(
-                                                larguraTela,
-                                                ctRecolherOferta,
-                                                Textos.labelRecolherOferta),
-                                            camposFormulario(
-                                                larguraTela,
-                                                ctUniforme,
-                                                Textos.labelUniforme),
-                                            camposFormulario(
-                                                larguraTela,
-                                                ctMesaApoio,
-                                                Textos.labelMesaApoio),
-                                            Visibility(
-                                              visible:
-                                                  exibirCampoServirSantaCeia,
-                                              child: camposFormulario(
-                                                  larguraTela,
-                                                  ctServirSantaCeia,
-                                                  Textos.labelServirSantaCeia),
-                                            ),
-                                            Visibility(
-                                              visible: exbirCampoIrmaoReserva,
-                                              child: camposFormulario(
-                                                  larguraTela,
-                                                  ctIrmaoReserva,
-                                                  Textos.labelIrmaoReserva),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: larguraTela,
-                                        height: 90,
-                                        child: Card(
-                                          elevation: 10,
-                                          child: SingleChildScrollView(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(Textos.tituloTelaCadastro),
+                    ],
+                  ),
+                ),
+              ),
+              body: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                  child: SizedBox(
+                      width: larguraTela,
+                      height: alturaTela - alturaAppBar - alturaBarraStatus,
+                      child: LayoutBuilder(
+                        builder: (p0, p1) {
+                          if (exibirTelaCarregamento) {
+                            return const TelaCarregamento();
+                          } else {
+                            return Column(
+                              children: [
+                                Expanded(
+                                    flex: 8,
+                                    child: SingleChildScrollView(
+                                        child: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 0, horizontal: 0),
+                                      width: larguraTela,
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 10.0),
+                                            width: larguraTela,
+                                            child: Text(
+                                                Textos.descricaoTabelaSelecionada +
+                                                    widget.nomeTabela,
+                                                textAlign: TextAlign.end),
+                                          ),
+                                          Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                vertical: 10.0, horizontal: 0),
+                                            width: larguraTela,
+                                            child: Text(
+                                                Textos.descricaoTelaCadastro,
+                                                style: const TextStyle(
+                                                    fontSize: 20),
+                                                textAlign: TextAlign.center),
+                                          ),
+                                          botoesAcoes(
+                                              Constantes.tipoIconeDataCulto,
+                                              PaletaCores.corAdtl,
+                                              60,
+                                              60),
+                                          Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                vertical: 20.0, horizontal: 0),
+                                            width: larguraTela,
+                                            child: Text(
+                                                Textos.descricaoDataSelecionada +
+                                                    formatarData(
+                                                        dataSelecionada),
+                                                textAlign: TextAlign.center),
+                                          ),
+                                          SizedBox(
+                                            width: larguraTela,
+                                            child: Text(horarioTroca,
+                                                textAlign: TextAlign.center),
+                                          ),
+                                          Form(
+                                            key: _formKeyFormulario,
                                             child: Wrap(
-                                              alignment: WrapAlignment.center,
                                               children: [
-                                                botoesSwitch(
+                                                Visibility(
+                                                    visible:
+                                                        !exibirSoCamposCooperadora,
+                                                    child: Wrap(
+                                                      children: [
+                                                        camposFormulario(
+                                                            larguraTela,
+                                                            ctPrimeiroHoraPulpito,
+                                                            Textos
+                                                                .labelPrimeiroHoraPulpito),
+                                                        camposFormulario(
+                                                            larguraTela,
+                                                            ctSegundoHoraPulpito,
+                                                            Textos
+                                                                .labelSegundoHoraPulpito),
+                                                      ],
+                                                    )),
+                                                camposFormulario(
+                                                    larguraTela,
+                                                    ctPrimeiroHoraEntrada,
                                                     Textos
-                                                        .labelSwitchCooperadora,
-                                                    exibirSoCamposCooperadora),
-                                                botoesSwitch(
+                                                        .labelPrimeiroHoraEntrada),
+                                                camposFormulario(
+                                                    larguraTela,
+                                                    ctSegundoHoraEntrada,
                                                     Textos
-                                                        .labelSwitchServirSantaCeia,
-                                                    exibirCampoServirSantaCeia),
-                                                botoesSwitch(
-                                                    Textos
-                                                        .labelSwitchIrmaoReserva,
-                                                    exbirCampoIrmaoReserva)
+                                                        .labelSegundoHoraEntrada),
+                                                camposFormulario(
+                                                    larguraTela,
+                                                    ctRecolherOferta,
+                                                    Textos.labelRecolherOferta),
+                                                camposFormulario(
+                                                    larguraTela,
+                                                    ctUniforme,
+                                                    Textos.labelUniforme),
+                                                camposFormulario(
+                                                    larguraTela,
+                                                    ctMesaApoio,
+                                                    Textos.labelMesaApoio),
+                                                Visibility(
+                                                  visible:
+                                                      exibirCampoServirSantaCeia,
+                                                  child: camposFormulario(
+                                                      larguraTela,
+                                                      ctServirSantaCeia,
+                                                      Textos
+                                                          .labelServirSantaCeia),
+                                                ),
+                                                Visibility(
+                                                  visible:
+                                                      exbirCampoIrmaoReserva,
+                                                  child: camposFormulario(
+                                                      larguraTela,
+                                                      ctIrmaoReserva,
+                                                      Textos.labelIrmaoReserva),
+                                                )
                                               ],
                                             ),
                                           ),
-                                        ),
+                                          SizedBox(
+                                            width: larguraTela,
+                                            height: 90,
+                                            child: Card(
+                                              elevation: 10,
+                                              child: SingleChildScrollView(
+                                                child: Wrap(
+                                                  alignment:
+                                                      WrapAlignment.center,
+                                                  children: [
+                                                    botoesSwitch(
+                                                        Textos
+                                                            .labelSwitchCooperadora,
+                                                        exibirSoCamposCooperadora),
+                                                    botoesSwitch(
+                                                        Textos
+                                                            .labelSwitchServirSantaCeia,
+                                                        exibirCampoServirSantaCeia),
+                                                    botoesSwitch(
+                                                        Textos
+                                                            .labelSwitchIrmaoReserva,
+                                                        exbirCampoIrmaoReserva)
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                ))),
-                            Expanded(
-                                flex: 1,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    botoesAcoes(Constantes.tipoIconeSalvar,
-                                        PaletaCores.corVerdeCiano,80,70),
-                                    botoesAcoes(Constantes.tipoIconeLista,
-                                        PaletaCores.corAdtlLetras,80,70),
-                                  ],
-                                )),
-                            const Expanded(flex: 1, child: BarraNavegacao())
-                          ],
-                        );
-                      }
-                    },
-                  ))),
-        ));
+                                    ))),
+                                Expanded(
+                                    flex: 1,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        botoesAcoes(Constantes.tipoIconeSalvar,
+                                            PaletaCores.corVerdeCiano, 80, 70),
+                                        botoesAcoes(Constantes.tipoIconeLista,
+                                            PaletaCores.corAdtlLetras, 80, 70),
+                                      ],
+                                    )),
+                                const Expanded(flex: 1, child: BarraNavegacao())
+                              ],
+                            );
+                          }
+                        },
+                      ))),
+            )));
   }
 }

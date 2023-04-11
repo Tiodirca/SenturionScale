@@ -146,65 +146,73 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
 
     return Theme(
         data: estilo.estiloGeral,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(Textos.tituloTelaConfiguracoes),
-            leading: IconButton(
-                //setando tamanho do icone
-                iconSize: 30,
-                enableFeedback: false,
-                onPressed: () {
-                  Navigator.pushReplacementNamed(
-                      context, Constantes.rotaTelaInical);
-                },
-                icon: const Icon(Icons.arrow_back_ios)),
-          ),
-          body: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-              },
-              child: SizedBox(
-                  width: larguraTela,
-                  height: alturaTela - alturaAppBar - alturaBarraStatus,
-                  child: Column(
-                    children: [
-                      Expanded(
-                          flex: 9,
-                          child: Container(
-                            margin: const EdgeInsets.only(top: 20.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(bottom: 20.0),
-                                  width: larguraTela * 0.8,
-                                  child: Text(Textos.descricaoBtnDefinirHorario,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(fontSize: 20)),
+        child: WillPopScope(
+            onWillPop: () async {
+              Navigator.pushReplacementNamed(
+                  context, Constantes.rotaTelaCriarTabela);
+              return false;
+            },
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text(Textos.tituloTelaConfiguracoes),
+                leading: IconButton(
+                    //setando tamanho do icone
+                    iconSize: 30,
+                    enableFeedback: false,
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(
+                          context, Constantes.rotaTelaCriarTabela);
+                    },
+                    icon: const Icon(Icons.arrow_back_ios)),
+              ),
+              body: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                  child: SizedBox(
+                      width: larguraTela,
+                      height: alturaTela - alturaAppBar - alturaBarraStatus,
+                      child: Column(
+                        children: [
+                          Expanded(
+                              flex: 9,
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 20.0),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      margin:
+                                          const EdgeInsets.only(bottom: 20.0),
+                                      width: larguraTela * 0.8,
+                                      child: Text(
+                                          Textos.descricaoBtnDefinirHorario,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(fontSize: 20)),
+                                    ),
+                                    Text(Textos.descricaoTrocaSemana,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18)),
+                                    botoesAcoes(
+                                        larguraTela,
+                                        horarioInicioSemana,
+                                        horarioTrocaSemana,
+                                        Constantes.trocarHorarioSemana),
+                                    Text(Textos.descricaoTrocaFimSemana,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18)),
+                                    botoesAcoes(
+                                        larguraTela,
+                                        horarioInicioFSemana,
+                                        horarioTrocaFSemana,
+                                        Constantes.trocarHorarioFimSemana),
+                                  ],
                                 ),
-                                Text(Textos.descricaoTrocaSemana,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
-                                botoesAcoes(
-                                    larguraTela,
-                                    horarioInicioSemana,
-                                    horarioTrocaSemana,
-                                    Constantes.trocarHorarioSemana),
-                                Text(Textos.descricaoTrocaFimSemana,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
-                                botoesAcoes(
-                                    larguraTela,
-                                    horarioInicioFSemana,
-                                    horarioTrocaFSemana,
-                                    Constantes.trocarHorarioFimSemana),
-                              ],
-                            ),
-                          )),
-                      const Expanded(flex: 1, child: BarraNavegacao())
-                    ],
-                  ))),
-        ));
+                              )),
+                          const Expanded(flex: 1, child: BarraNavegacao())
+                        ],
+                      ))),
+            )));
   }
 }
