@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:senturionscale/Modelos/escala_modelo.dart';
 import 'package:senturionscale/Uteis/AcoesBancoDados/AcaoBancoDadosItensEscala.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/ajustar_visualizacao.dart';
@@ -10,24 +11,26 @@ import 'package:senturionscale/Widgets/barra_navegacao_widget.dart';
 import 'package:senturionscale/Widgets/tela_carregamento.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class TelaCadastro extends StatefulWidget {
-  TelaCadastro({Key? key, required this.nomeTabela}) : super(key: key);
+class TelaAtualizar extends StatefulWidget {
+  TelaAtualizar({Key? key, required this.nomeTabela, required this.idItem})
+      : super(key: key);
 
   String nomeTabela;
+  String idItem;
 
   @override
-  State<TelaCadastro> createState() => _TelaCadastroState();
+  State<TelaAtualizar> createState() => _TelaAtualizarState();
 }
 
-class _TelaCadastroState extends State<TelaCadastro> {
+class _TelaAtualizarState extends State<TelaAtualizar> {
   Estilo estilo = Estilo();
-  bool exibirTelaCarregamento = false;
+  bool exibirTelaCarregamento = true;
   bool exibirCampoServirSantaCeia = false;
   bool exibirSoCamposCooperadora = false;
   bool exbirCampoIrmaoReserva = false;
   String horarioTroca = "";
 
-  DateTime dataSelecionada = DateTime.now();
+  late DateTime dataSelecionada;
   final _formKeyFormulario = GlobalKey<FormState>();
   TextEditingController ctPrimeiroHoraPulpito = TextEditingController(text: "");
   TextEditingController ctSegundoHoraPulpito = TextEditingController(text: "");
@@ -77,25 +80,23 @@ class _TelaCadastroState extends State<TelaCadastro> {
               onPressed: () async {
                 //verificando o tipo do botao
                 // para fazer acoes diferentes
-                if (nomeBotao == Constantes.iconeSalvar) {
+                if (nomeBotao == Constantes.iconeAtualizar) {
                   if (_formKeyFormulario.currentState!.validate()) {
-                    chamarAdicionarItensBancoDados();
+                    chamarAtualizarItensBancoDados();
                   }
                 } else if (nomeBotao == Constantes.iconeLista) {
-                  Navigator.pushReplacementNamed(
-                      context, Constantes.rotaTelaListagemItens,
-                      arguments: widget.nomeTabela);
+                  redirecionarTela();
                 } else {
                   exibirDataPicker();
                 }
               },
               child: LayoutBuilder(
                 builder: (p0, p1) {
-                  if (nomeBotao == Constantes.iconeSalvar) {
+                  if (nomeBotao == Constantes.iconeAtualizar) {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.save_outlined,
+                        const Icon(Icons.update_outlined,
                             color: PaletaCores.corAdtl, size: 30),
                         Text(
                           Textos.btnSalvar,
@@ -170,9 +171,63 @@ class _TelaCadastroState extends State<TelaCadastro> {
   void initState() {
     super.initState();
     recuperarHorarioTroca();
+    recuperarValoresItem();
   }
 
-  chamarAdicionarItensBancoDados() async {
+  redirecionarTela() {
+    Navigator.pushReplacementNamed(context, Constantes.rotaTelaListagemItens,
+        arguments: widget.nomeTabela);
+  }
+
+  recuperarValoresItem() async {
+    await AcaoBancoDadosItensEscala.recuperarItens(widget.nomeTabela,
+            AcaoBancoDadosItensEscala.acaoRecupearDadosPorID, widget.idItem)
+        .then(
+      (value) {
+        preencherCampos(value);
+      },
+    );
+  }
+
+  preencherCampos(List<EscalaModelo> escala) {
+    for (var element in escala) {
+      ctPrimeiroHoraPulpito.text = element.primeiraHoraPulpito;
+      ctSegundoHoraPulpito.text = element.segundaHoraPulpito;
+      ctPrimeiroHoraEntrada.text = element.primeiraHoraEntrada;
+      ctSegundoHoraEntrada.text = element.segundaHoraEntrada;
+      ctRecolherOferta.text = element.recolherOferta;
+      ctUniforme.text = element.uniforme;
+      ctMesaApoio.text = element.mesaApoio;
+      ctServirSantaCeia.text = element.servirSantaCeia;
+      ctIrmaoReserva.text = element.irmaoReserva;
+
+      dataSelecionada =
+          DateFormat("dd/MM/yyyy EEEE", "pt_BR").parse(element.dataCulto);
+      //verificando se os campos nao estao vazios
+      // para exibi-los
+      if (element.servirSantaCeia.isNotEmpty) {
+        setState(() {
+          exibirCampoServirSantaCeia = true;
+        });
+      }
+      if (element.irmaoReserva.isNotEmpty) {
+        setState(() {
+          exbirCampoIrmaoReserva = true;
+        });
+      }
+      if (element.primeiraHoraPulpito.isEmpty &&
+          element.segundaHoraPulpito.isEmpty) {
+        setState(() {
+          exibirSoCamposCooperadora = true;
+        });
+      }
+    }
+    setState(() {
+      exibirTelaCarregamento = false;
+    });
+  }
+
+  chamarAtualizarItensBancoDados() async {
     setState(() {
       exibirTelaCarregamento = true;
     });
@@ -217,14 +272,13 @@ class _TelaCadastroState extends State<TelaCadastro> {
         horarioTroca,
         irmaoReserva,
         widget.nomeTabela,
-        AcaoBancoDadosItensEscala.acaoAdicionarDados,
-        "SemID");
+        AcaoBancoDadosItensEscala.acaoAtualizarDados,
+        widget.idItem);
 
     if (retorno == Constantes.retornoSucessoBancoDado) {
       exibirMsg(Textos.sucessoMsgAdicionarItemEscala);
       setState(() {
-        limparValoresCampos();
-        exibirTelaCarregamento = false;
+        redirecionarTela();
       });
     } else {
       exibirMsg(Textos.erroMsgAdicionarItemEscala);
@@ -259,21 +313,6 @@ class _TelaCadastroState extends State<TelaCadastro> {
             "${prefs.getString(Constantes.shareHorarioTrocaSemana) ?? ''} ";
       });
     }
-  }
-
-  // metodo para limpar valores dos
-  // campos apos cadastrar item
-  // na base de dados
-  limparValoresCampos() {
-    ctPrimeiroHoraPulpito.text = "";
-    ctSegundoHoraPulpito.text = "";
-    ctPrimeiroHoraEntrada.text = "";
-    ctSegundoHoraEntrada.text = "";
-    ctRecolherOferta.text = "";
-    ctUniforme.text = "";
-    ctMesaApoio.text = "";
-    ctServirSantaCeia.text = "";
-    ctIrmaoReserva.text = "";
   }
 
   // metodo para formatar a data e exibir
@@ -331,7 +370,8 @@ class _TelaCadastroState extends State<TelaCadastro> {
         child: WillPopScope(
             onWillPop: () async {
               Navigator.pushReplacementNamed(
-                  context, Constantes.rotaTelaCriarTabela);
+                  context, Constantes.rotaTelaListagemItens,
+                  arguments: widget.nomeTabela);
               return false;
             },
             child: Scaffold(
@@ -342,7 +382,8 @@ class _TelaCadastroState extends State<TelaCadastro> {
                     enableFeedback: false,
                     onPressed: () {
                       Navigator.pushReplacementNamed(
-                          context, Constantes.rotaTelaListagemTabelas);
+                          context, Constantes.rotaTelaListagemItens,
+                          arguments: widget.nomeTabela);
                     },
                     icon: const Icon(Icons.arrow_back_ios)),
                 title: SizedBox(
@@ -350,7 +391,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(Textos.tituloTelaCadastro),
+                      Text(Textos.tituloTelaAtualizarItem),
                     ],
                   ),
                 ),
@@ -392,7 +433,8 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                                 vertical: 10.0, horizontal: 0),
                                             width: larguraTela,
                                             child: Text(
-                                                Textos.descricaoTelaCadastro,
+                                                Textos
+                                                    .descricaoTelaAtualizarItem,
                                                 style: const TextStyle(
                                                     fontSize: 20),
                                                 textAlign: TextAlign.center),
@@ -517,7 +559,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        botoesAcoes(Constantes.iconeSalvar,
+                                        botoesAcoes(Constantes.iconeAtualizar,
                                             PaletaCores.corVerdeCiano, 80, 70),
                                         botoesAcoes(Constantes.iconeLista,
                                             PaletaCores.corAdtlLetras, 80, 70),

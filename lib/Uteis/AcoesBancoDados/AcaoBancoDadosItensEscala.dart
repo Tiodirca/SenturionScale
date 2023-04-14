@@ -13,8 +13,8 @@ class AcaoBancoDadosItensEscala {
 
   static var root = Uri.parse("https://senturionlist.000webhostapp.com");
 
-  //metodo para adicionar dados no banco de dados
-  static Future<String> adicionarItens(
+  //metodo para adicionar  e atualizar dados no banco de dados
+  static Future<String> adicionarAtualizarItens(
       String primeiraHoraPulpito,
       String segundaHoraPulpito,
       String primeiraHoraEntrada,
@@ -26,12 +26,19 @@ class AcaoBancoDadosItensEscala {
       String dataCulto,
       String horarioTroca,
       String irmaoReserva,
-      String nomeTabela) async {
+      String nomeTabela,
+      String tipoAcao,
+      String id) async {
     try {
-      //instanciando map
       var map = <String, dynamic>{};
-      //passando os parametros para o map
-      map['action'] = acaoAdicionarDados;
+      // verificando o tipo da acao
+      // a ser realizada pelo metodo
+      if (tipoAcao == acaoAdicionarDados) {
+        map['action'] = acaoAdicionarDados;
+      } else {
+        map['action'] = acaoAtualizarDados;
+        map['id'] = id;
+      }
       map[Constantes.primeiraHoraPulpito] = primeiraHoraPulpito;
       map[Constantes.segundaHoraPulpito] = segundaHoraPulpito;
       map[Constantes.primeiraHoraEntrada] = primeiraHoraEntrada;
@@ -49,26 +56,32 @@ class AcaoBancoDadosItensEscala {
       final response =
           await http.post(root, body: map).timeout(const Duration(seconds: 20));
       if (200 == response.statusCode) {
-        print(response.body.toString());
         return response.body;
       } else {
         return response.body;
       }
     } catch (e) {
-      print(e.toString());
       return Constantes.erroAcaoBancoDados;
     }
   }
+
   //metodo para recuperar os dados do banco de dados
-  static Future<List<EscalaModelo>> recuperarItens(String tabela) async {
+  static Future<List<EscalaModelo>> recuperarItens(
+      String tabela, String tipoAcao, String id) async {
     try {
-      //instanciando map
       var map = <String, dynamic>{};
-      //passando os parametros para o map
-      map['action'] = acaoRecupearDados;
+      // verificando o tipo da acao
+      // a ser realizada pelo metodo
+      if (tipoAcao == acaoRecupearDados) {
+        map['action'] = acaoRecupearDados;
+      } else {
+        map['action'] = acaoRecupearDadosPorID;
+        map['id'] = id;
+      }
       map['tabela'] = tabela;
       //definindo que a variavel vai receber os seguintes parametros
-      final response = await http.post(root, body: map).timeout(const Duration(seconds: 20));
+      final response =
+          await http.post(root, body: map).timeout(const Duration(seconds: 20));
       if (200 == response.statusCode) {
         List<EscalaModelo> list = parseResponse(response.body);
         return list;
@@ -78,6 +91,7 @@ class AcaoBancoDadosItensEscala {
     }
     return <EscalaModelo>[];
   }
+
   //metodo para transformar os dados obtidos pelo json em objetos
   static List<EscalaModelo> parseResponse(String responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
@@ -85,6 +99,7 @@ class AcaoBancoDadosItensEscala {
         .map<EscalaModelo>((json) => EscalaModelo.fromJson(json))
         .toList();
   }
+
   //metodo para deletar os dados
   static Future<String> deletar(String id, String nomeTabela) async {
     try {
@@ -97,7 +112,7 @@ class AcaoBancoDadosItensEscala {
       //definindo que a variavel vai
       // receber os seguintes parametros
       final response =
-      await http.post(root, body: map).timeout(const Duration(seconds: 20));
+          await http.post(root, body: map).timeout(const Duration(seconds: 20));
       if (200 == response.statusCode) {
         return response.body;
       } else {
@@ -107,5 +122,4 @@ class AcaoBancoDadosItensEscala {
       return Constantes.erroAcaoBancoDados;
     }
   }
-
 }

@@ -10,6 +10,7 @@ class Textos {
   static String btnBaixar = "Baixar";
   static String btnAdicionar = "Adicionar";
   static String btnConfiguracoes = "Configurações";
+  static String btnAtualizar = "Atualizar";
 
   // TELA SELECAO TABELAS
   static String tituloTelaSelecaoTabelas = "Seleção de Escala";
@@ -74,6 +75,11 @@ class Textos {
       "com todos os itens já adicionados. se for necessario"
       " araste a lista para os lados para ver os demais campos.";
 
+  static String tituloTelaAtualizarItem = "Atualizar Item da Escala";
+  static String descricaoTelaAtualizarItem =
+      "Aqui você pode estar editando os campos para estar "
+      "atualizando o item na escala";
+
   // SUCESSOS
   static String sucessoMsgCriarTabela =
       "Sucesso ao criar a escala no banco de dados";
@@ -85,7 +91,6 @@ class Textos {
   // ALERTA
   static String tituloAlerta = "Confirmação de Exclusão";
   static String descricaoAlerta = "Deseja realmente excluir o seguinte item ?";
-
 
   // ERROS
   static String descricaoErroConsultasBancoDados =

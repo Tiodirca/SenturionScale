@@ -152,10 +152,10 @@ class _TelaListagemTabelasBancoDadosState
               borderRadius: BorderRadius.all(Radius.circular(10))),
         ),
         onPressed: () async {
-          if (nomeBotao == Constantes.tipoIconeAdicionar) {
+          if (nomeBotao == Constantes.iconeAdicionar) {
             Navigator.pushReplacementNamed(
                 context, Constantes.rotaTelaCriarTabela);
-          } else if (nomeBotao == Constantes.tipoIconeRecarregar) {
+          } else if (nomeBotao == Constantes.iconeRecarregar) {
             setState(() {
               exibirTelaCarregamento = true;
             });
@@ -166,12 +166,12 @@ class _TelaListagemTabelasBancoDadosState
         },
         child: LayoutBuilder(
           builder: (p0, p1) {
-            if (nomeBotao == Constantes.tipoIconeAdicionar) {
+            if (nomeBotao == Constantes.iconeAdicionar) {
               return const Icon(
                 Icons.add_circle_outline_outlined,
                 color: PaletaCores.corAdtl,
               );
-            } else if (nomeBotao == Constantes.tipoIconeRecarregar) {
+            } else if (nomeBotao == Constantes.iconeRecarregar) {
               return const Icon(Icons.refresh, color: PaletaCores.corAdtl);
             } else {
               return const Center(
@@ -258,12 +258,12 @@ class _TelaListagemTabelasBancoDadosState
                                                 children: [
                                                   botoesAcoes(
                                                       Constantes
-                                                          .tipoIconeAdicionar,
+                                                          .iconeAdicionar,
                                                       PaletaCores
                                                           .corRosaAvermelhado),
                                                   botoesAcoes(
                                                       Constantes
-                                                          .tipoIconeRecarregar,
+                                                          .iconeRecarregar,
                                                       PaletaCores.corAdtlLetras)
                                                 ]),
                                           ],
@@ -351,7 +351,7 @@ class _TelaListagemTabelasBancoDadosState
                                                                         20),
                                                             child: botoesAcoes(
                                                                 Constantes
-                                                                    .tipoIconeExclusao,
+                                                                    .iconeExclusao,
                                                                 PaletaCores
                                                                     .corRosaAvermelhado),
                                                           )

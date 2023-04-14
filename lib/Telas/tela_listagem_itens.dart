@@ -31,7 +31,9 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
   }
 
   recuparValoresBancoDados() async {
-    await AcaoBancoDadosItensEscala.recuperarItens(widget.nomeTabela).then(
+    await AcaoBancoDadosItensEscala.recuperarItens(widget.nomeTabela,
+            AcaoBancoDadosItensEscala.acaoRecupearDados, "SemID")
+        .then(
       (escalaBanco) {
         setState(() {
           if (escalaBanco.isEmpty) {
@@ -50,10 +52,11 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
   }
 
   chamarDeletar(EscalaModelo escalaModelo) {
-    AcaoBancoDadosItensEscala.deletar(escalaModelo.id, widget.nomeTabela).then((result) {
+    AcaoBancoDadosItensEscala.deletar(escalaModelo.id, widget.nomeTabela)
+        .then((result) {
       if (Constantes.retornoSucessoBancoDado == result) {
         const snackBarSucesso =
-        SnackBar(content: Text('Item apagado com sucesso.'));
+            SnackBar(content: Text('Item apagado com sucesso.'));
         ScaffoldMessenger.of(context).showSnackBar(snackBarSucesso);
         //chamando metodo
         recuparValoresBancoDados();
@@ -76,12 +79,12 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                     borderRadius: BorderRadius.all(Radius.circular(10))),
               ),
               onPressed: () async {
-                if (nomeBotao == Constantes.tipoIconeBaixar) {
-                } else if (nomeBotao == Constantes.tipoIconeAdicionar) {
+                if (nomeBotao == Constantes.iconeBaixar) {
+                } else if (nomeBotao == Constantes.iconeAdicionar) {
                   Navigator.pushReplacementNamed(
                       context, Constantes.rotaTelaCadastro,
                       arguments: widget.nomeTabela);
-                } else if (nomeBotao == Constantes.tipoIconeRecarregar) {
+                } else if (nomeBotao == Constantes.iconeRecarregar) {
                   setState(() {
                     exibirTelaCarregamento = true;
                   });
@@ -94,7 +97,7 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
               },
               child: LayoutBuilder(
                 builder: (p0, p1) {
-                  if (nomeBotao == Constantes.tipoIconeBaixar) {
+                  if (nomeBotao == Constantes.iconeBaixar) {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -109,7 +112,7 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                         )
                       ],
                     );
-                  } else if (nomeBotao == Constantes.tipoIconeAdicionar) {
+                  } else if (nomeBotao == Constantes.iconeAdicionar) {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -125,7 +128,7 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                         )
                       ],
                     );
-                  } else if (nomeBotao == Constantes.tipoIconeAdicionarEscala) {
+                  } else if (nomeBotao == Constantes.iconeAdicionarEscala) {
                     return const Icon(
                       Icons.add_circle_outline_outlined,
                       color: PaletaCores.corAdtl,
@@ -263,15 +266,12 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       botoesAcoes(
-                                          Constantes.tipoIconeAdicionarEscala,
+                                          Constantes.iconeAdicionarEscala,
                                           PaletaCores.corRosaAvermelhado,
                                           60,
                                           40),
-                                      botoesAcoes(
-                                          Constantes.tipoIconeRecarregar,
-                                          PaletaCores.corAdtlLetras,
-                                          60,
-                                          40)
+                                      botoesAcoes(Constantes.iconeRecarregar,
+                                          PaletaCores.corAdtlLetras, 60, 40)
                                     ]),
                               ],
                             ),
@@ -464,7 +464,7 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                                                   //SET width
                                                                   child: Text(
                                                                       item
-                                                                          .segundaHoraPulpito,
+                                                                          .segundaHoraEntrada,
                                                                       textAlign:
                                                                           TextAlign
                                                                               .center))),
@@ -528,8 +528,23 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                                                           BorderRadius.all(
                                                                               Radius.circular(10))),
                                                                 ),
-                                                                onPressed:
-                                                                    () {},
+                                                                onPressed: () {
+                                                                  var dados =
+                                                                      {};
+                                                                  dados[Constantes
+                                                                          .nomeTabela] =
+                                                                      widget
+                                                                          .nomeTabela;
+                                                                  dados[Constantes
+                                                                          .idItem] =
+                                                                      item.id;
+                                                                  Navigator.pushReplacementNamed(
+                                                                      context,
+                                                                      Constantes
+                                                                          .rotaTelaAtualizarItem,
+                                                                      arguments:
+                                                                          dados);
+                                                                },
                                                                 child: const Icon(
                                                                     Icons
                                                                         .edit_outlined,
@@ -581,9 +596,9 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      botoesAcoes(Constantes.tipoIconeBaixar,
+                                      botoesAcoes(Constantes.iconeBaixar,
                                           PaletaCores.corVerdeCiano, 100, 70),
-                                      botoesAcoes(Constantes.tipoIconeAdicionar,
+                                      botoesAcoes(Constantes.iconeAdicionar,
                                           PaletaCores.corAdtlLetras, 100, 70),
                                     ],
                                   )),

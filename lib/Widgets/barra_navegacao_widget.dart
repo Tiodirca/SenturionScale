@@ -7,7 +7,7 @@ class BarraNavegacao extends StatelessWidget {
   const BarraNavegacao({Key? key}) : super(key: key);
 
   Widget botoesIcones(String tipoIcone, BuildContext context) => SizedBox(
-      height: 60,
+      height: 55,
       width: 120,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -19,20 +19,20 @@ class BarraNavegacao extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(10))),
         ),
         onPressed: () {
-          if (tipoIcone == Constantes.tipoIconeAdicionar) {
+          if (tipoIcone == Constantes.iconeAdicionar) {
             Navigator.pushReplacementNamed(
                 context, Constantes.rotaTelaCriarTabela);
-          } else if (tipoIcone == Constantes.tipoIconeLista) {
+          } else if (tipoIcone == Constantes.iconeLista) {
             Navigator.pushReplacementNamed(
                 context, Constantes.rotaTelaListagemTabelas);
-          } else if (tipoIcone == Constantes.tipoIconeConfiguracao) {
+          } else if (tipoIcone == Constantes.iconeConfiguracao) {
             Navigator.pushReplacementNamed(
                 context, Constantes.rotaTelaConfiguracoes);
           }
         },
         child: LayoutBuilder(
           builder: (context, constraints) {
-            if (tipoIcone == Constantes.tipoIconeLista) {
+            if (tipoIcone == Constantes.iconeLista) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -45,7 +45,7 @@ class BarraNavegacao extends StatelessWidget {
                       style: const TextStyle(fontSize: 12)),
                 ],
               );
-            } else if (tipoIcone == Constantes.tipoIconeAdicionar) {
+            } else if (tipoIcone == Constantes.iconeAdicionar) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -91,9 +91,9 @@ class BarraNavegacao extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            botoesIcones(Constantes.tipoIconeAdicionar, context),
-            botoesIcones(Constantes.tipoIconeLista, context),
-            botoesIcones(Constantes.tipoIconeConfiguracao, context),
+            botoesIcones(Constantes.iconeAdicionar, context),
+            botoesIcones(Constantes.iconeLista, context),
+            botoesIcones(Constantes.iconeConfiguracao, context),
           ],
         ),
       ),

@@ -5,34 +5,37 @@ class Constantes {
   static const rotaTelaListagemTabelas = "telaListagemTabelas";
   static const rotaTelaConfiguracoes = "telaConfiguracoes";
   static const rotaTelaListagemItens = "telaListagem";
+  static const rotaTelaAtualizarItem = "telaAtualizarItem";
 
-  static const tipoExibicaoCadastroTabela = "cadastroTabela";
-  static const tipoExibicaoListagemTabela = "listagemTabeela";
 
   static const retornoSucessoBancoDado = "sucesso";
   static const retornoErroBancoDado = "erro";
 
-  static const tipoIconeAdicionar = "adicionar";
-  static const tipoIconeAdicionarEscala = "adicionarEscala";
-  static const tipoIconeLista = "lista";
-  static const tipoIconeConfiguracao = "configuracao";
+  // ICONES
+  static const iconeAdicionar = "adicionar";
+  static const iconeAtualizar = "atualizar";
+  static const iconeAdicionarEscala = "adicionarEscala";
+  static const iconeLista = "lista";
+  static const iconeConfiguracao = "configuracao";
 
-  static const tipoIconeExclusao = "exclusao";
-  static const tipoIconeRecarregar = "recarregar";
-  static const tipoIconeBaixar = "baixar";
-  static const tipoIconeEditar = "editar";
+  static const iconeExclusao = "exclusao";
+  static const iconeRecarregar = "recarregar";
+  static const iconeBaixar = "baixar";
+  static const iconeEditar = "editar";
 
-  static const tipoIconeSalvar = "salvar";
-  static const tipoIconeDataCulto = "dataCulto";
+  static const iconeSalvar = "salvar";
+  static const iconeDataCulto = "dataCulto";
 
-  static const tipoIconeDefinirHorarioTroca = "definirHorarioTroca";
+  static const iconeDefinirHorarioTroca = "definirHorarioTroca";
 
+  // Horario padrao de trocas de cooperadores
   static const horarioInicialSemana = "19:00";
   static const horarioTrocaSemana = "20:00";
   static const horarioInicialFSemana = "18:00";
   static const horarioTrocaFsemana = "19:00";
   static const horarioMudado = "sim";
 
+  //
   static const shareHorarioInicialSemana = "horarioInicialSemana";
   static const shareHorarioTrocaSemana = "horarioFinalSemana";
   static const shareHorarioInicialFSemana = "horarioInicialFSemana";
@@ -46,6 +49,7 @@ class Constantes {
   static const sucessoCriarTabela = "sucessoCriarTabela";
   static const erroCriarTabela = "erroCriarTabela";
 
+  static const idItem = "id";
   static const primeiraHoraPulpito = "primeiraHoraPulpito";
   static const segundaHoraPulpito = "segundaHoraPulpito";
   static const primeiraHoraEntrada = "primeiraHoraEntrada";
@@ -59,12 +63,7 @@ class Constantes {
   static const irmaoReserva = "irmaoReserva";
   static const nomeTabela = "tabela";
 
-  // constantes para a definicao de cultos
-  static const String segundaFeira = "segunda-feira";
-  static const String tercaFeira = "terça-feira";
-  static const String quartaFeira = "quarta-feira";
-  static const String quintaFeira = "quinta-feira";
-  static const String sextaFeira = "sexta-feira";
+
   static const String domingo = "domingo";
   static const String sabado = "sábado";
 }
