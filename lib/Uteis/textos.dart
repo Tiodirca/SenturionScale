@@ -87,7 +87,9 @@ class Textos {
       "Sucesso ao excluir escala do banco de dados";
   static String sucessoMsgAdicionarItemEscala =
       "Sucesso ao adicionar item a escala do banco de dados";
-
+  static String sucessoMsgAtualizarItemEscala =
+      "Sucesso ao atualizar item a escala do banco de dados";
+  static String sucessoExcluirItem = "Item apagado com sucesso.";
   // ALERTA
   static String tituloAlerta = "Confirmação de Exclusão";
   static String descricaoAlerta = "Deseja realmente excluir o seguinte item ?";
@@ -104,4 +106,15 @@ class Textos {
       "Erro ao excluir escala do banco de dados";
   static String erroMsgAdicionarItemEscala =
       "Erro ao adicionar item a escala do banco de dados";
+  static String erroMsgAtualizarItemEscala =
+      "Erro ao adicionar item a escala do banco de dados";
+
+  //strings da pagina de pdf
+  static String txtCabecalhoPDF =
+      "Escala  voluntaria de cooperador(a) da ADTL Parque São Carlos";
+  static String txtRodapePDF =
+      "Quem sua mão ao arado já pois, constante precisa ser.";
+  static String nomeIgreja = "ADTL Parque São Carlos";
+  static String txtGeradoApk = "Escala criada por Senturion List";
+
 }

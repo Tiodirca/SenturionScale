@@ -30,7 +30,7 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
   bool exbirCampoIrmaoReserva = false;
   String horarioTroca = "";
 
-  late DateTime dataSelecionada;
+  late DateTime dataSelecionada  = DateTime.now();
   final _formKeyFormulario = GlobalKey<FormState>();
   TextEditingController ctPrimeiroHoraPulpito = TextEditingController(text: "");
   TextEditingController ctSegundoHoraPulpito = TextEditingController(text: "");
@@ -276,12 +276,12 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
         widget.idItem);
 
     if (retorno == Constantes.retornoSucessoBancoDado) {
-      exibirMsg(Textos.sucessoMsgAdicionarItemEscala);
+      exibirMsg(Textos.sucessoMsgAtualizarItemEscala);
       setState(() {
         redirecionarTela();
       });
     } else {
-      exibirMsg(Textos.erroMsgAdicionarItemEscala);
+      exibirMsg(Textos.erroMsgAtualizarItemEscala);
       setState(() {
         exibirTelaCarregamento = false;
       });

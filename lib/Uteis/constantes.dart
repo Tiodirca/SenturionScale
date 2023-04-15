@@ -23,6 +23,7 @@ class Constantes {
   static const iconeBaixar = "baixar";
   static const iconeEditar = "editar";
 
+
   static const iconeSalvar = "salvar";
   static const iconeDataCulto = "dataCulto";
 
@@ -63,6 +64,7 @@ class Constantes {
   static const irmaoReserva = "irmaoReserva";
   static const nomeTabela = "tabela";
 
+  static const contemValorColuna = "contemValoresColuna";
 
   static const String domingo = "domingo";
   static const String sabado = "sábado";
