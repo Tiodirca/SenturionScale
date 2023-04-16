@@ -49,50 +49,27 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                     DateFormat("dd/MM/yyyy EEEE", "pt_BR").parse(b.dataCulto)));
             escala = escalaBanco;
             exibirTelaCarregamento = false;
-            verificarCamposVazios();
+            chamarVerificarColunaVazia();
           }
         });
       },
     );
   }
 
-  verificarCamposVazios() {
-    String contemValorRecolherOferta = "";
-    String contemValorIrmaoReserva = "";
-    String naoContemValorMesaApoio = "";
+  // metodo para chamar metodo para verificar
+  // se a coluna esta vazia
+  chamarVerificarColunaVazia() {
     for (var element in escala) {
-      exibirOcultarCampoRecolherOferta = verificarColunaVazia(element.recolherOferta);
-
-      // if (element.recolherOferta.isNotEmpty) {
-      //   contemValorRecolherOferta = Constantes.contemValorColuna;
-      // }
-      // if (element.irmaoReserva.isNotEmpty) {
-      //   contemValorIrmaoReserva = Constantes.contemValorColuna;
-      // }
-      // if (element.primeiraHoraPulpito.isNotEmpty &&
-      //     element.segundaHoraPulpito.isNotEmpty) {
-      //   naoContemValorMesaApoio = Constantes.contemValorColuna;
-      // }
+      exibirOcultarCampoRecolherOferta =
+          verificarColunaVazia(element.recolherOferta);
+      exibirOcultarCampoIrmaoReserva =
+          verificarColunaVazia(element.irmaoReserva);
+      exibirOcultarCampoMesaApoio = verificarColunaVazia(element.mesaApoio);
     }
-    // setState(() {
-    //   if (contemValorRecolherOferta == Constantes.contemValorColuna) {
-    //     exibirOcultarCampoRecolherOferta = true;
-    //   } else {
-    //     exibirOcultarCampoRecolherOferta = false;
-    //   }
-    //   if (contemValorIrmaoReserva == Constantes.contemValorColuna) {
-    //     exibirOcultarCampoIrmaoReserva = true;
-    //   } else {
-    //     exibirOcultarCampoIrmaoReserva = false;
-    //   }
-    //   if (naoContemValorMesaApoio == Constantes.contemValorColuna) {
-    //     exibirOcultarCampoMesaApoio = true;
-    //   } else {
-    //     exibirOcultarCampoMesaApoio = false;
-    //   }
-    // });
   }
 
+  // metodo para verificar se a coluna
+  // contem algum valor em uma de suas linhas
   verificarColunaVazia(String valor) {
     if (valor.isNotEmpty) {
       return true;
@@ -130,7 +107,8 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
               ),
               onPressed: () async {
                 if (nomeBotao == Constantes.iconeBaixar) {
-                  GerarPDF.pegarDados(escala);
+                  GerarPDF gerarPDF = GerarPDF();
+                  gerarPDF.pegarDados(escala,widget.nomeTabela);
                 } else if (nomeBotao == Constantes.iconeAdicionar) {
                   Navigator.pushReplacementNamed(
                       context, Constantes.rotaTelaCadastro,

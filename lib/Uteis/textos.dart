@@ -115,6 +115,6 @@ class Textos {
   static String txtRodapePDF =
       "Quem sua mão ao arado já pois, constante precisa ser.";
   static String nomeIgreja = "ADTL Parque São Carlos";
-  static String txtGeradoApk = "Escala criada por Senturion List";
+  static String txtGeradoApk = "Escala criada por Senturion Scale";
 
 }
