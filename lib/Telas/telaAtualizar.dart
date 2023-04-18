@@ -51,12 +51,12 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
         child: TextFormField(
           keyboardType: TextInputType.text,
           controller: controller,
-          validator: (value) {
-            if (value!.isEmpty) {
-              return Textos.erroCampoVazio;
-            }
-            return null;
-          },
+          // validator: (value) {
+          //   if (value!.isEmpty) {
+          //     return Textos.erroCampoVazio;
+          //   }
+          //   return null;
+          // },
           decoration: InputDecoration(
             labelText: label,
           ),

@@ -1,6 +1,7 @@
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pdfLib;
 import 'package:senturionscale/Modelos/escala_modelo.dart';
+import 'package:senturionscale/Uteis/constantes.dart';
 import 'package:senturionscale/Uteis/textos.dart';
 
 import 'salvarPDF/SavePDFMobile.dart'
@@ -9,21 +10,36 @@ import 'salvarPDF/SavePDFMobile.dart'
 class GerarPDF {
   static List<String> listaLegenda = [];
 
+  pegarDados(
+      List<EscalaModelo> escala, String nomeEscala, String tipoListagem) {
 
-  pegarDados(List<EscalaModelo> escala,String nomeEscala) {
+
+    listaLegenda.addAll([Textos.labelData, Textos.labelHorarioTroca]);
+
+    if (tipoListagem != Constantes.mesaApoio) {
+      listaLegenda.addAll([
+        Textos.labelPrimeiroHoraPulpito,
+        Textos.labelSegundoHoraPulpito,
+      ]);
+    }
     listaLegenda.addAll([
-      Textos.labelData,
-      Textos.labelHorarioTroca,
-      Textos.labelPrimeiroHoraPulpito,
-      Textos.labelSegundoHoraPulpito,
       Textos.labelPrimeiroHoraEntrada,
       Textos.labelSegundoHoraEntrada,
+    ]);
+    if (tipoListagem == Constantes.mesaApoio) {
+      listaLegenda.addAll([Textos.labelMesaApoio]);
+    }
+    listaLegenda.addAll([
       Textos.labelUniforme,
       Textos.labelServirSantaCeia,
       Textos.labelRecolherOferta,
-      //Textos.labelIrmaoReserva
+      Textos.labelIrmaoReserva
     ]);
-    gerarPDF(nomeEscala, escala, "dfsfsdf");
+
+
+
+
+    gerarPDF(nomeEscala, escala, tipoListagem);
   }
 
   gerarPDF(
@@ -86,9 +102,9 @@ class GerarPDF {
               pdfLib.Table.fromTextArray(
                   defaultColumnWidth: const pdfLib.FixedColumnWidth(1.0),
                   cellPadding: const pdfLib.EdgeInsets.symmetric(
-                      horizontal: 5.0, vertical: 0.0),
+                      horizontal: 0.0, vertical: 0.0),
                   headerPadding: const pdfLib.EdgeInsets.symmetric(
-                      horizontal: 0.0, vertical: 10.0),
+                      horizontal: 0.0, vertical: 0.0),
                   cellAlignment: pdfLib.Alignment.center,
                   data: listagemDados(tipoListagem, escala)),
             ]));
@@ -99,9 +115,8 @@ class GerarPDF {
     listaLegenda = [];
   }
 
-//
   listagemDados(String tipoListagem, List<EscalaModelo> escala) {
-    if (tipoListagem == Textos.labelMesaApoio) {
+    if (tipoListagem == Constantes.mesaApoio) {
       return <List<String>>[
         listaLegenda,
         ...escala.map((e) => [
@@ -109,6 +124,7 @@ class GerarPDF {
               e.horarioTroca,
               e.primeiraHoraEntrada,
               e.segundaHoraEntrada,
+              e.mesaApoio,
               e.uniforme,
               e.servirSantaCeia,
               e.recolherOferta,
@@ -133,4 +149,38 @@ class GerarPDF {
       ];
     }
   }
+
+//   if (tipoListagem == Constantes.mesaApoio) {
+//   return <List<String>>[
+//   listaLegenda,
+//   ...escala.map((e) => [
+//   e.dataCulto,
+//   e.horarioTroca,
+//   e.primeiraHoraEntrada,
+//   e.segundaHoraEntrada,
+//   e.mesaApoio,
+//   e.uniforme,
+//   e.servirSantaCeia,
+//   e.recolherOferta,
+//   e.irmaoReserva
+//   ])
+//   ];
+//   } else {
+//   return <List<String>>[
+//   listaLegenda,
+//   ...escala.map((e) => [
+//   e.dataCulto,
+//   e.horarioTroca,
+//   e.primeiraHoraPulpito,
+//   e.segundaHoraPulpito,
+//   e.primeiraHoraEntrada,
+//   e.segundaHoraEntrada,
+//   e.uniforme,
+//   e.servirSantaCeia,
+//   e.recolherOferta,
+//   e.irmaoReserva
+//   ])
+//   ];
+//   }
+// }
 }
