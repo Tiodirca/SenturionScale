@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:senturionscale/Telas/Tabelas/tela_criar_tabela_banco.dart';
-import 'package:senturionscale/Telas/Tabelas/tela_listagem_tabalas_banco_dados.dart';
+import 'package:senturionscale/Telas/Tabelas/tela_listagem_tabelas_banco_dados.dart';
 import 'package:senturionscale/Telas/telaAtualizar.dart';
 import 'package:senturionscale/Telas/telaCadastro.dart';
 import 'package:senturionscale/Telas/tela_configuracoes.dart';
@@ -11,7 +11,6 @@ import 'package:senturionscale/Uteis/constantes.dart';
 
 class Rotas {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // Recebe os parâmetros na chamada do Navigator.pushNamed
     final args = settings.arguments;
 
     switch (settings.name) {

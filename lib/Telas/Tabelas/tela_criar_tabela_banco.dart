@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:senturionscale/Uteis/AcoesBancoDados/AcoesBancoDadosTabelas.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
-import 'package:senturionscale/Uteis/ajustar_visualizacao.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 import 'package:senturionscale/Uteis/estilo.dart';
+import 'package:senturionscale/Uteis/metodos_auxiliares.dart';
 import 'package:senturionscale/Uteis/textos.dart';
 import 'package:senturionscale/Widgets/barra_navegacao_widget.dart';
 import 'package:senturionscale/Widgets/tela_carregamento.dart';
@@ -28,7 +28,8 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
       exibirTelaCarregamento = true;
     });
     String retorno = await AcoesBancoDadosTabelas.criarTabela(
-        _controllerCadastrarTabela.text);
+        MetodosAuxiliares.removerEspacoNomeTabelas(
+            _controllerCadastrarTabela.text));
     if (retorno == Constantes.retornoSucessoBancoDado) {
       exibirMsg(Textos.sucessoMsgCriarTabela);
       redirecionarTela();
@@ -96,8 +97,8 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
                                         top: 5.0,
                                         right: 5.0,
                                         bottom: 5.0),
-                                    width: AjustarVisualizacao.ajustarTextField(
-                                        larguraTela),
+                                    width: MetodosAuxiliares
+                                        .ajustarTamanhoTextField(larguraTela),
                                     child: TextFormField(
                                       keyboardType: TextInputType.text,
                                       controller: _controllerCadastrarTabela,

@@ -1,7 +1,7 @@
+import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pdfLib;
 import 'package:senturionscale/Modelos/escala_modelo.dart';
-import 'package:senturionscale/Uteis/constantes.dart';
 import 'package:senturionscale/Uteis/textos.dart';
 
 import 'salvarPDF/SavePDFMobile.dart'
@@ -9,14 +9,23 @@ import 'salvarPDF/SavePDFMobile.dart'
 
 class GerarPDF {
   static List<String> listaLegenda = [];
+  List<EscalaModelo> escala;
+  String nomeEscala;
+  bool exibirMesaApoio;
+  bool exibirRecolherOferta;
+  bool exibirIrmaoReserva;
 
-  pegarDados(
-      List<EscalaModelo> escala, String nomeEscala, String tipoListagem) {
+  GerarPDF(
+      {required this.escala,
+      required this.nomeEscala,
+      required this.exibirMesaApoio,
+      required this.exibirRecolherOferta,
+      required this.exibirIrmaoReserva});
 
-
+  pegarDados() {
     listaLegenda.addAll([Textos.labelData, Textos.labelHorarioTroca]);
 
-    if (tipoListagem != Constantes.mesaApoio) {
+    if (exibirMesaApoio == false) {
       listaLegenda.addAll([
         Textos.labelPrimeiroHoraPulpito,
         Textos.labelSegundoHoraPulpito,
@@ -26,30 +35,33 @@ class GerarPDF {
       Textos.labelPrimeiroHoraEntrada,
       Textos.labelSegundoHoraEntrada,
     ]);
-    if (tipoListagem == Constantes.mesaApoio) {
+    if (exibirMesaApoio) {
       listaLegenda.addAll([Textos.labelMesaApoio]);
     }
     listaLegenda.addAll([
       Textos.labelUniforme,
       Textos.labelServirSantaCeia,
-      Textos.labelRecolherOferta,
-      Textos.labelIrmaoReserva
     ]);
-
-
-
-
-    gerarPDF(nomeEscala, escala, tipoListagem);
+    if (exibirIrmaoReserva && exibirRecolherOferta) {
+      listaLegenda
+          .addAll([Textos.labelRecolherOferta, Textos.labelIrmaoReserva]);
+    } else if (exibirRecolherOferta) {
+      listaLegenda.add(Textos.labelRecolherOferta);
+    } else if (exibirRecolherOferta == false && exibirIrmaoReserva) {
+      listaLegenda.addAll(["", Textos.labelIrmaoReserva]);
+    }
+    gerarPDF();
   }
 
-  gerarPDF(
-      String nomePDF, List<EscalaModelo> escala, String tipoListagem) async {
+  gerarPDF() async {
     final pdfLib.Document pdf = pdfLib.Document();
-    //definindo que a variavel vai receber o caminho da imagem para serem exibidas
-    // final image =
-    // (await rootBundle.load('assets/imagens/adtl.png')).buffer.asUint8List();
-    // final imageLogo =
-    // (await rootBundle.load('assets/imagens/logo.png')).buffer.asUint8List();
+    //definindo que a variavel vai receber o caminho da
+    // imagem para serem exibidas
+    final image = (await rootBundle.load('assets/imagens/logo_adtl.png'))
+        .buffer
+        .asUint8List();
+    final imageLogo =
+        (await rootBundle.load('assets/imagens/Logo.png')).buffer.asUint8List();
     //adicionando a pagina ao pdf
     pdf.addPage(pdfLib.MultiPage(
         //definindo formato
@@ -61,8 +73,8 @@ class GerarPDF {
                 pdfLib.Container(
                   alignment: pdfLib.Alignment.centerRight,
                   child: pdfLib.Column(children: [
-                    // pdfLib.Image(pdfLib.MemoryImage(image),
-                    //     width: 50, height: 50),
+                    pdfLib.Image(pdfLib.MemoryImage(image),
+                        width: 50, height: 50),
                     pdfLib.Text(Textos.nomeIgreja),
                   ]),
                 ),
@@ -89,8 +101,8 @@ class GerarPDF {
                           pdfLib.Text(Textos.txtGeradoApk,
                               textAlign: pdfLib.TextAlign.center),
                           pdfLib.SizedBox(width: 10),
-                          // pdfLib.Image(pdfLib.MemoryImage(imageLogo),
-                          //     width: 20, height: 20),
+                          pdfLib.Image(pdfLib.MemoryImage(imageLogo),
+                              width: 20, height: 20),
                         ]),
                   )),
             ]),
@@ -100,36 +112,37 @@ class GerarPDF {
         build: (context) => [
               pdfLib.SizedBox(height: 20),
               pdfLib.Table.fromTextArray(
-                  defaultColumnWidth: const pdfLib.FixedColumnWidth(1.0),
                   cellPadding: const pdfLib.EdgeInsets.symmetric(
                       horizontal: 0.0, vertical: 0.0),
                   headerPadding: const pdfLib.EdgeInsets.symmetric(
-                      horizontal: 0.0, vertical: 0.0),
+                      horizontal: 0.0, vertical: 5.0),
                   cellAlignment: pdfLib.Alignment.center,
-                  data: listagemDados(tipoListagem, escala)),
+                  data: listagemDados()),
             ]));
 
     List<int> bytes = await pdf.save();
-    salvarPDF(bytes, '$nomePDF.pdf');
+    salvarPDF(bytes, '$nomeEscala.pdf');
     escala = [];
     listaLegenda = [];
   }
 
-  listagemDados(String tipoListagem, List<EscalaModelo> escala) {
-    if (tipoListagem == Constantes.mesaApoio) {
+  listagemDados() {
+    if (exibirMesaApoio) {
       return <List<String>>[
         listaLegenda,
-        ...escala.map((e) => [
-              e.dataCulto,
-              e.horarioTroca,
-              e.primeiraHoraEntrada,
-              e.segundaHoraEntrada,
-              e.mesaApoio,
-              e.uniforme,
-              e.servirSantaCeia,
-              e.recolherOferta,
-              e.irmaoReserva
-            ])
+        ...escala.map((e) {
+          return [
+            e.dataCulto,
+            e.horarioTroca,
+            e.primeiraHoraEntrada,
+            e.segundaHoraEntrada,
+            e.mesaApoio,
+            e.uniforme,
+            e.servirSantaCeia,
+            e.recolherOferta,
+            e.irmaoReserva
+          ];
+        }),
       ];
     } else {
       return <List<String>>[
@@ -149,38 +162,4 @@ class GerarPDF {
       ];
     }
   }
-
-//   if (tipoListagem == Constantes.mesaApoio) {
-//   return <List<String>>[
-//   listaLegenda,
-//   ...escala.map((e) => [
-//   e.dataCulto,
-//   e.horarioTroca,
-//   e.primeiraHoraEntrada,
-//   e.segundaHoraEntrada,
-//   e.mesaApoio,
-//   e.uniforme,
-//   e.servirSantaCeia,
-//   e.recolherOferta,
-//   e.irmaoReserva
-//   ])
-//   ];
-//   } else {
-//   return <List<String>>[
-//   listaLegenda,
-//   ...escala.map((e) => [
-//   e.dataCulto,
-//   e.horarioTroca,
-//   e.primeiraHoraPulpito,
-//   e.segundaHoraPulpito,
-//   e.primeiraHoraEntrada,
-//   e.segundaHoraEntrada,
-//   e.uniforme,
-//   e.servirSantaCeia,
-//   e.recolherOferta,
-//   e.irmaoReserva
-//   ])
-//   ];
-//   }
-// }
 }

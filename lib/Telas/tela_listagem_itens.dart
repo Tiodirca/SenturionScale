@@ -6,6 +6,7 @@ import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 import 'package:intl/intl.dart';
 import 'package:senturionscale/Uteis/estilo.dart';
+import 'package:senturionscale/Uteis/metodos_auxiliares.dart';
 import 'package:senturionscale/Uteis/textos.dart';
 import 'package:senturionscale/Widgets/barra_navegacao_widget.dart';
 import 'package:senturionscale/Widgets/tela_carregamento.dart';
@@ -34,8 +35,9 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
     recuparValoresBancoDados();
   }
 
+
   recuparValoresBancoDados() async {
-    await AcaoBancoDadosItensEscala.recuperarItens(widget.nomeTabela,
+    await AcaoBancoDadosItensEscala.recuperarItens(MetodosAuxiliares.removerEspacoNomeTabelas(widget.nomeTabela),
             AcaoBancoDadosItensEscala.acaoRecupearDados, "SemID")
         .then(
       (escalaBanco) {
@@ -60,11 +62,28 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
   // se a coluna esta vazia
   chamarVerificarColunaVazia() {
     for (var element in escala) {
-      exibirOcultarCampoRecolherOferta =
-          verificarColunaVazia(element.recolherOferta);
-      exibirOcultarCampoIrmaoReserva =
-          verificarColunaVazia(element.irmaoReserva);
-      exibirOcultarCampoMesaApoio = verificarColunaVazia(element.mesaApoio);
+      if (element.mesaApoio.isNotEmpty) {
+        exibirOcultarCampoMesaApoio = true;
+        break;
+      } else {
+        exibirOcultarCampoMesaApoio = false;
+      }
+    }
+    for (var element in escala) {
+      if (element.irmaoReserva.isNotEmpty) {
+        exibirOcultarCampoIrmaoReserva = true;
+        break;
+      } else {
+        exibirOcultarCampoIrmaoReserva = false;
+      }
+    }
+    for (var element in escala) {
+      if (element.recolherOferta.isNotEmpty) {
+        exibirOcultarCampoRecolherOferta = true;
+        break;
+      } else {
+        exibirOcultarCampoRecolherOferta = false;
+      }
     }
   }
 
@@ -79,7 +98,7 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
   }
 
   chamarDeletar(EscalaModelo escalaModelo) {
-    AcaoBancoDadosItensEscala.deletar(escalaModelo.id, widget.nomeTabela)
+    AcaoBancoDadosItensEscala.deletar(escalaModelo.id, MetodosAuxiliares.removerEspacoNomeTabelas(widget.nomeTabela))
         .then((result) {
       if (Constantes.retornoSucessoBancoDado == result) {
         const snackBarSucesso =
@@ -88,9 +107,20 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
         //chamando metodo
         escala = [];
         recuparValoresBancoDados();
-
       }
     });
+  }
+
+  // metodo para chamar a geracao do arquivo em pdf
+  // e permitir o usuario baixar o arquivo
+  chamarGerarArquivoPDF() {
+    GerarPDF gerarPDF = GerarPDF(
+        escala: escala,
+        nomeEscala: widget.nomeTabela,
+        exibirMesaApoio: exibirOcultarCampoMesaApoio,
+        exibirRecolherOferta: exibirOcultarCampoRecolherOferta,
+        exibirIrmaoReserva: exibirOcultarCampoIrmaoReserva);
+    gerarPDF.pegarDados();
   }
 
   Widget botoesAcoes(
@@ -109,12 +139,7 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
               ),
               onPressed: () async {
                 if (nomeBotao == Constantes.iconeBaixar) {
-                  GerarPDF gerarPDF = GerarPDF();
-                  String tipoListagem = "";
-                  if (exibirOcultarCampoMesaApoio) {
-                    tipoListagem = Constantes.mesaApoio;
-                  }
-                  gerarPDF.pegarDados(escala, widget.nomeTabela, tipoListagem);
+                  chamarGerarArquivoPDF();
                 } else if (nomeBotao == Constantes.iconeAdicionar) {
                   Navigator.pushReplacementNamed(
                       context, Constantes.rotaTelaCadastro,
@@ -317,9 +342,7 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                               Expanded(
                                   flex: 8,
                                   child: SingleChildScrollView(
-                                      child: Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 0, horizontal: 0),
+                                      child: SizedBox(
                                     width: larguraTela,
                                     child: Column(
                                       children: [
@@ -328,8 +351,7 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                               horizontal: 10.0),
                                           width: larguraTela,
                                           child: Text(
-                                              Textos.descricaoTabelaSelecionada +
-                                                  widget.nomeTabela,
+                                              widget.nomeTabela,
                                               textAlign: TextAlign.end),
                                         ),
                                         Container(
@@ -343,289 +365,277 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                               textAlign: TextAlign.center),
                                         ),
                                         Container(
-                                          alignment: Alignment.center,
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 10.0, vertical: 0.0),
-                                          height: alturaTela * 0.5,
-                                          child: ListView(
-                                            children: [
-                                              SingleChildScrollView(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                child: DataTable(
-                                                  columnSpacing: 10,
-                                                  columns: [
-                                                    DataColumn(
-                                                        label: Text(
-                                                            Textos.labelData,
-                                                            textAlign: TextAlign
-                                                                .center)),
-                                                    DataColumn(
-                                                      label: Text(
-                                                          Textos
-                                                              .labelHorarioTroca,
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    ),
-                                                    DataColumn(
-                                                        label: Text(
-                                                            Textos
-                                                                .labelPrimeiroHoraPulpito,
-                                                            textAlign: TextAlign
-                                                                .center)),
-                                                    DataColumn(
-                                                      label: Text(
-                                                          Textos
-                                                              .labelSegundoHoraPulpito,
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    ),
-                                                    DataColumn(
-                                                        label: Text(
-                                                            Textos
-                                                                .labelPrimeiroHoraEntrada,
-                                                            textAlign: TextAlign
-                                                                .center)),
-                                                    DataColumn(
-                                                      label: Text(
-                                                          Textos
-                                                              .labelSegundoHoraEntrada,
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    ),
-                                                    DataColumn(
-                                                      label: Text(
-                                                          Textos.labelMesaApoio,
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    ),
-                                                    DataColumn(
-                                                      label: Text(
-                                                          Textos.labelUniforme,
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    ),
-                                                    DataColumn(
-                                                      label: Text(
-                                                          Textos
-                                                              .labelRecolherOferta,
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    ),
-                                                    DataColumn(
-                                                      label: Text(
-                                                          Textos
-                                                              .labelServirSantaCeia,
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    ),
-                                                    DataColumn(
-                                                      label: Text(
-                                                          Textos
-                                                              .labelIrmaoReserva,
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    ),
-                                                    DataColumn(
-                                                      label: Text(
-                                                          Textos.labelEditar,
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    ),
-                                                    DataColumn(
-                                                      label: Text(
-                                                          Textos.labelExcluir,
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    ),
-                                                  ],
-                                                  rows: escala
-                                                      .map(
-                                                        (item) => DataRow(
-                                                            cells: [
-                                                              DataCell(SizedBox(
-                                                                  width: 90,
-                                                                  //SET width
-                                                                  child: Text(
-                                                                      item
-                                                                          .dataCulto,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center))),
-                                                              DataCell(
-                                                                  Container(
-                                                                      alignment:
-                                                                          Alignment
-                                                                              .center,
-                                                                      width:
-                                                                          150,
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 10.0,
+                                                vertical: 0.0),
+                                            height: alturaTela * 0.5,
+                                            width: larguraTela,
+                                            child: Center(
+                                              child: ListView(
+                                                children: [
+                                                  SingleChildScrollView(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    child: DataTable(
+                                                      columnSpacing: 10,
+                                                      columns: [
+                                                        DataColumn(
+                                                            label: Text(
+                                                                Textos
+                                                                    .labelData,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center)),
+                                                        DataColumn(
+                                                          label: Text(
+                                                              Textos
+                                                                  .labelHorarioTroca,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center),
+                                                        ),
+                                                        DataColumn(
+                                                            label: Text(
+                                                                Textos
+                                                                    .labelPrimeiroHoraPulpito,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center)),
+                                                        DataColumn(
+                                                          label: Text(
+                                                              Textos
+                                                                  .labelSegundoHoraPulpito,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center),
+                                                        ),
+                                                        DataColumn(
+                                                            label: Text(
+                                                                Textos
+                                                                    .labelPrimeiroHoraEntrada,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center)),
+                                                        DataColumn(
+                                                          label: Text(
+                                                              Textos
+                                                                  .labelSegundoHoraEntrada,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center),
+                                                        ),
+                                                        DataColumn(
+                                                            label: Visibility(
+                                                          visible:
+                                                              exibirOcultarCampoMesaApoio,
+                                                          child: Text(
+                                                              Textos
+                                                                  .labelMesaApoio,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center),
+                                                        )),
+                                                        DataColumn(
+                                                          label: Text(
+                                                              Textos
+                                                                  .labelUniforme,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center),
+                                                        ),
+                                                        DataColumn(
+                                                            label: Visibility(
+                                                          visible:
+                                                              exibirOcultarCampoRecolherOferta,
+                                                          child: Text(
+                                                              Textos
+                                                                  .labelRecolherOferta,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center),
+                                                        )),
+                                                        DataColumn(
+                                                          label: Text(
+                                                              Textos
+                                                                  .labelServirSantaCeia,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center),
+                                                        ),
+                                                        DataColumn(
+                                                            label: Visibility(
+                                                          visible:
+                                                              exibirOcultarCampoIrmaoReserva,
+                                                          child: Text(
+                                                              Textos
+                                                                  .labelIrmaoReserva,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center),
+                                                        )),
+                                                        DataColumn(
+                                                          label: Text(
+                                                              Textos
+                                                                  .labelEditar,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center),
+                                                        ),
+                                                        DataColumn(
+                                                          label: Text(
+                                                              Textos
+                                                                  .labelExcluir,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center),
+                                                        ),
+                                                      ],
+                                                      rows: escala
+                                                          .map(
+                                                            (item) => DataRow(
+                                                                cells: [
+                                                                  DataCell(SizedBox(
+                                                                      width: 90,
                                                                       //SET width
-                                                                      child:
-                                                                          SingleChildScrollView(
+                                                                      child: Text(item.dataCulto, textAlign: TextAlign.center))),
+                                                                  DataCell(Container(
+                                                                      alignment: Alignment.center,
+                                                                      width: 150,
+                                                                      //SET width
+                                                                      child: SingleChildScrollView(
                                                                         child: Text(
                                                                             item
                                                                                 .horarioTroca,
                                                                             textAlign:
                                                                                 TextAlign.center),
                                                                       ))),
-                                                              DataCell(SizedBox(
-                                                                  width: 90,
-                                                                  //SET width
-                                                                  child: Text(
-                                                                      item
-                                                                          .primeiraHoraPulpito,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center))),
-                                                              DataCell(SizedBox(
-                                                                  width: 90,
-                                                                  //SET width
-                                                                  child: Text(
-                                                                      item
-                                                                          .segundaHoraPulpito,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center))),
-                                                              DataCell(SizedBox(
-                                                                  width: 90,
-                                                                  //SET width
-                                                                  child: Text(
-                                                                      item
-                                                                          .primeiraHoraEntrada,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center))),
-                                                              DataCell(SizedBox(
-                                                                  width: 90,
-                                                                  //SET width
-                                                                  child: Text(
-                                                                      item
-                                                                          .segundaHoraEntrada,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center))),
-                                                              DataCell(
-                                                                SizedBox(
-                                                                    width: 90,
-                                                                    //SET width
-                                                                    child: Text(
-                                                                        item
-                                                                            .mesaApoio,
-                                                                        textAlign:
-                                                                            TextAlign.center)),
-                                                              ),
-                                                              DataCell(SizedBox(
-                                                                  width: 90,
-                                                                  //SET width
-                                                                  child: Text(
-                                                                      item
-                                                                          .uniforme,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center))),
-                                                              DataCell(
-                                                                SizedBox(
-                                                                    width: 90,
-                                                                    //SET width
-                                                                    child: Text(
-                                                                        item
-                                                                            .recolherOferta,
-                                                                        textAlign:
-                                                                            TextAlign.center)),
-                                                              ),
-                                                              DataCell(SizedBox(
-                                                                  width: 90,
-                                                                  //SET width
-                                                                  child: Text(
-                                                                      item
-                                                                          .servirSantaCeia,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center))),
-                                                              DataCell(
-                                                                SizedBox(
-                                                                    width: 90,
-                                                                    //SET width
-                                                                    child: Text(
-                                                                        item
-                                                                            .irmaoReserva,
-                                                                        textAlign:
-                                                                            TextAlign.center)),
-                                                              ),
-                                                              DataCell(
-                                                                  ElevatedButton(
-                                                                style: ElevatedButton
-                                                                    .styleFrom(
-                                                                  side: const BorderSide(
-                                                                      color: PaletaCores
-                                                                          .corAdtlLetras),
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  shape: const RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.all(
-                                                                              Radius.circular(10))),
-                                                                ),
-                                                                onPressed: () {
-                                                                  var dados =
-                                                                      {};
-                                                                  dados[Constantes
-                                                                          .nomeTabela] =
-                                                                      widget
-                                                                          .nomeTabela;
-                                                                  dados[Constantes
-                                                                          .idItem] =
-                                                                      item.id;
-                                                                  Navigator.pushReplacementNamed(
-                                                                      context,
-                                                                      Constantes
-                                                                          .rotaTelaAtualizarItem,
-                                                                      arguments:
-                                                                          dados);
-                                                                },
-                                                                child: const Icon(
-                                                                    Icons
-                                                                        .edit_outlined,
-                                                                    size: 20,
-                                                                    color: PaletaCores
-                                                                        .corAdtl),
-                                                              )),
-                                                              DataCell(
-                                                                  ElevatedButton(
-                                                                style: ElevatedButton
-                                                                    .styleFrom(
-                                                                  side: const BorderSide(
-                                                                      color: PaletaCores
-                                                                          .corRosaAvermelhado),
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  shape: const RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.all(
-                                                                              Radius.circular(10))),
-                                                                ),
-                                                                onPressed: () {
-                                                                  alertaExclusao(
-                                                                      item,
-                                                                      context);
-                                                                },
-                                                                child: const Icon(
-                                                                    Icons
-                                                                        .close_outlined,
-                                                                    size: 20,
-                                                                    color: PaletaCores
-                                                                        .corAdtl),
-                                                              )),
-                                                            ]),
-                                                      )
-                                                      .toList(),
-                                                ),
+                                                                  DataCell(SizedBox(
+                                                                      width: 90,
+                                                                      //SET width
+                                                                      child: Text(item.primeiraHoraPulpito, textAlign: TextAlign.center))),
+                                                                  DataCell(SizedBox(
+                                                                      width: 90,
+                                                                      //SET width
+                                                                      child: Text(item.segundaHoraPulpito, textAlign: TextAlign.center))),
+                                                                  DataCell(SizedBox(
+                                                                      width: 90,
+                                                                      //SET width
+                                                                      child: Text(item.primeiraHoraEntrada, textAlign: TextAlign.center))),
+                                                                  DataCell(SizedBox(
+                                                                      width: 90,
+                                                                      //SET width
+                                                                      child: Text(item.segundaHoraEntrada, textAlign: TextAlign.center))),
+                                                                  DataCell(
+                                                                      Visibility(
+                                                                    visible:
+                                                                        exibirOcultarCampoMesaApoio,
+                                                                    child: SizedBox(
+                                                                        width: 90,
+                                                                        //SET width
+                                                                        child: Text(item.mesaApoio, textAlign: TextAlign.center)),
+                                                                  )),
+                                                                  DataCell(SizedBox(
+                                                                      width: 90,
+                                                                      //SET width
+                                                                      child: Text(item.uniforme, textAlign: TextAlign.center))),
+                                                                  DataCell(
+                                                                      Visibility(
+                                                                    visible:
+                                                                        exibirOcultarCampoRecolherOferta,
+                                                                    child: SizedBox(
+                                                                        width: 90,
+                                                                        //SET width
+                                                                        child: Text(item.recolherOferta, textAlign: TextAlign.center)),
+                                                                  )),
+                                                                  DataCell(SizedBox(
+                                                                      width: 90,
+                                                                      //SET width
+                                                                      child: Text(item.servirSantaCeia, textAlign: TextAlign.center))),
+                                                                  DataCell(
+                                                                      Visibility(
+                                                                    visible:
+                                                                        exibirOcultarCampoIrmaoReserva,
+                                                                    child: SizedBox(
+                                                                        width: 90,
+                                                                        //SET width
+                                                                        child: Text(item.irmaoReserva, textAlign: TextAlign.center)),
+                                                                  )),
+                                                                  DataCell(
+                                                                      ElevatedButton(
+                                                                    style: ElevatedButton
+                                                                        .styleFrom(
+                                                                      side: const BorderSide(
+                                                                          color:
+                                                                              PaletaCores.corAdtlLetras),
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      shape: const RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.all(Radius.circular(10))),
+                                                                    ),
+                                                                    onPressed:
+                                                                        () {
+                                                                      var dados =
+                                                                          {};
+                                                                      dados[Constantes
+                                                                              .nomeTabela] =
+                                                                          widget
+                                                                              .nomeTabela;
+                                                                      dados[Constantes
+                                                                              .idItem] =
+                                                                          item.id;
+                                                                      Navigator.pushReplacementNamed(
+                                                                          context,
+                                                                          Constantes
+                                                                              .rotaTelaAtualizarItem,
+                                                                          arguments:
+                                                                              dados);
+                                                                    },
+                                                                    child: const Icon(
+                                                                        Icons
+                                                                            .edit_outlined,
+                                                                        size:
+                                                                            20,
+                                                                        color: PaletaCores
+                                                                            .corAdtl),
+                                                                  )),
+                                                                  DataCell(
+                                                                      ElevatedButton(
+                                                                    style: ElevatedButton
+                                                                        .styleFrom(
+                                                                      side: const BorderSide(
+                                                                          color:
+                                                                              PaletaCores.corRosaAvermelhado),
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      shape: const RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.all(Radius.circular(10))),
+                                                                    ),
+                                                                    onPressed:
+                                                                        () {
+                                                                      alertaExclusao(
+                                                                          item,
+                                                                          context);
+                                                                    },
+                                                                    child: const Icon(
+                                                                        Icons
+                                                                            .close_outlined,
+                                                                        size:
+                                                                            20,
+                                                                        color: PaletaCores
+                                                                            .corAdtl),
+                                                                  )),
+                                                                ]),
+                                                          )
+                                                          .toList(),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
-                                        ),
+                                            )),
                                       ],
                                     ),
                                   ))),

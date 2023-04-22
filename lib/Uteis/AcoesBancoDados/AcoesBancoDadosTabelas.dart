@@ -5,8 +5,8 @@ import 'package:senturionscale/Modelos/exibir_tabelas.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 
 class AcoesBancoDadosTabelas {
-  static var root = Uri.parse("https://senturionlist.000webhostapp.com");
-
+  //static var root = Uri.parse("https://senturionlist.000webhostapp.com");
+  static var root = Uri.parse("http://192.168.69.104/teste/");
   static const acaoDeletarTabela = 'deletarTabela';
   static const acaoExibirTabelas = 'exibirTabelas';
   static const acaoCriarTabelas = 'criarTabela';
@@ -24,11 +24,14 @@ class AcoesBancoDadosTabelas {
       final response =
           await http.post(root, body: map).timeout(const Duration(seconds: 10));
       if (200 == response.statusCode) {
+        print(response.body);
         return response.body;
       } else {
+        print(response.body);
         return Constantes.erroAcaoBancoDados;
       }
     } catch (e) {
+      print(e.toString());
       return Constantes.erroAcaoBancoDados;
     }
   }
