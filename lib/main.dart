@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Senturion Scale',
       scrollBehavior: ScrollBehaviorPersonalizado(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

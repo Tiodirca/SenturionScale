@@ -55,6 +55,18 @@ flutter_icons:
   android: true
   ios: true
   image_path: "assets/imagens/Logo.png"
+  web:
+    generate: true
+    image_path: "assets/imagens/Logo.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/imagens/Logo.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/imagens/Logo.png"
 
 dev_dependencies:
   flutter_test:
