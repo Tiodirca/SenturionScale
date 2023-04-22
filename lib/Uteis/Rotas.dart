@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:senturionscale/Telas/Tabelas/tela_criar_tabela_banco.dart';
 import 'package:senturionscale/Telas/Tabelas/tela_listagem_tabelas_banco_dados.dart';
-import 'package:senturionscale/Telas/telaAtualizar.dart';
-import 'package:senturionscale/Telas/telaCadastro.dart';
+import 'package:senturionscale/Telas/tela_atualizar.dart';
+import 'package:senturionscale/Telas/tela_cadastro.dart';
 import 'package:senturionscale/Telas/tela_configuracoes.dart';
 import 'package:senturionscale/Telas/tela_listagem_itens.dart';
 import 'package:senturionscale/Telas/tela_splash.dart';
@@ -50,16 +50,6 @@ class Rotas {
       } else {
         return erroRota(settings);
       }
-      // case Constantes.rotaTelaInical:
-      //   if (args is Map) {
-      //     return MaterialPageRoute(
-      //       builder: (_) => TelaAtualizar(
-      //         nomeTabela: args["tabela"],idItem: args["id"],
-      //       ),
-      //     );
-      //   } else {
-      //     return erroRota(settings);
-      //   }
     }
 
     // Se o argumento não é do tipo correto, retorna erro

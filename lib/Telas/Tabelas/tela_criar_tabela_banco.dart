@@ -138,7 +138,9 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
                               )
                             ],
                           )),
-                      const Expanded(flex: 1, child: BarraNavegacao())
+                      const Expanded(flex: 1, child: SingleChildScrollView(
+                        child: BarraNavegacao(),
+                      ))
                     ],
                   ),
                 );

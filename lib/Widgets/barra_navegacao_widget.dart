@@ -87,7 +87,7 @@ class BarraNavegacao extends StatelessWidget {
       color: PaletaCores.corAdtl,
       child: SizedBox(
         width: larguraTela,
-        height: 70,
+        height: 65,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

@@ -512,17 +512,21 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                     ))),
                                 Expanded(
                                     flex: 1,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        botoesAcoes(Constantes.iconeSalvar,
-                                            PaletaCores.corVerdeCiano, 80, 70),
-                                        botoesAcoes(Constantes.iconeLista,
-                                            PaletaCores.corAdtlLetras, 80, 70),
-                                      ],
+                                    child: SingleChildScrollView(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          botoesAcoes(Constantes.iconeSalvar,
+                                              PaletaCores.corVerdeCiano, 80, 70),
+                                          botoesAcoes(Constantes.iconeLista,
+                                              PaletaCores.corAdtlLetras, 80, 70),
+                                        ],
+                                      ),
                                     )),
-                                const Expanded(flex: 1, child: BarraNavegacao())
+                                const Expanded(flex: 1, child: SingleChildScrollView(
+                                  child: BarraNavegacao(),
+                                ))
                               ],
                             );
                           }
