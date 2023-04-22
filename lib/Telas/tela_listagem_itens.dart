@@ -35,10 +35,11 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
     recuparValoresBancoDados();
   }
 
-
   recuparValoresBancoDados() async {
-    await AcaoBancoDadosItensEscala.recuperarItens(MetodosAuxiliares.removerEspacoNomeTabelas(widget.nomeTabela),
-            AcaoBancoDadosItensEscala.acaoRecupearDados, "SemID")
+    await AcaoBancoDadosItensEscala.recuperarItens(
+            MetodosAuxiliares.removerEspacoNomeTabelas(widget.nomeTabela),
+            AcaoBancoDadosItensEscala.acaoRecupearDados,
+            "SemID")
         .then(
       (escalaBanco) {
         setState(() {
@@ -98,7 +99,8 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
   }
 
   chamarDeletar(EscalaModelo escalaModelo) {
-    AcaoBancoDadosItensEscala.deletar(escalaModelo.id, MetodosAuxiliares.removerEspacoNomeTabelas(widget.nomeTabela))
+    AcaoBancoDadosItensEscala.deletar(escalaModelo.id,
+            MetodosAuxiliares.removerEspacoNomeTabelas(widget.nomeTabela))
         .then((result) {
       if (Constantes.retornoSucessoBancoDado == result) {
         const snackBarSucesso =
@@ -350,8 +352,7 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                           margin: const EdgeInsets.symmetric(
                                               horizontal: 10.0),
                                           width: larguraTela,
-                                          child: Text(
-                                              widget.nomeTabela,
+                                          child: Text(widget.nomeTabela,
                                               textAlign: TextAlign.end),
                                         ),
                                         Container(
@@ -535,9 +536,15 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                                                         child: Text(item.mesaApoio, textAlign: TextAlign.center)),
                                                                   )),
                                                                   DataCell(SizedBox(
-                                                                      width: 90,
+                                                                      width: 150,
                                                                       //SET width
-                                                                      child: Text(item.uniforme, textAlign: TextAlign.center))),
+                                                                      child: SingleChildScrollView(
+                                                                        child: Text(
+                                                                            item
+                                                                                .uniforme,
+                                                                            textAlign:
+                                                                                TextAlign.center),
+                                                                      ))),
                                                                   DataCell(
                                                                       Visibility(
                                                                     visible:

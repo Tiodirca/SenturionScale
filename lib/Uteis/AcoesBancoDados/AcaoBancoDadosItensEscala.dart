@@ -11,8 +11,8 @@ class AcaoBancoDadosItensEscala {
   static const acaoAtualizarDados = 'atualizarDados';
   static const acaoDeletarDados = 'deletarDados';
 
- // static var root = Uri.parse("https://senturionlist.000webhostapp.com");
-  static var root = Uri.parse("http://192.168.69.104/teste/");
+  static var root = Uri.parse("https://senturionlist.000webhostapp.com");
+
   //metodo para adicionar  e atualizar dados no banco de dados
   static Future<String> adicionarAtualizarItens(
       String primeiraHoraPulpito,
