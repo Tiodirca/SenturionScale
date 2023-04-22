@@ -352,7 +352,7 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                           margin: const EdgeInsets.symmetric(
                                               horizontal: 10.0),
                                           width: larguraTela,
-                                          child: Text(widget.nomeTabela,
+                                          child: Text(Textos.descricaoTabelaSelecionada + widget.nomeTabela,
                                               textAlign: TextAlign.end),
                                         ),
                                         Container(

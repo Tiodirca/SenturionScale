@@ -30,6 +30,7 @@ class AcaoBancoDadosItensEscala {
       String tipoAcao,
       String id) async {
     try {
+
       var map = <String, dynamic>{};
       // verificando o tipo da acao
       // a ser realizada pelo metodo

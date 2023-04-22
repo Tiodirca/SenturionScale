@@ -5,6 +5,7 @@ import 'package:senturionscale/Modelos/exibir_tabelas.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 
 class AcoesBancoDadosTabelas {
+
   static var root = Uri.parse("https://senturionlist.000webhostapp.com");
   static const acaoDeletarTabela = 'deletarTabela';
   static const acaoExibirTabelas = 'exibirTabelas';
