@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 import 'package:senturionscale/Uteis/estilo.dart';
+import 'package:senturionscale/Uteis/metodos_auxiliares.dart';
 import 'package:senturionscale/Uteis/textos.dart';
 import 'package:senturionscale/Widgets/barra_navegacao_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -207,6 +208,44 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
                                         horarioInicioFSemana,
                                         horarioTrocaFSemana,
                                         Constantes.trocarHorarioFimSemana),
+                                    Container(
+                                      margin:
+                                      const EdgeInsets.only(bottom: 20.0),
+                                      width: larguraTela * 0.8,
+                                      child: Text(
+                                          Textos
+                                              .descricaoRedefinirValoresHorarioTroca,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(fontSize: 20)),
+                                    ),
+
+                                    SizedBox(
+                                        height: 60,
+                                        width: 60,
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              side: const BorderSide(
+                                                  color:
+                                                      PaletaCores.corAdtlLetras),
+                                              backgroundColor: Colors.white,
+                                              elevation: 10,
+                                              shadowColor: PaletaCores.corAdtl,
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10))),
+                                            ),
+                                            onPressed: () async {
+                                              MetodosAuxiliares metodosAuxiliares = MetodosAuxiliares();
+                                              metodosAuxiliares.gravarDadosPadrao();
+                                              recuperarValoresSharePreferences();
+                                            },
+                                            child: const Icon(
+                                              Icons.reset_tv,
+                                              color: PaletaCores.corAdtl,
+                                            )))
                                   ],
                                 ),
                               )),

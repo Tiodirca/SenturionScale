@@ -17,7 +17,7 @@ class _TelaSplashScreenState extends State<TelaSplashScreen> {
   @override
   void initState() {
     super.initState();
-    MetodosAuxiliares metodosAuxiliares  = MetodosAuxiliares();
+    MetodosAuxiliares metodosAuxiliares = MetodosAuxiliares();
     metodosAuxiliares.gravarDadosPadrao();
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacementNamed(context, Constantes.rotaTelaCriarTabela);
@@ -32,13 +32,27 @@ class _TelaSplashScreenState extends State<TelaSplashScreen> {
       body: Container(
           height: alturaTela,
           width: larguraTela,
-          color: PaletaCores.corAzul,
+          color: PaletaCores.corAdtl,
           child: SingleChildScrollView(
               child: SizedBox(
-            width: larguraTela,
-            height: alturaTela,
-            child: const TelaCarregamento(),
-          ))),
+                  width: larguraTela,
+                  height: alturaTela,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:  [
+                      const Image(
+                        image: AssetImage('assets/imagens/Logo.png'),
+                        width: 200,
+                        height: 200,
+                      ),
+                      SizedBox(
+                        width: larguraTela,
+                        height: 300,
+                        child: const TelaCarregamento(),
+                      ),
+
+                    ],
+                  )))),
     );
   }
 }

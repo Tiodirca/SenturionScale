@@ -61,6 +61,11 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
         child: Scaffold(
           appBar: AppBar(
             title: Text(Textos.tituloTelaCriarTabela),
+            leading: const Image(
+              image: AssetImage('assets/imagens/Logo.png'),
+              width: 30,
+              height: 30,
+            ),
           ),
           body: GestureDetector(onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
@@ -138,9 +143,11 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
                               )
                             ],
                           )),
-                      const Expanded(flex: 1, child: SingleChildScrollView(
-                        child: BarraNavegacao(),
-                      ))
+                      const Expanded(
+                          flex: 1,
+                          child: SingleChildScrollView(
+                            child: BarraNavegacao(),
+                          ))
                     ],
                   ),
                 );

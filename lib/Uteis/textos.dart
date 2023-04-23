@@ -67,6 +67,8 @@ class Textos {
   static String descricaoTimePickerHorarioTroca =
       "Defina o Horário que ocorrerá a troca";
   static String descricaoTrocaFimSemana = "Horário durante o final de semana";
+  static String descricaoRedefinirValoresHorarioTroca = "Redefinir Horário de troca"
+      " para padrões de fabrica.";
 
   // LISTAGEM
   static String tituloTelaListagemItens = "Listagem Itens";
