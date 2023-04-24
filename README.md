@@ -1,16 +1,5 @@
-# senturionscale
+# Senturion Scale
 
-A new Flutter project.
+Aplicativo criado para o cadastro dos nomes de cooperadores(as) da Igreja Assembleia de Deus Ministério Belém. Onde o usuário pode criar uma escala/tabela no banco de dados adicionar o nome do cooperador(a) nos campos correspondentes ao local que ele estará escalado, em como a data que o mesmo irá trabalhar, O usuário tem uma lista que é formada com todos os nomes adicionados permitindo ele editar o registro cadastrado ou excluir. O usuário pode gerar um arquivo em PDF da escala que foi gerada.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Aplicação disponível para as seguintes plataformas : IOS, Android, Windows e Web.
