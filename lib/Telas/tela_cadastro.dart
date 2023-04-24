@@ -107,7 +107,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                         const Icon(Icons.view_list,
                             color: PaletaCores.corAdtl, size: 30),
                         Text(
-                          Textos.btnVerLista,
+                          Textos.btnVerEscalaAtual,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
@@ -117,8 +117,21 @@ class _TelaCadastroState extends State<TelaCadastro> {
                       ],
                     );
                   } else {
-                    return const Icon(Icons.date_range_outlined,
-                        color: PaletaCores.corAdtl);
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.date_range_outlined,
+                        color: PaletaCores.corAdtl,size: 30),
+                        Text(
+                          Textos.labelData,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: PaletaCores.corAdtl),
+                        )
+                      ],
+                    );
                   }
                 },
               )));
@@ -198,10 +211,6 @@ class _TelaCadastroState extends State<TelaCadastro> {
       irmaoReserva = "";
     }
 
-    sobreescreverNomeTabela(){
-      String nomeTabelaFormatada = MetodosAuxiliares.removerEspacoNomeTabelas(widget.nomeTabela);
-      return nomeTabelaFormatada;
-    }
 
     String retorno = await AcaoBancoDadosItensEscala.adicionarAtualizarItens(
         primeiroHoraPulpito,

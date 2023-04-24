@@ -6,7 +6,8 @@ class Textos {
   static String btnUsarTabela = "Usar está Escala";
   static String btnCriarTabela = "Criar Escala";
   static String btnSalvar = "Salvar";
-  static String btnVerLista = "Ver Escala";
+  static String btnVerLista = "Ver Escalas";
+  static String btnVerEscalaAtual = "Escala atual";
   static String btnBaixar = "Baixar";
   static String btnAdicionar = "Adicionar";
   static String btnConfiguracoes = "Configurações";
