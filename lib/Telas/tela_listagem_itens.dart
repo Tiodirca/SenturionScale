@@ -26,6 +26,7 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
   bool exibirOcultarCampoRecolherOferta = false;
   bool exibirOcultarCampoIrmaoReserva = false;
   bool exibirOcultarCampoMesaApoio = false;
+  bool exibirOcultarServirSantaCeia = false;
   late List<EscalaModelo> escala;
 
   @override
@@ -86,6 +87,14 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
         exibirOcultarCampoRecolherOferta = false;
       }
     }
+    for (var element in escala) {
+      if (element.servirSantaCeia.isNotEmpty) {
+        exibirOcultarServirSantaCeia = true;
+        break;
+      } else {
+        exibirOcultarServirSantaCeia = false;
+      }
+    }
   }
 
   // metodo para verificar se a coluna
@@ -121,7 +130,8 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
         nomeEscala: widget.nomeTabela,
         exibirMesaApoio: exibirOcultarCampoMesaApoio,
         exibirRecolherOferta: exibirOcultarCampoRecolherOferta,
-        exibirIrmaoReserva: exibirOcultarCampoIrmaoReserva);
+        exibirIrmaoReserva: exibirOcultarCampoIrmaoReserva,
+        exibirServirSantaCeia: exibirOcultarServirSantaCeia);
     gerarPDF.pegarDados();
   }
 
@@ -352,7 +362,9 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                           margin: const EdgeInsets.symmetric(
                                               horizontal: 10.0),
                                           width: larguraTela,
-                                          child: Text(Textos.descricaoTabelaSelecionada + widget.nomeTabela,
+                                          child: Text(
+                                              Textos.descricaoTabelaSelecionada +
+                                                  widget.nomeTabela,
                                               textAlign: TextAlign.end),
                                         ),
                                         Container(
@@ -396,20 +408,27 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                                                       .center),
                                                         ),
                                                         DataColumn(
-                                                            label: Text(
-                                                                Textos
-                                                                    .labelPrimeiroHoraPulpito,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center)),
+                                                            label: Visibility(
+                                                          visible:
+                                                              !exibirOcultarCampoMesaApoio,
+                                                          child: Text(
+                                                              Textos
+                                                                  .labelPrimeiroHoraPulpito,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center),
+                                                        )),
                                                         DataColumn(
-                                                          label: Text(
+                                                            label: Visibility(
+                                                          visible:
+                                                              !exibirOcultarCampoMesaApoio,
+                                                          child: Text(
                                                               Textos
                                                                   .labelSegundoHoraPulpito,
                                                               textAlign:
                                                                   TextAlign
                                                                       .center),
-                                                        ),
+                                                        )),
                                                         DataColumn(
                                                             label: Text(
                                                                 Textos
@@ -456,13 +475,16 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                                                       .center),
                                                         )),
                                                         DataColumn(
-                                                          label: Text(
+                                                            label: Visibility(
+                                                          visible:
+                                                              exibirOcultarServirSantaCeia,
+                                                          child: Text(
                                                               Textos
                                                                   .labelServirSantaCeia,
                                                               textAlign:
                                                                   TextAlign
                                                                       .center),
-                                                        ),
+                                                        )),
                                                         DataColumn(
                                                             label: Visibility(
                                                           visible:
@@ -498,7 +520,13 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                                                   DataCell(SizedBox(
                                                                       width: 90,
                                                                       //SET width
-                                                                      child: Text(item.dataCulto, textAlign: TextAlign.center))),
+                                                                      child: SingleChildScrollView(
+                                                                        child: Text(
+                                                                            item
+                                                                                .dataCulto,
+                                                                            textAlign:
+                                                                                TextAlign.center),
+                                                                      ))),
                                                                   DataCell(Container(
                                                                       alignment: Alignment.center,
                                                                       width: 150,
@@ -510,14 +538,24 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                                                             textAlign:
                                                                                 TextAlign.center),
                                                                       ))),
-                                                                  DataCell(SizedBox(
-                                                                      width: 90,
-                                                                      //SET width
-                                                                      child: Text(item.primeiraHoraPulpito, textAlign: TextAlign.center))),
-                                                                  DataCell(SizedBox(
-                                                                      width: 90,
-                                                                      //SET width
-                                                                      child: Text(item.segundaHoraPulpito, textAlign: TextAlign.center))),
+                                                                  DataCell(
+                                                                      Visibility(
+                                                                    visible:
+                                                                        !exibirOcultarCampoMesaApoio,
+                                                                    child: SizedBox(
+                                                                        width: 90,
+                                                                        //SET width
+                                                                        child: Text(item.primeiraHoraPulpito, textAlign: TextAlign.center)),
+                                                                  )),
+                                                                  DataCell(
+                                                                      Visibility(
+                                                                    visible:
+                                                                        !exibirOcultarCampoMesaApoio,
+                                                                    child: SizedBox(
+                                                                        width: 90,
+                                                                        //SET width
+                                                                        child: Text(item.segundaHoraPulpito, textAlign: TextAlign.center)),
+                                                                  )),
                                                                   DataCell(SizedBox(
                                                                       width: 90,
                                                                       //SET width
@@ -554,10 +592,15 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                                                         //SET width
                                                                         child: Text(item.recolherOferta, textAlign: TextAlign.center)),
                                                                   )),
-                                                                  DataCell(SizedBox(
-                                                                      width: 90,
-                                                                      //SET width
-                                                                      child: Text(item.servirSantaCeia, textAlign: TextAlign.center))),
+                                                                  DataCell(
+                                                                      Visibility(
+                                                                    visible:
+                                                                        exibirOcultarServirSantaCeia,
+                                                                    child: SizedBox(
+                                                                        width: 90,
+                                                                        //SET width
+                                                                        child: Text(item.servirSantaCeia, textAlign: TextAlign.center)),
+                                                                  )),
                                                                   DataCell(
                                                                       Visibility(
                                                                     visible:

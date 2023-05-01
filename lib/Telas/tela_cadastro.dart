@@ -121,7 +121,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.date_range_outlined,
-                        color: PaletaCores.corAdtl,size: 30),
+                            color: PaletaCores.corAdtl, size: 30),
                         Text(
                           Textos.labelData,
                           textAlign: TextAlign.center,
@@ -211,7 +211,6 @@ class _TelaCadastroState extends State<TelaCadastro> {
       irmaoReserva = "";
     }
 
-
     String retorno = await AcaoBancoDadosItensEscala.adicionarAtualizarItens(
         primeiroHoraPulpito,
         segundoHoraPulpito,
@@ -288,7 +287,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
   // ela nos moldes exigidos
   formatarData(DateTime data) {
     String dataFormatada = DateFormat("dd/MM/yyyy EEEE", "pt_BR").format(data);
-    return dataFormatada;
+    if (exibirCampoServirSantaCeia) {
+      return dataFormatada = "$dataFormatada ( Santa Ceia )";
+    } else {
+      return dataFormatada;
+    }
   }
 
   // metodo para exibir data picker para
@@ -524,18 +527,26 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                     child: SingleChildScrollView(
                                       child: Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          botoesAcoes(Constantes.iconeSalvar,
-                                              PaletaCores.corVerdeCiano, 80, 70),
-                                          botoesAcoes(Constantes.iconeLista,
-                                              PaletaCores.corAdtlLetras, 80, 70),
+                                          botoesAcoes(
+                                              Constantes.iconeSalvar,
+                                              PaletaCores.corVerdeCiano,
+                                              80,
+                                              70),
+                                          botoesAcoes(
+                                              Constantes.iconeLista,
+                                              PaletaCores.corAdtlLetras,
+                                              80,
+                                              70),
                                         ],
                                       ),
                                     )),
-                                const Expanded(flex: 1, child: SingleChildScrollView(
-                                  child: BarraNavegacao(),
-                                ))
+                                const Expanded(
+                                    flex: 1,
+                                    child: SingleChildScrollView(
+                                      child: BarraNavegacao(),
+                                    ))
                               ],
                             );
                           }

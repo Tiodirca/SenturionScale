@@ -14,13 +14,15 @@ class GerarPDF {
   bool exibirMesaApoio;
   bool exibirRecolherOferta;
   bool exibirIrmaoReserva;
+  bool exibirServirSantaCeia;
 
   GerarPDF(
       {required this.escala,
       required this.nomeEscala,
       required this.exibirMesaApoio,
       required this.exibirRecolherOferta,
-      required this.exibirIrmaoReserva});
+      required this.exibirIrmaoReserva,
+      required this.exibirServirSantaCeia});
 
   pegarDados() {
     listaLegenda.addAll([Textos.labelData, Textos.labelHorarioTroca]);
@@ -40,8 +42,12 @@ class GerarPDF {
     }
     listaLegenda.addAll([
       Textos.labelUniforme,
-      Textos.labelServirSantaCeia,
     ]);
+    if (exibirServirSantaCeia) {
+      listaLegenda.add(Textos.labelServirSantaCeia);
+    } else {
+      listaLegenda.add("");
+    }
     if (exibirIrmaoReserva && exibirRecolherOferta) {
       listaLegenda
           .addAll([Textos.labelRecolherOferta, Textos.labelIrmaoReserva]);

@@ -326,7 +326,11 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
   // ela nos moldes exigidos
   formatarData(DateTime data) {
     String dataFormatada = DateFormat("dd/MM/yyyy EEEE", "pt_BR").format(data);
-    return dataFormatada;
+    if (exibirCampoServirSantaCeia) {
+      return dataFormatada = "$dataFormatada ( Santa Ceia )";
+    } else {
+      return dataFormatada;
+    }
   }
 
   // metodo para exibir data picker para

@@ -3,6 +3,7 @@ class Textos {
 
   static String txtTelaCarregamento = "Aguarde Carregando";
 
+
   static String btnUsarTabela = "Usar está Escala";
   static String btnCriarTabela = "Criar Escala";
   static String btnSalvar = "Salvar";

@@ -284,8 +284,8 @@ class _TelaListagemTabelasBancoDadosState
                                           DropdownButton(
                                             value: nomeItemDrop,
                                             icon: const Icon(
-                                                Icons.list_alt_outlined,
-                                                size: 30),
+                                                Icons.keyboard_arrow_down,
+                                                size: 40,color: Colors.black,),
                                             items: tabelasBancoDados
                                                 .map((item) =>
                                                     DropdownMenuItem<String>(
