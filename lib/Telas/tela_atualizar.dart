@@ -212,6 +212,7 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
           DateFormat("dd/MM/yyyy EEEE", "pt_BR").parse(element.dataCulto);
       //verificando se os campos nao estao vazios
       // para exibi-los
+      recuperarHorarioTroca();
       if (element.servirSantaCeia.isNotEmpty) {
         setState(() {
           exibirCampoServirSantaCeia = true;
@@ -308,13 +309,13 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
     // verificando se a data corresponde a um dia do fim de semana
     if (data.contains(Constantes.sabado) || data.contains(Constantes.domingo)) {
       setState(() {
-        horarioTroca = "1° Hora começa às : "
+        horarioTroca = "Começa às : "
             "${prefs.getString(Constantes.shareHorarioInicialFSemana) ?? ''}"
             " e troca às : ${prefs.getString(Constantes.shareHorarioTrocaFsemana) ?? ''} ";
       });
     } else {
       setState(() {
-        horarioTroca = "1° Hora começa às : "
+        horarioTroca = "Começa às : "
             "${prefs.getString(Constantes.shareHorarioInicialSemana) ?? ''}"
             " e troca às : "
             "${prefs.getString(Constantes.shareHorarioTrocaSemana) ?? ''} ";

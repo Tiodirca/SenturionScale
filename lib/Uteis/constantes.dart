@@ -31,7 +31,7 @@ class Constantes {
 
   // Horario padrao de trocas de cooperadores
   static const horarioInicialSemana = "19:00";
-  static const horarioTrocaSemana = "20:00";
+  static const horarioTrocaSemana = "20:15";
   static const horarioInicialFSemana = "18:00";
   static const horarioTrocaFsemana = "19:00";
   static const horarioMudado = "sim";

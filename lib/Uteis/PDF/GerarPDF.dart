@@ -25,8 +25,10 @@ class GerarPDF {
       required this.exibirServirSantaCeia});
 
   pegarDados() {
-    listaLegenda.addAll([Textos.labelData, Textos.labelHorarioTroca]);
-
+    listaLegenda.addAll([Textos.labelData]);
+    if (exibirMesaApoio) {
+      listaLegenda.addAll([Textos.labelMesaApoio]);
+    }
     if (exibirMesaApoio == false) {
       listaLegenda.addAll([
         Textos.labelPrimeiroHoraPulpito,
@@ -37,12 +39,11 @@ class GerarPDF {
       Textos.labelPrimeiroHoraEntrada,
       Textos.labelSegundoHoraEntrada,
     ]);
-    if (exibirMesaApoio) {
-      listaLegenda.addAll([Textos.labelMesaApoio]);
-    }
+
     listaLegenda.addAll([
       Textos.labelUniforme,
     ]);
+    listaLegenda.addAll([Textos.labelHorarioTroca]);
     if (exibirServirSantaCeia) {
       listaLegenda.add(Textos.labelServirSantaCeia);
     } else {
@@ -139,11 +140,11 @@ class GerarPDF {
         ...escala.map((e) {
           return [
             e.dataCulto,
-            e.horarioTroca,
+            e.mesaApoio,
             e.primeiraHoraEntrada,
             e.segundaHoraEntrada,
-            e.mesaApoio,
             e.uniforme,
+            e.horarioTroca,
             e.servirSantaCeia,
             e.recolherOferta,
             e.irmaoReserva
@@ -155,12 +156,12 @@ class GerarPDF {
         listaLegenda,
         ...escala.map((e) => [
               e.dataCulto,
-              e.horarioTroca,
               e.primeiraHoraPulpito,
               e.segundaHoraPulpito,
               e.primeiraHoraEntrada,
               e.segundaHoraEntrada,
               e.uniforme,
+              e.horarioTroca,
               e.servirSantaCeia,
               e.recolherOferta,
               e.irmaoReserva

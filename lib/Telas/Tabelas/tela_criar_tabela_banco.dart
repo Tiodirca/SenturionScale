@@ -84,6 +84,15 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
                           child: Column(
                             children: [
                               Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 10),
+                                width: larguraTela,
+                                child: Text(
+                                  textAlign: TextAlign.end,
+                                  Textos.versaoApp,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              ),
+                              Container(
                                 margin: const EdgeInsets.all(10),
                                 width: larguraTela,
                                 child: Text(

@@ -254,13 +254,13 @@ class _TelaCadastroState extends State<TelaCadastro> {
     // verificando se a data corresponde a um dia do fim de semana
     if (data.contains(Constantes.sabado) || data.contains(Constantes.domingo)) {
       setState(() {
-        horarioTroca = "1° Hora começa às : "
+        horarioTroca = "Começa às : "
             "${prefs.getString(Constantes.shareHorarioInicialFSemana) ?? ''}"
             " e troca às : ${prefs.getString(Constantes.shareHorarioTrocaFsemana) ?? ''} ";
       });
     } else {
       setState(() {
-        horarioTroca = "1° Hora começa às : "
+        horarioTroca = "Começa às : "
             "${prefs.getString(Constantes.shareHorarioInicialSemana) ?? ''}"
             " e troca às : "
             "${prefs.getString(Constantes.shareHorarioTrocaSemana) ?? ''} ";

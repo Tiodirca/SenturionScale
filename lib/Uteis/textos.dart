@@ -1,5 +1,6 @@
 class Textos {
   static String nomeAplicacao = "Senturion Scale";
+  static String versaoApp = "Versão : 1.2.10";
 
   static String txtTelaCarregamento = "Aguarde Carregando";
 
@@ -44,7 +45,7 @@ class Textos {
   // GERAIS
   static String labelEditar = "Editar";
   static String labelExcluir = "Excluir";
-  static String labelHorarioTroca = "Horários";
+  static String labelHorarioTroca = "Horários de troca";
   static String labelData = "Data";
   static String labelPrimeiroHoraPulpito = "1° Hora Pulpito";
   static String labelSegundoHoraPulpito = "2° Hora Pulpito";
@@ -63,12 +64,12 @@ class Textos {
       "Utilize os botões abaixo para definir os"
       " horários que ocorrerão as trocas de cooperadores(as). Inicialmente será pedido para definir o "
       "horário de início da escala e depois o horário que ira ocorrer a troca.";
-  static String descricaoTrocaSemana = "Horário durante a semana";
+  static String descricaoTrocaSemana = "Horário de troca durante a semana";
   static String descricaoTimePickerHorarioInicial =
       "Defina o Horário de inicio";
   static String descricaoTimePickerHorarioTroca =
       "Defina o Horário que ocorrerá a troca";
-  static String descricaoTrocaFimSemana = "Horário durante o final de semana";
+  static String descricaoTrocaFimSemana = "Horário de troca durante o final de semana";
   static String descricaoRedefinirValoresHorarioTroca = "Redefinir Horário de troca"
       " para padrões de fabrica.";
 
