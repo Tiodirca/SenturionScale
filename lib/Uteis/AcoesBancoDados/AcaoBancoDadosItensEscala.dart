@@ -11,11 +11,11 @@ class AcaoBancoDadosItensEscala {
   static const acaoAtualizarDados = 'atualizarDados';
   static const acaoDeletarDados = 'deletarDados';
 
-  static var root = Uri.parse("https://senturionlist.000webhostapp.com");
+  //static var root = Uri.parse("https://senturionlist.000webhostapp.com");
+  static var root = Uri.parse("http://192.168.101.5/teste/conexao.php");
 
   //metodo para adicionar  e atualizar dados no banco de dados
-  static Future<String> adicionarAtualizarItens(
-      String primeiraHoraPulpito,
+  static Future<String> adicionarAtualizarItens(String primeiraHoraPulpito,
       String segundaHoraPulpito,
       String primeiraHoraEntrada,
       String segundaHoraEntrada,
@@ -30,14 +30,13 @@ class AcaoBancoDadosItensEscala {
       String tipoAcao,
       String id) async {
     try {
-
       var map = <String, dynamic>{};
       // verificando o tipo da acao
       // a ser realizada pelo metodo
       if (tipoAcao == acaoAdicionarDados) {
-        map['action'] = acaoAdicionarDados;
+        map['acao'] = acaoAdicionarDados;
       } else {
-        map['action'] = acaoAtualizarDados;
+        map['acao'] = acaoAtualizarDados;
         map['id'] = id;
       }
       map[Constantes.primeiraHoraPulpito] = primeiraHoraPulpito;
@@ -55,8 +54,9 @@ class AcaoBancoDadosItensEscala {
       //definindo que a variavel vai
       // receber os seguintes parametros
       final response =
-          await http.post(root, body: map).timeout(const Duration(seconds: 20));
+      await http.post(root, body: map).timeout(const Duration(seconds: 20));
       if (200 == response.statusCode) {
+        print(response.body);
         return response.body;
       } else {
         return response.body;
@@ -67,24 +67,33 @@ class AcaoBancoDadosItensEscala {
   }
 
   //metodo para recuperar os dados do banco de dados
-  static Future<List<EscalaModelo>> recuperarItens(
-      String tabela, String tipoAcao, String id) async {
+  static Future<List<EscalaModelo>> recuperarItens(String tabela,
+      String tipoAcao, String id) async {
     try {
       var map = <String, dynamic>{};
       // verificando o tipo da acao
       // a ser realizada pelo metodo
       if (tipoAcao == acaoRecupearDados) {
-        map['action'] = acaoRecupearDados;
+        map['acao'] = acaoRecupearDados;
       } else {
-        map['action'] = acaoRecupearDadosPorID;
+        map['acao'] = acaoRecupearDadosPorID;
         map['id'] = id;
       }
       map['tabela'] = tabela;
       //definindo que a variavel vai receber os seguintes parametros
       final response =
-          await http.post(root, body: map).timeout(const Duration(seconds: 20));
+      await http.post(root, body: map).timeout(const Duration(seconds: 20));
       if (200 == response.statusCode) {
-        List<EscalaModelo> list = parseResponse(response.body);
+        //print(response.body);
+        String resposta = response.body;
+        List itensDivididos = resposta.split(" || ");
+        // removendo ultimo index pois o mesmo está vazio
+        itensDivididos.removeAt(itensDivididos.length-1);
+        List<EscalaModelo> list = [];
+        for (var element in itensDivididos) {
+           Map<String, dynamic> converterParaJson = json.decode(element);
+           list.add(EscalaModelo.fromJson(converterParaJson));
+        }
         return list;
       }
     } catch (e) {
@@ -107,13 +116,13 @@ class AcaoBancoDadosItensEscala {
       //instanciando map
       var map = <String, dynamic>{};
       //passando os parametros para o map
-      map['action'] = acaoDeletarDados;
+      map['acao'] = acaoDeletarDados;
       map['id'] = id;
       map['tabela'] = nomeTabela;
       //definindo que a variavel vai
       // receber os seguintes parametros
       final response =
-          await http.post(root, body: map).timeout(const Duration(seconds: 20));
+      await http.post(root, body: map).timeout(const Duration(seconds: 20));
       if (200 == response.statusCode) {
         return response.body;
       } else {

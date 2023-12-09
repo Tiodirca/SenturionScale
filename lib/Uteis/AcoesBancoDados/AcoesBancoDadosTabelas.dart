@@ -1,12 +1,14 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:senturionscale/Modelos/exibir_tabelas.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 
 class AcoesBancoDadosTabelas {
+  //static var root = Uri.parse("https:// 192.168.74.7/teste/conexao.php");
 
-  static var root = Uri.parse("https://senturionlist.000webhostapp.com");
+  static var root = Uri.parse("http://192.168.101.5/teste/conexao.php");
   static const acaoDeletarTabela = 'deletarTabela';
   static const acaoExibirTabelas = 'exibirTabelas';
   static const acaoCriarTabelas = 'criarTabela';
@@ -17,21 +19,18 @@ class AcoesBancoDadosTabelas {
       //instanciando map
       var map = <String, dynamic>{};
       //passando um map
-      map['action'] = acaoCriarTabelas;
+      map['acao'] = acaoCriarTabelas;
       map['tabela'] = nomeTabela;
       //definindo que a variavel vai receber
       // os seguintes parametros
       final response =
           await http.post(root, body: map).timeout(const Duration(seconds: 10));
       if (200 == response.statusCode) {
-        print(response.body);
         return response.body;
       } else {
-        print(response.body);
         return Constantes.erroAcaoBancoDados;
       }
     } catch (e) {
-      print(e.toString());
       return Constantes.erroAcaoBancoDados;
     }
   }
@@ -43,13 +42,25 @@ class AcoesBancoDadosTabelas {
       //instanciando map
       var map = <String, dynamic>{};
       //passando os parametros para o map
-      map['action'] = acaoExibirTabelas;
+      map['acao'] = acaoExibirTabelas;
       map['tabela'] = acaoExibirTabelas;
       //definindo que a variavel vai receber os seguintes parametros
       final response =
           await http.post(root, body: map).timeout(const Duration(seconds: 10));
+
       if (200 == response.statusCode) {
-        List<ExibirTabelas> list = parseResponseTabelas(response.body);
+        String resposta = response.body;
+        List itensDivididos = resposta.split(",");
+        // removendo ultimo index pois o mesmo está vazio
+        itensDivididos.removeAt(itensDivididos.length - 1);
+        print(itensDivididos.toString());
+        List<ExibirTabelas> list = [];
+        for (var element in itensDivididos) {
+          print(element);
+          Map<String, dynamic> converterParaJson = json.decode(element);
+          print(converterParaJson);
+          list.add(ExibirTabelas.fromJson(converterParaJson));
+        }
         return list;
       }
     } catch (e) {
@@ -57,14 +68,6 @@ class AcoesBancoDadosTabelas {
     }
     return <ExibirTabelas>[];
   }
-
-  static List<ExibirTabelas> parseResponseTabelas(String responseBody) {
-    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed
-        .map<ExibirTabelas>((json) => ExibirTabelas.fromJson(json))
-        .toList();
-  }
-
   //metodo para deletar a tabela do
   // banco de dados
   static Future<String> deletarTabela(String tabela) async {
@@ -72,10 +75,11 @@ class AcoesBancoDadosTabelas {
       //instanciando map
       var map = <String, dynamic>{};
       //passando os parametros para o map
-      map['action'] = acaoDeletarTabela;
+      map['acao'] = acaoDeletarTabela;
       map['tabela'] = tabela;
       //definindo que a variavel vai receber os seguintes parametros
-      final response = await http.post(root, body: map).timeout(const Duration(seconds: 5));
+      final response =
+          await http.post(root, body: map).timeout(const Duration(seconds: 5));
       if (200 == response.statusCode) {
         return response.body;
       } else {
