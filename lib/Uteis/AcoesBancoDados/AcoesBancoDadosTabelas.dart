@@ -1,14 +1,13 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:senturionscale/Modelos/exibir_tabelas.dart';
 import 'package:senturionscale/Uteis/constantes.dart';
 
 class AcoesBancoDadosTabelas {
-  //static var root = Uri.parse("https:// 192.168.74.7/teste/conexao.php");
 
-  static var root = Uri.parse("http://192.168.101.5/teste/conexao.php");
+  static var root = Uri.parse("https://senturionlistback.000webhostapp.com/");
+
   static const acaoDeletarTabela = 'deletarTabela';
   static const acaoExibirTabelas = 'exibirTabelas';
   static const acaoCriarTabelas = 'criarTabela';
@@ -53,12 +52,9 @@ class AcoesBancoDadosTabelas {
         List itensDivididos = resposta.split(",");
         // removendo ultimo index pois o mesmo está vazio
         itensDivididos.removeAt(itensDivididos.length - 1);
-        print(itensDivididos.toString());
         List<ExibirTabelas> list = [];
         for (var element in itensDivididos) {
-          print(element);
           Map<String, dynamic> converterParaJson = json.decode(element);
-          print(converterParaJson);
           list.add(ExibirTabelas.fromJson(converterParaJson));
         }
         return list;
