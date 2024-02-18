@@ -142,15 +142,19 @@ class _TelaListagemTabelasBancoDadosState
   Widget botoesAcoes(String nomeBotao, Color corBotao) => SizedBox(
       height: 40,
       width: 60,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
+      child: FloatingActionButton(
+        backgroundColor: Colors.white,
+        shape:  RoundedRectangleBorder(
           side: BorderSide(color: corBotao),
-          backgroundColor: Colors.white,
-          elevation: 10,
-          shadowColor: PaletaCores.corAdtl,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-        ),
+                borderRadius: const BorderRadius.all(Radius.circular(10))),
+        // style: ElevatedButton.styleFrom(
+        //   side: BorderSide(color: corBotao),
+        //   backgroundColor: Colors.white,
+        //   elevation: 10,
+        //   shadowColor: PaletaCores.corAdtl,
+        //   shape: const RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.all(Radius.circular(10))),
+        // ),
         onPressed: () async {
           if (nomeBotao == Constantes.iconeAdicionar) {
             Navigator.pushReplacementNamed(
@@ -178,7 +182,7 @@ class _TelaListagemTabelasBancoDadosState
                   child: Icon(
                 Icons.close_outlined,
                 color: PaletaCores.corAdtl,
-                size: 20,
+                size: 30,
               ));
             }
           },
@@ -206,6 +210,7 @@ class _TelaListagemTabelasBancoDadosState
                 leading: IconButton(
                     //setando tamanho do icone
                     iconSize: 30,
+                    color:  Colors.white,
                     enableFeedback: false,
                     onPressed: () {
                       Navigator.pushReplacementNamed(
@@ -374,7 +379,7 @@ class _TelaListagemTabelasBancoDadosState
                                                             textAlign: TextAlign
                                                                 .center,
                                                             style:
-                                                                const TextStyle(
+                                                                const TextStyle( color:  Colors.white,
                                                                     fontSize:
                                                                         18),
                                                           ),

@@ -139,8 +139,9 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
                                           PaletaCores.corVerdeCiano),
                                   child: Text(
                                     Textos.btnCriarTabela,
+
                                     textAlign: TextAlign.center,
-                                    style: const TextStyle(fontSize: 18),
+                                    style: const TextStyle(fontSize: 18 ,color:  Colors.white,),
                                   ),
                                   onPressed: () {
                                     if (_formKeyTabela.currentState!

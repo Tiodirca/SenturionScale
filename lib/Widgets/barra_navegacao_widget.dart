@@ -7,8 +7,8 @@ class BarraNavegacao extends StatelessWidget {
   const BarraNavegacao({Key? key}) : super(key: key);
 
   Widget botoesIcones(String tipoIcone, BuildContext context) => SizedBox(
-      height: 55,
-      width: 120,
+      height: 65,
+      width: 140,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           side: const BorderSide(color: PaletaCores.corAdtl),
@@ -38,11 +38,11 @@ class BarraNavegacao extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.list_alt_outlined,
-                    size: 30,
+                    size: 30, color:  Colors.white,
                   ),
                   Text(Textos.btnVerLista,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 12)),
+                      style: const TextStyle(fontSize: 13, color:  Colors.white,)),
                 ],
               );
             } else if (tipoIcone == Constantes.iconeAdicionar) {
@@ -52,10 +52,11 @@ class BarraNavegacao extends StatelessWidget {
                   const Icon(
                     Icons.add_circle_outline_outlined,
                     size: 30,
+                    color:  Colors.white,
                   ),
                   Text(Textos.btnCriarTabela,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 12)),
+                      style: const TextStyle(fontSize: 13, color:  Colors.white,)),
                 ],
               );
             } else {
@@ -64,11 +65,13 @@ class BarraNavegacao extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.settings,
-                    size: 30,
+                    size: 30, color:  Colors.white,
                   ),
                   Text(Textos.btnConfiguracoes,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 12)),
+                      style: const TextStyle(
+                          fontSize: 13,
+                          color:  Colors.white)),
                 ],
               );
             }

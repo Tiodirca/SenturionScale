@@ -651,32 +651,31 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                                                             .corAdtl),
                                                                   )),
                                                                   DataCell(
-                                                                      ElevatedButton(
-                                                                    style: ElevatedButton
-                                                                        .styleFrom(
-                                                                      side: const BorderSide(
-                                                                          color:
-                                                                              PaletaCores.corRosaAvermelhado),
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .white,
+                                                                      Container(
+                                                                        padding: const EdgeInsets.all(5),
+                                                                    child:
+                                                                        FloatingActionButton(
+                                                                          backgroundColor: Colors.white,
                                                                       shape: const RoundedRectangleBorder(
+                                                                          side: BorderSide(
+                                                                              color: PaletaCores
+                                                                                  .corRosaAvermelhado),
                                                                           borderRadius:
                                                                               BorderRadius.all(Radius.circular(10))),
+                                                                      onPressed:
+                                                                          () {
+                                                                        alertaExclusao(
+                                                                            item,
+                                                                            context);
+                                                                      },
+                                                                      child: const Icon(
+                                                                          Icons
+                                                                              .close_outlined,
+                                                                          size:
+                                                                              20,
+                                                                          color:
+                                                                              PaletaCores.corAdtl),
                                                                     ),
-                                                                    onPressed:
-                                                                        () {
-                                                                      alertaExclusao(
-                                                                          item,
-                                                                          context);
-                                                                    },
-                                                                    child: const Icon(
-                                                                        Icons
-                                                                            .close_outlined,
-                                                                        size:
-                                                                            20,
-                                                                        color: PaletaCores
-                                                                            .corAdtl),
                                                                   )),
                                                                 ]),
                                                           )
