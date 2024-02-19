@@ -1,6 +1,6 @@
 class Textos {
   static String nomeAplicacao = "Senturion Scale";
-  static String versaoApp = "Versão : 1.2.10";
+  static String versaoApp = "Versão : 1.2.15";
 
   static String txtTelaCarregamento = "Aguarde Carregando";
 

@@ -8,12 +8,12 @@ class BarraNavegacao extends StatelessWidget {
 
   Widget botoesIcones(String tipoIcone, BuildContext context) => SizedBox(
       height: 65,
-      width: 140,
+      width: 110,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           side: const BorderSide(color: PaletaCores.corAdtl),
           backgroundColor: PaletaCores.corAzulClaro,
-          elevation: 10,
+          elevation: 0,
           shadowColor: PaletaCores.corAdtl,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
