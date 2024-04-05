@@ -17,6 +17,7 @@ class Constantes {
   static const iconeAdicionarEscala = "adicionarEscala";
   static const iconeLista = "lista";
   static const iconeConfiguracao = "configuracao";
+  static const iconeOpcoesData = "opcoesData";
 
   static const iconeExclusao = "exclusao";
   static const iconeRecarregar = "recarregar";

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:senturionscale/Uteis/AcoesBancoDados/AcaoBancoDadosItensEscala.dart';
 import 'package:senturionscale/Uteis/PaletaCores.dart';
@@ -28,7 +29,8 @@ class _TelaCadastroState extends State<TelaCadastro> {
   bool exibirSoCamposCooperadora = false;
   bool exbirCampoIrmaoReserva = false;
   String horarioTroca = "";
-
+  String complementoDataDepartamento = "";
+  int valorRadioButton = 0;
   DateTime dataSelecionada = DateTime.now();
   final _formKeyFormulario = GlobalKey<FormState>();
   TextEditingController ctPrimeiroHoraPulpito = TextEditingController(text: "");
@@ -77,6 +79,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                   Navigator.pushReplacementNamed(
                       context, Constantes.rotaTelaListagemItens,
                       arguments: widget.nomeTabela);
+                } else if (nomeBotao == Constantes.iconeOpcoesData) {
                 } else {
                   exibirDataPicker();
                 }
@@ -288,6 +291,9 @@ class _TelaCadastroState extends State<TelaCadastro> {
     String dataFormatada = DateFormat("dd/MM/yyyy EEEE", "pt_BR").format(data);
     if (exibirCampoServirSantaCeia) {
       return dataFormatada = "$dataFormatada ( Santa Ceia )";
+    } else if (complementoDataDepartamento.isNotEmpty &&
+        complementoDataDepartamento != Textos.deparamentoCultoLivre) {
+      return "$dataFormatada ( $complementoDataDepartamento )";
     } else {
       return dataFormatada;
     }
@@ -326,6 +332,62 @@ class _TelaCadastroState extends State<TelaCadastro> {
       });
       formatarData(dataSelecionada);
       recuperarHorarioTroca();
+    });
+  }
+
+  Widget radioButtonComplementoData(int valor, String nomeBtn) => SizedBox(
+        width: 170,
+        height: 60,
+        child: Row(
+          children: [
+            Radio(
+              value: valor,
+              groupValue: valorRadioButton,
+              onChanged: (value) {
+                mudarRadioButton(valor);
+              },
+            ),
+            Text(nomeBtn)
+          ],
+        ),
+      );
+
+  mudarRadioButton(int value) {
+    //metodo para mudar o estado do radio button
+    setState(() {
+      valorRadioButton = value;
+      switch (valorRadioButton) {
+        case 0:
+          setState(() {
+            complementoDataDepartamento = Textos.deparamentoCultoLivre;
+          });
+          break;
+        case 1:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoMissao;
+          });
+          break;
+        case 2:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoCirculoOracao;
+          });
+          break;
+        case 3:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoJovens;
+          });
+          break;
+        case 4:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoAdolecentes;
+          });
+          break;
+        case 5:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoInfantil;
+          });
+          break;
+      }
     });
   }
 
@@ -409,6 +471,43 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                       ),
                                       botoesAcoes(Constantes.iconeDataCulto,
                                           PaletaCores.corAdtl, 60, 60),
+                                      Column(
+                                        children: [
+                                          Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                vertical: 10.0, horizontal: 0),
+                                            width: larguraTela,
+                                            child: Text(
+                                                Textos
+                                                    .descricaoComplementoDataCulto,
+                                                style: const TextStyle(
+                                                    fontSize: 20),
+                                                textAlign: TextAlign.center),
+                                          ),
+                                          Wrap(
+                                            alignment:
+                                                WrapAlignment.spaceBetween,
+                                            children: [
+                                              radioButtonComplementoData(0,
+                                                  Textos.deparamentoCultoLivre),
+                                              radioButtonComplementoData(
+                                                  1, Textos.departamentoMissao),
+                                              radioButtonComplementoData(
+                                                  2,
+                                                  Textos
+                                                      .departamentoCirculoOracao),
+                                              radioButtonComplementoData(
+                                                  3, Textos.departamentoJovens),
+                                              radioButtonComplementoData(
+                                                  4,
+                                                  Textos
+                                                      .departamentoAdolecentes),
+                                              radioButtonComplementoData(5,
+                                                  Textos.departamentoInfantil)
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                       Container(
                                         margin: const EdgeInsets.symmetric(
                                             vertical: 20.0, horizontal: 0),

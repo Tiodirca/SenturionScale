@@ -15,6 +15,8 @@ class Textos {
   static String btnConfiguracoes = "Configurações";
   static String btnAtualizar = "Atualizar";
 
+
+
   // TELA SELECAO TABELAS
   static String tituloTelaSelecaoTabelas = "Seleção de Escala";
   static String descricaoDropDownTabelas =
@@ -36,6 +38,15 @@ class Textos {
       "um item a lista que ira compor a escala";
   static String descricaoDataPicker = "Selecione uma data que contenha culto";
   static String descricaoDataSelecionada = "A data Selecionada foi : ";
+  static String descricaoComplementoDataCulto = "Selecione uma das opções caso seja culto de algum departamento";
+
+  // Departamentos
+  static String departamentoMissao = "Missões";
+  static String departamentoInfantil = "Infantil";
+  static String departamentoCirculoOracao = "Circulo de oração";
+  static String departamentoJovens = "Jovens";
+  static String departamentoAdolecentes = "Adolecentes";
+  static String deparamentoCultoLivre = "Culto Livre";
 
   // label dos switch
   static String labelSwitchCooperadora = "Cooperadora";

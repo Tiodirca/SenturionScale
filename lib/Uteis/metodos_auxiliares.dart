@@ -21,6 +21,10 @@ class MetodosAuxiliares{
     return tamanho;
   }
 
+  exibirClassificacaoCulto(){
+
+  }
+
   // metodo para gravar valores padroes no
   // share preferences
   gravarDadosPadrao() async {
