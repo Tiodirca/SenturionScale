@@ -8,7 +8,7 @@ class BarraNavegacao extends StatelessWidget {
 
   Widget botoesIcones(String tipoIcone, BuildContext context) => SizedBox(
       height: 65,
-      width: 150,
+      width: 100,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           side: const BorderSide(color: PaletaCores.corAdtl),

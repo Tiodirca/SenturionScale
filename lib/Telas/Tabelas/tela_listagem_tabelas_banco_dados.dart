@@ -9,6 +9,7 @@ import '../../Uteis/estilo.dart';
 import '../../Uteis/textos.dart';
 import '../../Widgets/barra_navegacao_widget.dart';
 import '../../Widgets/tela_carregamento.dart';
+
 class TelaListagemTabelasBancoDados extends StatefulWidget {
   const TelaListagemTabelasBancoDados({super.key});
 
@@ -384,14 +385,16 @@ class _TelaListagemTabelasBancoDadosState
                                                       style: ElevatedButton
                                                           .styleFrom(
                                                               backgroundColor:
-                                                                  PaletaCores
-                                                                      .corVerdeCiano),
+                                                                  Colors.white),
                                                       child: Text(
                                                         Textos.btnUsarTabela,
                                                         textAlign:
                                                             TextAlign.center,
                                                         style: const TextStyle(
-                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: PaletaCores
+                                                                .corAzul,
                                                             fontSize: 18),
                                                       ),
                                                       onPressed: () {

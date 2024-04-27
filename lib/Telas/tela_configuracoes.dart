@@ -170,7 +170,7 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
                       Expanded(
                           flex: 9,
                           child: Container(
-                            margin: const EdgeInsets.only(top: 20.0),
+                            margin: const EdgeInsets.only(top: 10.0),
                             child: Column(
                               children: [
                                 Container(

@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Modelos/escala_modelo.dart';
-import '../Uteis/AcoesBancoDados/AcaoBancoDadosItensEscala.dart';
 import '../Uteis/PaletaCores.dart';
 import '../Uteis/constantes.dart';
 import '../Uteis/estilo.dart';
@@ -74,6 +73,7 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
           height: altura,
           width: largura,
           child: FloatingActionButton(
+            heroTag: "${nomeBotao}att",
               backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: corBotao),
@@ -425,34 +425,6 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
         exibirTelaCarregamento = false;
       });
     }
-
-    // String retorno = await AcaoBancoDadosItensEscala.adicionarAtualizarItens(
-    //     primeiroHoraPulpito,
-    //     segundoHoraPulpito,
-    //     ctPrimeiroHoraEntrada.text,
-    //     ctSegundoHoraEntrada.text,
-    //     ctRecolherOferta.text,
-    //     ctUniforme.text,
-    //     mesaApoio,
-    //     servirSantaCeia,
-    //     formatarData(dataSelecionada),
-    //     horarioTroca,
-    //     irmaoReserva,
-    //     MetodosAuxiliares.removerEspacoNomeTabelas(widget.nomeTabela),
-    //     AcaoBancoDadosItensEscala.acaoAtualizarDados,
-    //     widget.idItem);
-
-    // if (retorno == Constantes.retornoSucessoBancoDado) {
-    //   exibirMsg(Textos.sucessoMsgAtualizarItemEscala);
-    //   setState(() {
-    //     redirecionarTela();
-    //   });
-    // } else {
-    //   exibirMsg(Textos.erroMsgAtualizarItemEscala);
-    //   setState(() {
-    //     exibirTelaCarregamento = false;
-    //   });
-    // }
   }
 
   exibirMsg(String msg) {
@@ -606,24 +578,14 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
                                         child: Text(
                                             Textos.descricaoTelaAtualizarItem,
                                             style:
-                                                const TextStyle(fontSize: 20),
+                                                const TextStyle(fontSize: 18),
                                             textAlign: TextAlign.center),
                                       ),
-                                      botoesAcoes(Constantes.iconeDataCulto,
-                                          PaletaCores.corAdtl, 60, 60),
-                                      Column(
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Container(
-                                            margin: const EdgeInsets.symmetric(
-                                                vertical: 10.0, horizontal: 0),
-                                            width: larguraTela,
-                                            child: Text(
-                                                Textos
-                                                    .descricaoComplementoDataCulto,
-                                                style: const TextStyle(
-                                                    fontSize: 20),
-                                                textAlign: TextAlign.center),
-                                          ),
+                                          botoesAcoes(Constantes.iconeDataCulto,
+                                              PaletaCores.corAdtl, 60, 60),
                                           botoesAcoes(
                                               Constantes.iconeOpcoesData,
                                               PaletaCores.corAzulClaro,

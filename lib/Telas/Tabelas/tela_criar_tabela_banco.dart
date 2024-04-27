@@ -139,15 +139,14 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
                                 height: 70,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          PaletaCores.corVerdeCiano),
+                                      backgroundColor: Colors.white),
                                   child: Text(
                                     Textos.btnCriarTabela,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                    ),
+                                        fontSize: 18,
+                                        color: PaletaCores.corAzul,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   onPressed: () async {
                                     if (_formKeyTabela.currentState!

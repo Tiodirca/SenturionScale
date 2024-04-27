@@ -1,6 +1,6 @@
 class Textos {
   static String nomeAplicacao = "Senturion Scale";
-  static String versaoApp = "Versão : 1.2.15";
+  static String versaoApp = "Versão : 1.3.10";
 
   static String txtTelaCarregamento = "Aguarde Carregando";
 
@@ -13,7 +13,7 @@ class Textos {
   static String btnAdicionar = "Adicionar";
   static String btnConfiguracoes = "Configurações";
   static String btnAtualizar = "Atualizar";
-  static String btnOpcoesData= "Opções da Data";
+  static String btnOpcoesData = "Opções da Data";
 
   // TELA SELECAO TABELAS
   static String tituloTelaSelecaoTabelas = "Seleção de Escala";
@@ -36,9 +36,9 @@ class Textos {
       "um item a lista que ira compor a escala";
   static String descricaoDataPicker = "Selecione uma data que contenha culto";
   static String descricaoDataSelecionada = "A data Selecionada foi : ";
-  static String descricaoComplementoDataCulto =
-      "Utilize o botão abaixo para selecionar uma das opções caso seja culto de algum departamento";
   static String alertaOpcoesData = "Selecione um opção";
+  static String descricaoalertaOpcoesData =
+      "Para indicar na data selecionada que será culto do departamento escolhido";
 
   // Departamentos
   static String departamentoMissao = "Missões";

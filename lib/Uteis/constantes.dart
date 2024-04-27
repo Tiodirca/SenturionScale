@@ -54,9 +54,6 @@ class Constantes {
 
   static const erroAcaoBancoDados = "erroAcaoBancoDados";
 
-  static const sucessoCriarTabela = "sucessoCriarTabela";
-  static const erroCriarTabela = "erroCriarTabela";
-
   static const idItem = "id";
   static const primeiraHoraPulpito = "primeiraHoraPulpito";
   static const segundaHoraPulpito = "segundaHoraPulpito";

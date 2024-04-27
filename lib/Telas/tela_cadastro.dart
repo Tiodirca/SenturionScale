@@ -430,6 +430,10 @@ class _TelaCadastroState extends State<TelaCadastro> {
           content: SingleChildScrollView(
             child: Column(
               children: [
+                Text(
+                  Textos.descricaoalertaOpcoesData,
+                  style: const TextStyle(color: Colors.black,),
+                ),
                 radioButtonComplementoData(0, Textos.deparamentoCultoLivre),
                 radioButtonComplementoData(1, Textos.departamentoMissao),
                 radioButtonComplementoData(2, Textos.departamentoCirculoOracao),
@@ -530,24 +534,14 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                         child: Text(
                                             Textos.descricaoTelaCadastro,
                                             style:
-                                                const TextStyle(fontSize: 20),
+                                                const TextStyle(fontSize: 18),
                                             textAlign: TextAlign.center),
                                       ),
-                                      botoesAcoes(Constantes.iconeDataCulto,
-                                          PaletaCores.corAdtl, 60, 60),
-                                      Column(
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Container(
-                                            margin: const EdgeInsets.symmetric(
-                                                vertical: 10.0, horizontal: 0),
-                                            width: larguraTela,
-                                            child: Text(
-                                                Textos
-                                                    .descricaoComplementoDataCulto,
-                                                style: const TextStyle(
-                                                    fontSize: 20),
-                                                textAlign: TextAlign.center),
-                                          ),
+                                          botoesAcoes(Constantes.iconeDataCulto,
+                                              PaletaCores.corAdtl, 60, 60),
                                           botoesAcoes(
                                               Constantes.iconeOpcoesData,
                                               PaletaCores.corAzulClaro,
