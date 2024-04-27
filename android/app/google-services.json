@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "776473338582",
+    "project_id": "scalesenturionback",
+    "storage_bucket": "scalesenturionback.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776473338582:android:7bf4473bada001e6cadf77",
+        "android_client_info": {
+          "package_name": "com.example.scalesenturion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq-zwkZLdFybyFfAnFvdlTTK5AoWCaq74"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776473338582:android:b1dfb5387df28fa4cadf77",
+        "android_client_info": {
+          "package_name": "com.example.senturionscale"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq-zwkZLdFybyFfAnFvdlTTK5AoWCaq74"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
