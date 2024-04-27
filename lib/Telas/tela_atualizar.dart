@@ -1,24 +1,31 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:senturionscale/Modelos/escala_modelo.dart';
-import 'package:senturionscale/Uteis/AcoesBancoDados/AcaoBancoDadosItensEscala.dart';
-import 'package:senturionscale/Uteis/PaletaCores.dart';
-import 'package:senturionscale/Uteis/constantes.dart';
-import 'package:senturionscale/Uteis/estilo.dart';
 import 'package:intl/intl.dart';
-import 'package:senturionscale/Uteis/metodos_auxiliares.dart';
-import 'package:senturionscale/Uteis/textos.dart';
-import 'package:senturionscale/Widgets/barra_navegacao_widget.dart';
-import 'package:senturionscale/Widgets/tela_carregamento.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Modelos/escala_modelo.dart';
+import '../Uteis/AcoesBancoDados/AcaoBancoDadosItensEscala.dart';
+import '../Uteis/PaletaCores.dart';
+import '../Uteis/constantes.dart';
+import '../Uteis/estilo.dart';
+import '../Uteis/metodos_auxiliares.dart';
+import '../Uteis/textos.dart';
+import '../Widgets/barra_navegacao_widget.dart';
+import '../Widgets/tela_carregamento.dart';
+
 class TelaAtualizar extends StatefulWidget {
-  TelaAtualizar({Key? key, required this.nomeTabela, required this.idItem})
+  TelaAtualizar(
+      {Key? key,
+      required this.nomeTabela,
+      required this.idTabelaSelecionada,
+      required this.escalaModelo})
       : super(key: key);
 
   String nomeTabela;
-  String idItem;
+  String idTabelaSelecionada;
+  EscalaModelo escalaModelo;
 
   @override
   State<TelaAtualizar> createState() => _TelaAtualizarState();
@@ -30,6 +37,8 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
   bool exibirCampoServirSantaCeia = false;
   bool exibirSoCamposCooperadora = false;
   bool exbirCampoIrmaoReserva = false;
+  String complementoDataDepartamento = Textos.deparamentoCultoLivre;
+  int valorRadioButton = 0;
   String horarioTroca = "";
 
   late DateTime dataSelecionada = DateTime.now();
@@ -76,6 +85,8 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
                   if (_formKeyFormulario.currentState!.validate()) {
                     chamarAtualizarItensBancoDados();
                   }
+                } else if (nomeBotao == Constantes.iconeOpcoesData) {
+                  alertaSelecaoOpcaoData(context);
                 } else if (nomeBotao == Constantes.iconeLista) {
                   redirecionarTela();
                 } else {
@@ -107,6 +118,20 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
                             color: PaletaCores.corAdtl, size: 30),
                         Text(
                           Textos.btnVerEscalaAtual,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: PaletaCores.corAdtl),
+                        )
+                      ],
+                    );
+                  } else if (nomeBotao == Constantes.iconeOpcoesData) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          Textos.btnOpcoesData,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
@@ -176,62 +201,167 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
   @override
   void initState() {
     super.initState();
+    exibirTelaCarregamento = false;
     recuperarHorarioTroca();
-    recuperarValoresItem();
+    preencherCampos(widget.escalaModelo);
   }
 
   redirecionarTela() {
+    var dados = {};
+    dados[Constantes.nomeTabela] = widget.nomeTabela;
+    dados[Constantes.idTabelaSelecionada] = widget.idTabelaSelecionada;
     Navigator.pushReplacementNamed(context, Constantes.rotaTelaListagemItens,
-        arguments: widget.nomeTabela);
+        arguments: dados);
   }
 
-  recuperarValoresItem() async {
-    await AcaoBancoDadosItensEscala.recuperarItens(widget.nomeTabela,
-            AcaoBancoDadosItensEscala.acaoRecupearDadosPorID, widget.idItem)
-        .then(
-      (value) {
-        preencherCampos(value);
-      },
-    );
-  }
+  preencherCampos(EscalaModelo element) {
+    ctPrimeiroHoraPulpito.text = element.primeiraHoraPulpito;
+    ctSegundoHoraPulpito.text = element.segundaHoraPulpito;
+    ctPrimeiroHoraEntrada.text = element.primeiraHoraEntrada;
+    ctSegundoHoraEntrada.text = element.segundaHoraEntrada;
+    ctRecolherOferta.text = element.recolherOferta;
+    ctUniforme.text = element.uniforme;
+    ctMesaApoio.text = element.mesaApoio;
+    ctServirSantaCeia.text = element.servirSantaCeia;
+    ctIrmaoReserva.text = element.irmaoReserva;
 
-  preencherCampos(List<EscalaModelo> escala) {
-    for (var element in escala) {
-      ctPrimeiroHoraPulpito.text = element.primeiraHoraPulpito;
-      ctSegundoHoraPulpito.text = element.segundaHoraPulpito;
-      ctPrimeiroHoraEntrada.text = element.primeiraHoraEntrada;
-      ctSegundoHoraEntrada.text = element.segundaHoraEntrada;
-      ctRecolherOferta.text = element.recolherOferta;
-      ctUniforme.text = element.uniforme;
-      ctMesaApoio.text = element.mesaApoio;
-      ctServirSantaCeia.text = element.servirSantaCeia;
-      ctIrmaoReserva.text = element.irmaoReserva;
-
-      dataSelecionada =
-          DateFormat("dd/MM/yyyy EEEE", "pt_BR").parse(element.dataCulto);
-      //verificando se os campos nao estao vazios
-      // para exibi-los
-      recuperarHorarioTroca();
-      if (element.servirSantaCeia.isNotEmpty) {
-        setState(() {
-          exibirCampoServirSantaCeia = true;
-        });
-      }
-      if (element.irmaoReserva.isNotEmpty) {
-        setState(() {
-          exbirCampoIrmaoReserva = true;
-        });
-      }
-      if (element.primeiraHoraPulpito.isEmpty &&
-          element.segundaHoraPulpito.isEmpty) {
-        setState(() {
-          exibirSoCamposCooperadora = true;
-        });
-      }
+    dataSelecionada =
+        DateFormat("dd/MM/yyyy EEEE", "pt_BR").parse(element.dataCulto);
+    recuperarValorRadioButtonComplementoData(element.dataCulto);
+    mudarRadioButton(valorRadioButton);
+    //verificando se os campos nao estao vazios
+    // para exibi-los
+    recuperarHorarioTroca();
+    if (element.servirSantaCeia.isNotEmpty) {
+      setState(() {
+        exibirCampoServirSantaCeia = true;
+      });
+    }
+    if (element.irmaoReserva.isNotEmpty) {
+      setState(() {
+        exbirCampoIrmaoReserva = true;
+      });
+    }
+    if (element.primeiraHoraPulpito.isEmpty &&
+        element.segundaHoraPulpito.isEmpty) {
+      setState(() {
+        exibirSoCamposCooperadora = true;
+      });
     }
     setState(() {
       exibirTelaCarregamento = false;
     });
+  }
+
+  recuperarValorRadioButtonComplementoData(String data) {
+    if (data.toString().contains(Textos.deparamentoCultoLivre)) {
+      valorRadioButton = 0;
+    } else if (data.toString().contains(Textos.departamentoMissao)) {
+      valorRadioButton = 1;
+    } else if (data.toString().contains(Textos.departamentoCirculoOracao)) {
+      valorRadioButton = 2;
+    } else if (data.toString().contains(Textos.departamentoJovens)) {
+      valorRadioButton = 3;
+    } else if (data.toString().contains(Textos.departamentoAdolecentes)) {
+      valorRadioButton = 4;
+    } else if (data.toString().contains(Textos.departamentoInfantil)) {
+      valorRadioButton = 5;
+    }
+  }
+
+  Widget radioButtonComplementoData(int valor, String nomeBtn) => SizedBox(
+        width: 250,
+        height: 60,
+        child: Row(
+          children: [
+            Radio(
+              value: valor,
+              groupValue: valorRadioButton,
+              onChanged: (value) {
+                mudarRadioButton(valor);
+                Navigator.of(context).pop();
+              },
+            ),
+            Text(nomeBtn)
+          ],
+        ),
+      );
+
+  mudarRadioButton(int value) {
+    //metodo para mudar o estado do radio button
+    setState(() {
+      valorRadioButton = value;
+      switch (valorRadioButton) {
+        case 0:
+          setState(() {
+            complementoDataDepartamento = Textos.deparamentoCultoLivre;
+          });
+          break;
+        case 1:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoMissao;
+          });
+          break;
+        case 2:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoCirculoOracao;
+          });
+          break;
+        case 3:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoJovens;
+          });
+          break;
+        case 4:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoAdolecentes;
+          });
+          break;
+        case 5:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoInfantil;
+          });
+          break;
+      }
+    });
+  }
+
+  Future<void> alertaSelecaoOpcaoData(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            Textos.alertaOpcoesData,
+            style: const TextStyle(color: Colors.black),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                radioButtonComplementoData(0, Textos.deparamentoCultoLivre),
+                radioButtonComplementoData(1, Textos.departamentoMissao),
+                radioButtonComplementoData(2, Textos.departamentoCirculoOracao),
+                radioButtonComplementoData(3, Textos.departamentoJovens),
+                radioButtonComplementoData(4, Textos.departamentoAdolecentes),
+                radioButtonComplementoData(5, Textos.departamentoInfantil)
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'Cancelar',
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   chamarAtualizarItensBancoDados() async {
@@ -265,34 +395,64 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
     } else {
       irmaoReserva = "";
     }
-
-    String retorno = await AcaoBancoDadosItensEscala.adicionarAtualizarItens(
-        primeiroHoraPulpito,
-        segundoHoraPulpito,
-        ctPrimeiroHoraEntrada.text,
-        ctSegundoHoraEntrada.text,
-        ctRecolherOferta.text,
-        ctUniforme.text,
-        mesaApoio,
-        servirSantaCeia,
-        formatarData(dataSelecionada),
-        horarioTroca,
-        irmaoReserva,
-        MetodosAuxiliares.removerEspacoNomeTabelas(widget.nomeTabela),
-        AcaoBancoDadosItensEscala.acaoAtualizarDados,
-        widget.idItem);
-
-    if (retorno == Constantes.retornoSucessoBancoDado) {
-      exibirMsg(Textos.sucessoMsgAtualizarItemEscala);
+    try {
+      var db = FirebaseFirestore.instance;
+      db
+          .collection(Constantes.fireBaseTabelasColecao)
+          .doc(widget.idTabelaSelecionada)
+          .collection(Constantes.fireBaseDadosCadastrados)
+          .doc(widget.escalaModelo.id)
+          .set({
+        Constantes.primeiraHoraPulpito: primeiroHoraPulpito,
+        Constantes.segundaHoraPulpito: segundoHoraPulpito,
+        Constantes.primeiraHoraEntrada: ctPrimeiroHoraEntrada.text,
+        Constantes.segundaHoraEntrada: ctSegundoHoraEntrada.text,
+        Constantes.recolherOferta: ctRecolherOferta.text,
+        Constantes.uniforme: ctUniforme.text,
+        Constantes.mesaApoio: mesaApoio,
+        Constantes.servirSantaCeia: servirSantaCeia,
+        Constantes.dataCulto: formatarData(dataSelecionada),
+        Constantes.horarioTroca: horarioTroca,
+        Constantes.irmaoReserva: irmaoReserva,
+      });
+      exibirMsg(Textos.sucessoMsgAdicionarItemEscala);
       setState(() {
         redirecionarTela();
       });
-    } else {
-      exibirMsg(Textos.erroMsgAtualizarItemEscala);
+    } catch (e) {
+      exibirMsg(Textos.erroMsgAdicionarItemEscala);
       setState(() {
         exibirTelaCarregamento = false;
       });
     }
+
+    // String retorno = await AcaoBancoDadosItensEscala.adicionarAtualizarItens(
+    //     primeiroHoraPulpito,
+    //     segundoHoraPulpito,
+    //     ctPrimeiroHoraEntrada.text,
+    //     ctSegundoHoraEntrada.text,
+    //     ctRecolherOferta.text,
+    //     ctUniforme.text,
+    //     mesaApoio,
+    //     servirSantaCeia,
+    //     formatarData(dataSelecionada),
+    //     horarioTroca,
+    //     irmaoReserva,
+    //     MetodosAuxiliares.removerEspacoNomeTabelas(widget.nomeTabela),
+    //     AcaoBancoDadosItensEscala.acaoAtualizarDados,
+    //     widget.idItem);
+
+    // if (retorno == Constantes.retornoSucessoBancoDado) {
+    //   exibirMsg(Textos.sucessoMsgAtualizarItemEscala);
+    //   setState(() {
+    //     redirecionarTela();
+    //   });
+    // } else {
+    //   exibirMsg(Textos.erroMsgAtualizarItemEscala);
+    //   setState(() {
+    //     exibirTelaCarregamento = false;
+    //   });
+    // }
   }
 
   exibirMsg(String msg) {
@@ -328,6 +488,9 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
     String dataFormatada = DateFormat("dd/MM/yyyy EEEE", "pt_BR").format(data);
     if (exibirCampoServirSantaCeia) {
       return dataFormatada = "$dataFormatada ( Santa Ceia )";
+    } else if (complementoDataDepartamento.isNotEmpty &&
+        complementoDataDepartamento != Textos.deparamentoCultoLivre) {
+      return "$dataFormatada ( $complementoDataDepartamento )";
     } else {
       return dataFormatada;
     }
@@ -383,14 +546,12 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
               leading: Visibility(
                 visible: !exibirTelaCarregamento,
                 child: IconButton(
-                  color: Colors.white,
+                    color: Colors.white,
                     //setando tamanho do icone
                     iconSize: 30,
                     enableFeedback: false,
                     onPressed: () {
-                      Navigator.pushReplacementNamed(
-                          context, Constantes.rotaTelaListagemItens,
-                          arguments: widget.nomeTabela);
+                      redirecionarTela();
                     },
                     icon: const Icon(Icons.arrow_back_ios)),
               ),
@@ -450,6 +611,26 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
                                       ),
                                       botoesAcoes(Constantes.iconeDataCulto,
                                           PaletaCores.corAdtl, 60, 60),
+                                      Column(
+                                        children: [
+                                          Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                vertical: 10.0, horizontal: 0),
+                                            width: larguraTela,
+                                            child: Text(
+                                                Textos
+                                                    .descricaoComplementoDataCulto,
+                                                style: const TextStyle(
+                                                    fontSize: 20),
+                                                textAlign: TextAlign.center),
+                                          ),
+                                          botoesAcoes(
+                                              Constantes.iconeOpcoesData,
+                                              PaletaCores.corAzulClaro,
+                                              100,
+                                              40)
+                                        ],
+                                      ),
                                       Container(
                                         margin: const EdgeInsets.symmetric(
                                             vertical: 20.0, horizontal: 0),
@@ -530,9 +711,9 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
                                       ),
                                       SizedBox(
                                         width:
-                                        Platform.isAndroid || Platform.isIOS
-                                            ? larguraTela
-                                            : larguraTela * 0.9,
+                                            Platform.isAndroid || Platform.isIOS
+                                                ? larguraTela
+                                                : larguraTela * 0.9,
                                         height: 100,
                                         child: Card(
                                           color: Colors.white,
@@ -540,9 +721,9 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
                                               side: const BorderSide(
                                                   width: 1,
                                                   color:
-                                                  PaletaCores.corAzulClaro),
+                                                      PaletaCores.corAzulClaro),
                                               borderRadius:
-                                              BorderRadius.circular(20)),
+                                                  BorderRadius.circular(20)),
                                           elevation: 1,
                                           child: Wrap(
                                             runAlignment: WrapAlignment.center,

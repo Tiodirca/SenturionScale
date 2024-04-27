@@ -7,6 +7,12 @@ class Constantes {
   static const rotaTelaListagemItens = "telaListagem";
   static const rotaTelaAtualizarItem = "telaAtualizarItem";
 
+  static const fireBaseTabelasColecao = "tabelas";
+  static const fireBaseValorTabelas = "nome_tabela";
+  static const fireBaseDadosCadastrados = "dados_tabela";
+  static const idTabelaSelecionada = "idTabelaSelecionada";
+  static const escalaModelo = "escala_modelo";
+
 
   static const retornoSucessoBancoDado = "sucesso";
   static const retornoErroBancoDado = "erro";

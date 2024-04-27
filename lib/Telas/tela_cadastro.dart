@@ -1,22 +1,25 @@
 import 'dart:io';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:senturionscale/Uteis/AcoesBancoDados/AcaoBancoDadosItensEscala.dart';
-import 'package:senturionscale/Uteis/PaletaCores.dart';
-import 'package:senturionscale/Uteis/constantes.dart';
-import 'package:senturionscale/Uteis/estilo.dart';
 import 'package:intl/intl.dart';
-import 'package:senturionscale/Uteis/metodos_auxiliares.dart';
-import 'package:senturionscale/Uteis/textos.dart';
-import 'package:senturionscale/Widgets/barra_navegacao_widget.dart';
-import 'package:senturionscale/Widgets/tela_carregamento.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Uteis/PaletaCores.dart';
+import '../Uteis/constantes.dart';
+import '../Uteis/estilo.dart';
+import '../Uteis/metodos_auxiliares.dart';
+import '../Uteis/textos.dart';
+import '../Widgets/barra_navegacao_widget.dart';
+import '../Widgets/tela_carregamento.dart';
+
 class TelaCadastro extends StatefulWidget {
-  TelaCadastro({Key? key, required this.nomeTabela}) : super(key: key);
+  TelaCadastro(
+      {Key? key, required this.nomeTabela, required this.idTabelaSelecionada})
+      : super(key: key);
 
   String nomeTabela;
+  String idTabelaSelecionada;
 
   @override
   State<TelaCadastro> createState() => _TelaCadastroState();
@@ -29,7 +32,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
   bool exibirSoCamposCooperadora = false;
   bool exbirCampoIrmaoReserva = false;
   String horarioTroca = "";
-  String complementoDataDepartamento = "";
+  String complementoDataDepartamento = Textos.deparamentoCultoLivre;
   int valorRadioButton = 0;
   DateTime dataSelecionada = DateTime.now();
   final _formKeyFormulario = GlobalKey<FormState>();
@@ -64,6 +67,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
           height: altura,
           width: largura,
           child: FloatingActionButton(
+              heroTag: nomeBotao,
               backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: corBotao),
@@ -73,13 +77,18 @@ class _TelaCadastroState extends State<TelaCadastro> {
                 // para fazer acoes diferentes
                 if (nomeBotao == Constantes.iconeSalvar) {
                   if (_formKeyFormulario.currentState!.validate()) {
-                    chamarAdicionarItensBancoDados();
+                    adicionarItensBancoDados();
                   }
                 } else if (nomeBotao == Constantes.iconeLista) {
+                  var dados = {};
+                  dados[Constantes.nomeTabela] = widget.nomeTabela;
+                  dados[Constantes.idTabelaSelecionada] =
+                      widget.idTabelaSelecionada;
                   Navigator.pushReplacementNamed(
                       context, Constantes.rotaTelaListagemItens,
-                      arguments: widget.nomeTabela);
+                      arguments: dados);
                 } else if (nomeBotao == Constantes.iconeOpcoesData) {
+                  alertaSelecaoOpcaoData(context);
                 } else {
                   exibirDataPicker();
                 }
@@ -109,6 +118,20 @@ class _TelaCadastroState extends State<TelaCadastro> {
                             color: PaletaCores.corAdtl, size: 30),
                         Text(
                           Textos.btnVerEscalaAtual,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: PaletaCores.corAdtl),
+                        )
+                      ],
+                    );
+                  } else if (nomeBotao == Constantes.iconeOpcoesData) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          Textos.btnOpcoesData,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
@@ -181,7 +204,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
     recuperarHorarioTroca();
   }
 
-  chamarAdicionarItensBancoDados() async {
+  adicionarItensBancoDados() async {
     setState(() {
       exibirTelaCarregamento = true;
     });
@@ -212,30 +235,32 @@ class _TelaCadastroState extends State<TelaCadastro> {
     } else {
       irmaoReserva = "";
     }
-
-    String retorno = await AcaoBancoDadosItensEscala.adicionarAtualizarItens(
-        primeiroHoraPulpito,
-        segundoHoraPulpito,
-        ctPrimeiroHoraEntrada.text,
-        ctSegundoHoraEntrada.text,
-        ctRecolherOferta.text,
-        ctUniforme.text,
-        mesaApoio,
-        servirSantaCeia,
-        formatarData(dataSelecionada),
-        horarioTroca,
-        irmaoReserva,
-        MetodosAuxiliares.removerEspacoNomeTabelas(widget.nomeTabela),
-        AcaoBancoDadosItensEscala.acaoAdicionarDados,
-        "SemID");
-
-    if (retorno == Constantes.retornoSucessoBancoDado) {
+    try {
+      var db = FirebaseFirestore.instance;
+      db
+          .collection(Constantes.fireBaseTabelasColecao)
+          .doc(widget.idTabelaSelecionada)
+          .collection(Constantes.fireBaseDadosCadastrados)
+          .doc()
+          .set({
+        Constantes.primeiraHoraPulpito: primeiroHoraPulpito,
+        Constantes.segundaHoraPulpito: segundoHoraPulpito,
+        Constantes.primeiraHoraEntrada: ctPrimeiroHoraEntrada.text,
+        Constantes.segundaHoraEntrada: ctSegundoHoraEntrada.text,
+        Constantes.recolherOferta: ctRecolherOferta.text,
+        Constantes.uniforme: ctUniforme.text,
+        Constantes.mesaApoio: mesaApoio,
+        Constantes.servirSantaCeia: servirSantaCeia,
+        Constantes.dataCulto: formatarData(dataSelecionada),
+        Constantes.horarioTroca: horarioTroca,
+        Constantes.irmaoReserva: irmaoReserva,
+      });
       exibirMsg(Textos.sucessoMsgAdicionarItemEscala);
       setState(() {
         limparValoresCampos();
         exibirTelaCarregamento = false;
       });
-    } else {
+    } catch (e) {
       exibirMsg(Textos.erroMsgAdicionarItemEscala);
       setState(() {
         exibirTelaCarregamento = false;
@@ -336,7 +361,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
   }
 
   Widget radioButtonComplementoData(int valor, String nomeBtn) => SizedBox(
-        width: 170,
+        width: 250,
         height: 60,
         child: Row(
           children: [
@@ -345,6 +370,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
               groupValue: valorRadioButton,
               onChanged: (value) {
                 mudarRadioButton(valor);
+                Navigator.of(context).pop();
               },
             ),
             Text(nomeBtn)
@@ -389,6 +415,44 @@ class _TelaCadastroState extends State<TelaCadastro> {
           break;
       }
     });
+  }
+
+  Future<void> alertaSelecaoOpcaoData(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            Textos.alertaOpcoesData,
+            style: const TextStyle(color: Colors.black),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                radioButtonComplementoData(0, Textos.deparamentoCultoLivre),
+                radioButtonComplementoData(1, Textos.departamentoMissao),
+                radioButtonComplementoData(2, Textos.departamentoCirculoOracao),
+                radioButtonComplementoData(3, Textos.departamentoJovens),
+                radioButtonComplementoData(4, Textos.departamentoAdolecentes),
+                radioButtonComplementoData(5, Textos.departamentoInfantil)
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'Cancelar',
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -484,28 +548,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                                     fontSize: 20),
                                                 textAlign: TextAlign.center),
                                           ),
-                                          Wrap(
-                                            alignment:
-                                                WrapAlignment.spaceBetween,
-                                            children: [
-                                              radioButtonComplementoData(0,
-                                                  Textos.deparamentoCultoLivre),
-                                              radioButtonComplementoData(
-                                                  1, Textos.departamentoMissao),
-                                              radioButtonComplementoData(
-                                                  2,
-                                                  Textos
-                                                      .departamentoCirculoOracao),
-                                              radioButtonComplementoData(
-                                                  3, Textos.departamentoJovens),
-                                              radioButtonComplementoData(
-                                                  4,
-                                                  Textos
-                                                      .departamentoAdolecentes),
-                                              radioButtonComplementoData(5,
-                                                  Textos.departamentoInfantil)
-                                            ],
-                                          ),
+                                          botoesAcoes(
+                                              Constantes.iconeOpcoesData,
+                                              PaletaCores.corAzulClaro,
+                                              100,
+                                              40)
                                         ],
                                       ),
                                       Container(

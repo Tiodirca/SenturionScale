@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:senturionscale/Modelos/escala_modelo.dart';
-import 'package:senturionscale/Uteis/constantes.dart';
+
+
+import '../../Modelos/escala_modelo.dart';
+import '../constantes.dart';
 
 class AcaoBancoDadosItensEscala {
   static const acaoAdicionarDados = 'adicionarDados';
@@ -12,7 +14,7 @@ class AcaoBancoDadosItensEscala {
   static const acaoDeletarDados = 'deletarDados';
 
 
-  static var root = Uri.parse("https://senturionlistback.000webhostapp.com/");
+  static var root = Uri.parse("https://senturionscalebackendw.000webhostapp.com/");
 
   //metodo para adicionar  e atualizar dados no banco de dados
   static Future<String> adicionarAtualizarItens(

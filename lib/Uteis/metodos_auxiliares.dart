@@ -1,5 +1,6 @@
-import 'package:senturionscale/Uteis/constantes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'constantes.dart';
 
 class MetodosAuxiliares{
 

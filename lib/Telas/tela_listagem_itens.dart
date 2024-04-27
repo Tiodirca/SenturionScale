@@ -1,20 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:senturionscale/Modelos/escala_modelo.dart';
-import 'package:senturionscale/Uteis/AcoesBancoDados/AcaoBancoDadosItensEscala.dart';
-import 'package:senturionscale/Uteis/PDF/GerarPDF.dart';
-import 'package:senturionscale/Uteis/PaletaCores.dart';
-import 'package:senturionscale/Uteis/constantes.dart';
 import 'package:intl/intl.dart';
-import 'package:senturionscale/Uteis/estilo.dart';
-import 'package:senturionscale/Uteis/metodos_auxiliares.dart';
-import 'package:senturionscale/Uteis/textos.dart';
-import 'package:senturionscale/Widgets/barra_navegacao_widget.dart';
-import 'package:senturionscale/Widgets/tela_carregamento.dart';
+
+import '../Modelos/escala_modelo.dart';
+import '../Uteis/PDF/GerarPDF.dart';
+import '../Uteis/PaletaCores.dart';
+import '../Uteis/constantes.dart';
+import '../Uteis/estilo.dart';
+import '../Uteis/textos.dart';
+import '../Widgets/barra_navegacao_widget.dart';
+import '../Widgets/tela_carregamento.dart';
 
 class TelaListagemItens extends StatefulWidget {
-  TelaListagemItens({Key? key, required this.nomeTabela}) : super(key: key);
+  TelaListagemItens(
+      {Key? key, required this.nomeTabela, required this.idTabelaSelecionada})
+      : super(key: key);
 
   String nomeTabela;
+  String idTabelaSelecionada;
 
   @override
   State<TelaListagemItens> createState() => _TelaListagemItensState();
@@ -33,31 +36,68 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
   void initState() {
     super.initState();
     escala = [];
-    recuparValoresBancoDados();
+    realizarBuscaDadosFireBase(widget.idTabelaSelecionada);
   }
 
-  recuparValoresBancoDados() async {
-    await AcaoBancoDadosItensEscala.recuperarItens(
-            MetodosAuxiliares.removerEspacoNomeTabelas(widget.nomeTabela),
-            AcaoBancoDadosItensEscala.acaoRecupearDados,
-            "SemID")
+  realizarBuscaDadosFireBase(String idDocumento) async {
+    var db = FirebaseFirestore.instance;
+    //instanciano variavel
+    db
+        .collection(Constantes.fireBaseTabelasColecao)
+        .doc(idDocumento)
+        .collection(Constantes.fireBaseDadosCadastrados)
+        .get()
         .then(
-      (escalaBanco) {
-        setState(() {
-          if (escalaBanco.isEmpty) {
-            exibirTelaCarregamento = false;
-          } else {
-            escalaBanco.sort((a, b) => DateFormat("dd/MM/yyyy EEEE", "pt_BR")
-                .parse(a.dataCulto)
-                .compareTo(
-                    DateFormat("dd/MM/yyyy EEEE", "pt_BR").parse(b.dataCulto)));
-            escala = escalaBanco;
-            exibirTelaCarregamento = false;
-            chamarVerificarColunaVazia();
+      (querySnapshot) async {
+        // for para percorrer todos os dados que a variavel recebeu
+        if (querySnapshot.docs.isNotEmpty) {
+          for (var documentoFirebase in querySnapshot.docs) {
+            // chamando metodo para converter json
+            // recebido do firebase para objeto
+            converterJsonParaObjeto(idDocumento, documentoFirebase.id);
           }
-        });
+        } else {
+          setState(() {
+            exibirTelaCarregamento = false;
+          });
+        }
       },
     );
+  }
+
+  converterJsonParaObjeto(String idDocumento, String id) async {
+    var db = FirebaseFirestore.instance;
+    final ref = db
+        .collection(Constantes.fireBaseTabelasColecao)
+        .doc(idDocumento)
+        .collection(Constantes.fireBaseDadosCadastrados)
+        .doc(id)
+        .withConverter(
+          fromFirestore: EscalaModelo.fromFirestore,
+          toFirestore: (EscalaModelo escalaModelo, _) =>
+              escalaModelo.toFirestore(),
+        );
+
+    final docSnap = await ref.get();
+    final dados = docSnap.data(); // convertendo
+    if (dados != null) {
+      dados.id = docSnap.id;
+      //adicionando os dados convertidos na lista
+      escala.add(dados);
+      setState(() {
+        ordenarLista();
+        exibirTelaCarregamento = false;
+        chamarVerificarColunaVazia();
+      });
+    }
+  }
+
+  ordenarLista() {
+    // ordenando a lista pela data colocando
+    // a data mais antiga no topo da listagem
+    escala.sort((a, b) => DateFormat("dd/MM/yyyy EEEE", "pt_BR")
+        .parse(a.dataCulto)
+        .compareTo(DateFormat("dd/MM/yyyy EEEE", "pt_BR").parse(b.dataCulto)));
   }
 
   // metodo para chamar metodo para verificar
@@ -97,29 +137,31 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
     }
   }
 
-  // metodo para verificar se a coluna
-  // contem algum valor em uma de suas linhas
-  verificarColunaVazia(String valor) {
-    if (valor.isNotEmpty) {
-      return true;
-    } else {
-      return false;
-    }
+  exibirMsg(String msg) {
+    final snackBar = SnackBar(content: Text(msg));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  chamarDeletar(EscalaModelo escalaModelo) {
-    AcaoBancoDadosItensEscala.deletar(escalaModelo.id,
-            MetodosAuxiliares.removerEspacoNomeTabelas(widget.nomeTabela))
-        .then((result) {
-      if (Constantes.retornoSucessoBancoDado == result) {
-        const snackBarSucesso =
-            SnackBar(content: Text('Item apagado com sucesso.'));
-        ScaffoldMessenger.of(context).showSnackBar(snackBarSucesso);
-        //chamando metodo
-        escala = [];
-        recuparValoresBancoDados();
-      }
-    });
+  // Metodo para chamar deletar tabela
+  chamarDeletar(EscalaModelo escalaModelo) async {
+    var db = FirebaseFirestore.instance;
+    await db
+        .collection(Constantes.fireBaseTabelasColecao)
+        .doc(widget.idTabelaSelecionada)
+        .collection(Constantes.fireBaseDadosCadastrados)
+        .doc(escalaModelo.id)
+        .delete()
+        .then(
+      (doc) {
+        setState(() {
+          escala.clear();
+          realizarBuscaDadosFireBase(widget.idTabelaSelecionada);
+        });
+        exibirMsg(Textos.sucessoMsgExcluirEscala);
+        //realizarConsultaFirebase();
+      },
+      onError: (e) => exibirMsg(Textos.erroMsgExcluirEscala),
+    );
   }
 
   // metodo para chamar a geracao do arquivo em pdf
@@ -141,27 +183,28 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
           height: altura,
           width: largura,
           child: FloatingActionButton(
-
-            backgroundColor: Colors.white,
+            heroTag: nomeBotao,
+              backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: corBotao),
                   borderRadius: const BorderRadius.all(Radius.circular(10))),
               onPressed: () async {
                 if (nomeBotao == Constantes.iconeBaixar) {
                   chamarGerarArquivoPDF();
-                } else if (nomeBotao == Constantes.iconeAdicionar) {
+                } else if (nomeBotao == Constantes.iconeAdicionar ||
+                    nomeBotao == Constantes.iconeAdicionarEscala) {
+                  var dados = {};
+                  dados[Constantes.nomeTabela] = widget.nomeTabela;
+                  dados[Constantes.idTabelaSelecionada] =
+                      widget.idTabelaSelecionada;
                   Navigator.pushReplacementNamed(
                       context, Constantes.rotaTelaCadastro,
-                      arguments: widget.nomeTabela);
+                      arguments: dados);
                 } else if (nomeBotao == Constantes.iconeRecarregar) {
                   setState(() {
                     exibirTelaCarregamento = true;
+                    realizarBuscaDadosFireBase(widget.idTabelaSelecionada);
                   });
-                  recuparValoresBancoDados();
-                } else {
-                  Navigator.pushReplacementNamed(
-                      context, Constantes.rotaTelaCadastro,
-                      arguments: widget.nomeTabela);
                 }
               },
               child: LayoutBuilder(
@@ -216,7 +259,7 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            Textos.tituloAlerta,
+            Textos.tituloAlertaExclusao,
             style: const TextStyle(color: Colors.black),
           ),
           content: SingleChildScrollView(
@@ -665,8 +708,12 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                                                     widget
                                                                         .nomeTabela;
                                                                 dados[Constantes
-                                                                        .idItem] =
-                                                                    item.id;
+                                                                        .idTabelaSelecionada] =
+                                                                    widget
+                                                                        .idTabelaSelecionada;
+                                                                dados[Constantes
+                                                                        .escalaModelo] =
+                                                                    item;
                                                                 Navigator.pushReplacementNamed(
                                                                     context,
                                                                     Constantes

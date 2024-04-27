@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:senturionscale/Uteis/PaletaCores.dart';
+
+import 'PaletaCores.dart';
 
 class Estilo {
 

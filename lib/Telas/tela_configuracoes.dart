@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:senturionscale/Uteis/PaletaCores.dart';
-import 'package:senturionscale/Uteis/constantes.dart';
-import 'package:senturionscale/Uteis/estilo.dart';
-import 'package:senturionscale/Uteis/metodos_auxiliares.dart';
-import 'package:senturionscale/Uteis/textos.dart';
-import 'package:senturionscale/Widgets/barra_navegacao_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Uteis/PaletaCores.dart';
+import '../Uteis/constantes.dart';
+import '../Uteis/estilo.dart';
+import '../Uteis/metodos_auxiliares.dart';
+import '../Uteis/textos.dart';
+import '../Widgets/barra_navegacao_widget.dart';
 
 class TelaConfiguracoes extends StatefulWidget {
   const TelaConfiguracoes({Key? key}) : super(key: key);

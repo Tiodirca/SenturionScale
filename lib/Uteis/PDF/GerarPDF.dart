@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pdfLib;
-import 'package:senturionscale/Modelos/escala_modelo.dart';
-import 'package:senturionscale/Uteis/textos.dart';
 
+import '../../Modelos/escala_modelo.dart';
+import '../textos.dart';
 import 'salvarPDF/SavePDFMobile.dart'
     if (dart.library.html) 'salvarPDF/SavePDFWeb.dart';
 

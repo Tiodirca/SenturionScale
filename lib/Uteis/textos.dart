@@ -4,7 +4,6 @@ class Textos {
 
   static String txtTelaCarregamento = "Aguarde Carregando";
 
-
   static String btnUsarTabela = "Usar está Escala";
   static String btnCriarTabela = "Criar Escala";
   static String btnSalvar = "Salvar";
@@ -14,8 +13,7 @@ class Textos {
   static String btnAdicionar = "Adicionar";
   static String btnConfiguracoes = "Configurações";
   static String btnAtualizar = "Atualizar";
-
-
+  static String btnOpcoesData= "Opções da Data";
 
   // TELA SELECAO TABELAS
   static String tituloTelaSelecaoTabelas = "Seleção de Escala";
@@ -38,7 +36,9 @@ class Textos {
       "um item a lista que ira compor a escala";
   static String descricaoDataPicker = "Selecione uma data que contenha culto";
   static String descricaoDataSelecionada = "A data Selecionada foi : ";
-  static String descricaoComplementoDataCulto = "Selecione uma das opções caso seja culto de algum departamento";
+  static String descricaoComplementoDataCulto =
+      "Utilize o botão abaixo para selecionar uma das opções caso seja culto de algum departamento";
+  static String alertaOpcoesData = "Selecione um opção";
 
   // Departamentos
   static String departamentoMissao = "Missões";
@@ -80,8 +80,10 @@ class Textos {
       "Defina o Horário de inicio";
   static String descricaoTimePickerHorarioTroca =
       "Defina o Horário que ocorrerá a troca";
-  static String descricaoTrocaFimSemana = "Horário de troca durante o final de semana";
-  static String descricaoRedefinirValoresHorarioTroca = "Redefinir Horário de troca"
+  static String descricaoTrocaFimSemana =
+      "Horário de troca durante o final de semana";
+  static String descricaoRedefinirValoresHorarioTroca =
+      "Redefinir Horário de troca"
       " para padrões de fabrica.";
 
   // LISTAGEM
@@ -106,8 +108,9 @@ class Textos {
   static String sucessoMsgAtualizarItemEscala =
       "Sucesso ao atualizar item a escala do banco de dados";
   static String sucessoExcluirItem = "Item apagado com sucesso.";
+
   // ALERTA
-  static String tituloAlerta = "Confirmação de Exclusão";
+  static String tituloAlertaExclusao = "Confirmação de Exclusão";
   static String descricaoAlerta = "Deseja realmente excluir o seguinte item ?";
 
   // ERROS
@@ -132,5 +135,4 @@ class Textos {
       "Quem sua mão ao arado já pois, constante precisa ser.";
   static String nomeIgreja = "ADTL Parque São Carlos";
   static String txtGeradoApk = "Escala criada por Senturion Scale";
-
 }

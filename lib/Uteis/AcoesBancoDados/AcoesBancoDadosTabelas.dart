@@ -6,7 +6,7 @@ import 'package:senturionscale/Uteis/constantes.dart';
 
 class AcoesBancoDadosTabelas {
 
-  static var root = Uri.parse("https://senturionlistback.000webhostapp.com/");
+  static var root = Uri.parse("https://senturionscalebackendw.000webhostapp.com/");
 
   static const acaoDeletarTabela = 'deletarTabela';
   static const acaoExibirTabelas = 'exibirTabelas';

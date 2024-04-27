@@ -8,7 +8,7 @@ class ExibirTabelas {
 
   factory ExibirTabelas.fromJson(Map<String, dynamic> json) {
     return ExibirTabelas(
-      tabelas: json['Tables_in_id21590754_senturionscaledatabase'] as String,
+      tabelas: json['Tables_in_id22037631_senturionscale'] as String,
     );
   }
 }

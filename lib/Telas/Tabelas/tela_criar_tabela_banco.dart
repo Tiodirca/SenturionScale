@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:senturionscale/Uteis/AcoesBancoDados/AcoesBancoDadosTabelas.dart';
-import 'package:senturionscale/Uteis/PaletaCores.dart';
-import 'package:senturionscale/Uteis/constantes.dart';
-import 'package:senturionscale/Uteis/estilo.dart';
-import 'package:senturionscale/Uteis/metodos_auxiliares.dart';
-import 'package:senturionscale/Uteis/textos.dart';
-import 'package:senturionscale/Widgets/barra_navegacao_widget.dart';
-import 'package:senturionscale/Widgets/tela_carregamento.dart';
+
+import '../../Controladora/acaoes_firebase.dart';
+import '../../Uteis/PaletaCores.dart';
+import '../../Uteis/constantes.dart';
+import '../../Uteis/estilo.dart';
+import '../../Uteis/metodos_auxiliares.dart';
+import '../../Uteis/textos.dart';
+import '../../Widgets/barra_navegacao_widget.dart';
+import '../../Widgets/tela_carregamento.dart';
 
 class TelaCriarTabelaBanco extends StatefulWidget {
-  const TelaCriarTabelaBanco({Key? key}) : super(key: key);
+  const TelaCriarTabelaBanco({super.key});
 
   @override
   State<TelaCriarTabelaBanco> createState() => _TelaCriarTabelaBancoState();
 }
 
 class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Estilo estilo = Estilo();
   bool exibirTelaCarregamento = false;
 
@@ -27,13 +33,11 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
     setState(() {
       exibirTelaCarregamento = true;
     });
-    String retorno = await AcoesBancoDadosTabelas.criarTabela(
-        MetodosAuxiliares.removerEspacoNomeTabelas(
-            _controllerCadastrarTabela.text));
-    if (retorno == Constantes.retornoSucessoBancoDado) {
+    try {
+      AcoesFireBase.criarTabelas(_controllerCadastrarTabela.text);
       exibirMsg(Textos.sucessoMsgCriarTabela);
       redirecionarTela();
-    } else {
+    } catch (e) {
       exibirMsg(Textos.erroMsgCriarTabela);
       setState(() {
         exibirTelaCarregamento = false;
@@ -42,8 +46,7 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
   }
 
   redirecionarTela() {
-    Navigator.pushReplacementNamed(context, Constantes.rotaTelaCadastro,
-        arguments: _controllerCadastrarTabela.text);
+    Navigator.pushReplacementNamed(context, Constantes.rotaTelaListagemTabelas);
   }
 
   exibirMsg(String msg) {
@@ -84,7 +87,8 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
                           child: Column(
                             children: [
                               Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 10),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 10),
                                 width: larguraTela,
                                 child: Text(
                                   textAlign: TextAlign.end,
@@ -139,11 +143,13 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
                                           PaletaCores.corVerdeCiano),
                                   child: Text(
                                     Textos.btnCriarTabela,
-
                                     textAlign: TextAlign.center,
-                                    style: const TextStyle(fontSize: 18 ,color:  Colors.white,),
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (_formKeyTabela.currentState!
                                         .validate()) {
                                       criarTabelaBancoDados();

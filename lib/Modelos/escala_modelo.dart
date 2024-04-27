@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class EscalaModelo {
   String id;
   String primeiraHoraPulpito;
@@ -13,7 +15,7 @@ class EscalaModelo {
   String irmaoReserva;
 
   EscalaModelo(
-      {required this.id,
+      {this.id = "",
       required this.primeiraHoraPulpito,
       required this.segundaHoraPulpito,
       required this.primeiraHoraEntrada,
@@ -26,9 +28,8 @@ class EscalaModelo {
       required this.horarioTroca,
       required this.irmaoReserva});
 
-  factory EscalaModelo.fromJson(Map<String, dynamic> json) {
+  factory EscalaModelo.fromJson(Map<dynamic, dynamic> json) {
     return EscalaModelo(
-        id: json['id'] as String,
         primeiraHoraPulpito: json['primeiraHoraPulpito'] as String,
         segundaHoraPulpito: json['segundaHoraPulpito'] as String,
         primeiraHoraEntrada: json['primeiraHoraEntrada'] as String,
@@ -40,5 +41,41 @@ class EscalaModelo {
         dataCulto: json['dataCulto'] as String,
         horarioTroca: json['horarioTroca'] as String,
         irmaoReserva: json['irmaoReserva'] as String);
+  }
+
+  factory EscalaModelo.fromFirestore(
+    DocumentSnapshot<Map<dynamic, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return EscalaModelo(
+      primeiraHoraPulpito: data?['primeiraHoraPulpito'],
+      segundaHoraPulpito: data?['segundaHoraPulpito'],
+      primeiraHoraEntrada: data?['primeiraHoraEntrada'],
+      segundaHoraEntrada: data?['segundaHoraEntrada'],
+      recolherOferta: data?['recolherOferta'],
+      uniforme: data?['uniforme'],
+      mesaApoio: data?['mesaApoio'],
+      servirSantaCeia: data?['servirSantaCeia'],
+      dataCulto: data?['dataCulto'],
+      horarioTroca: data?['horarioTroca'],
+      irmaoReserva: data?['irmaoReserva'],
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      "id": id,
+      "primeiraHoraPulpito": primeiraHoraPulpito,
+      "segundaHoraPulpito": segundaHoraPulpito,
+      "primeiraHoraEntrada": primeiraHoraEntrada,
+      "segundaHoraEntrada": segundaHoraEntrada,
+      "recolherOferta": recolherOferta,
+      "mesaApoio": mesaApoio,
+      "servirSantaCeia": servirSantaCeia,
+      "dataCulto": dataCulto,
+      "horarioTroca": horarioTroca,
+      "irmaoReserva": irmaoReserva,
+    };
   }
 }

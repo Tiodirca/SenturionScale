@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:senturionscale/Uteis/PaletaCores.dart';
-import 'package:senturionscale/Uteis/textos.dart';
+
+import '../Uteis/PaletaCores.dart';
+import '../Uteis/textos.dart';
 
 class TelaCarregamento extends StatelessWidget {
   const TelaCarregamento({Key? key}) : super(key: key);

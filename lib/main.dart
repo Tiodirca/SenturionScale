@@ -1,16 +1,25 @@
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:senturionscale/Uteis/Rotas.dart';
-import 'package:senturionscale/Uteis/ScrollBehaviorPersonalizado.dart';
-import 'package:senturionscale/Uteis/constantes.dart';
 
-void main() {
+import 'Uteis/Rotas.dart';
+import 'Uteis/ScrollBehaviorPersonalizado.dart';
+import 'Uteis/constantes.dart';
+import 'firebase_options.dart';
+
+
+void main() async {
   runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,).whenComplete(() =>
+  print("Completo"));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
+
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Senturion Scale',

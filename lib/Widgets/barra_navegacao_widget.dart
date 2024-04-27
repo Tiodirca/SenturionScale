@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:senturionscale/Uteis/PaletaCores.dart';
-import 'package:senturionscale/Uteis/constantes.dart';
-import 'package:senturionscale/Uteis/textos.dart';
 
+import '../Uteis/PaletaCores.dart';
+import '../Uteis/constantes.dart';
+import '../Uteis/textos.dart';
 class BarraNavegacao extends StatelessWidget {
   const BarraNavegacao({Key? key}) : super(key: key);
 
   Widget botoesIcones(String tipoIcone, BuildContext context) => SizedBox(
       height: 65,
-      width: 110,
+      width: 150,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           side: const BorderSide(color: PaletaCores.corAdtl),
