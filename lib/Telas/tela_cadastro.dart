@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -68,6 +67,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
           width: largura,
           child: FloatingActionButton(
               heroTag: nomeBotao,
+              elevation: 0,
               backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: corBotao),
@@ -432,7 +432,9 @@ class _TelaCadastroState extends State<TelaCadastro> {
               children: [
                 Text(
                   Textos.descricaoalertaOpcoesData,
-                  style: const TextStyle(color: Colors.black,),
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
                 ),
                 radioButtonComplementoData(0, Textos.deparamentoCultoLivre),
                 radioButtonComplementoData(1, Textos.departamentoMissao),
@@ -538,7 +540,8 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                             textAlign: TextAlign.center),
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           botoesAcoes(Constantes.iconeDataCulto,
                                               PaletaCores.corAdtl, 60, 60),
@@ -673,9 +676,9 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       botoesAcoes(Constantes.iconeSalvar,
-                                          PaletaCores.corVerdeCiano, 80, 70),
+                                          PaletaCores.corVerdeCiano, 90, 70),
                                       botoesAcoes(Constantes.iconeLista,
-                                          PaletaCores.corAdtlLetras, 80, 70),
+                                          PaletaCores.corAdtlLetras, 90, 70),
                                     ],
                                   ),
                                 )),

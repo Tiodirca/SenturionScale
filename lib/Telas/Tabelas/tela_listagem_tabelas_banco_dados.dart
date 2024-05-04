@@ -163,6 +163,8 @@ class _TelaListagemTabelasBancoDadosState
       height: 40,
       width: 60,
       child: FloatingActionButton(
+        heroTag: nomeBotao,
+        elevation: 0,
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
             side: BorderSide(color: corBotao),
@@ -382,10 +384,6 @@ class _TelaListagemTabelasBancoDadosState
                                                     width: 150,
                                                     height: 70,
                                                     child: ElevatedButton(
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                              backgroundColor:
-                                                                  Colors.white),
                                                       child: Text(
                                                         Textos.btnUsarTabela,
                                                         textAlign:

@@ -45,11 +45,10 @@ class Estilo {
       // estilo dos botoes
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          elevation: 5,
+          elevation: 0,
           side: const BorderSide(color: PaletaCores.corVerdeCiano),
           backgroundColor: Colors.white,
           textStyle: const TextStyle( fontSize: 18),
-          shadowColor: Colors.white,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30))),
         ),

@@ -56,7 +56,8 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
             SizedBox(
                 height: 60,
                 width: 60,
-                child:FloatingActionButton(
+                child: FloatingActionButton(
+                    elevation: 0,
                     backgroundColor: Colors.white,
                     shape: const RoundedRectangleBorder(
                         side: BorderSide(color: PaletaCores.corAdtl),
@@ -144,12 +145,12 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
 
     return Theme(
         data: estilo.estiloGeral,
-        child:  Scaffold(
+        child: Scaffold(
           appBar: AppBar(
             title: Text(Textos.tituloTelaConfiguracoes),
             leading: IconButton(
-              color: Colors.white,
-              //setando tamanho do icone
+                color: Colors.white,
+                //setando tamanho do icone
                 iconSize: 30,
                 enableFeedback: false,
                 onPressed: () {
@@ -174,11 +175,9 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
                             child: Column(
                               children: [
                                 Container(
-                                  margin:
-                                  const EdgeInsets.only(bottom: 20.0),
+                                  margin: const EdgeInsets.only(bottom: 20.0),
                                   width: larguraTela * 0.8,
-                                  child: Text(
-                                      Textos.descricaoBtnDefinirHorario,
+                                  child: Text(Textos.descricaoBtnDefinirHorario,
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(fontSize: 20)),
                                 ),
@@ -201,8 +200,7 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
                                     horarioTrocaFSemana,
                                     Constantes.trocarHorarioFimSemana),
                                 Container(
-                                  margin:
-                                  const EdgeInsets.only(bottom: 20.0),
+                                  margin: const EdgeInsets.only(bottom: 20.0),
                                   width: larguraTela * 0.8,
                                   child: Text(
                                       Textos
@@ -210,17 +208,21 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(fontSize: 20)),
                                 ),
-
                                 SizedBox(
                                     height: 60,
                                     width: 60,
                                     child: FloatingActionButton(
+                                        elevation: 0,
                                         backgroundColor: Colors.white,
                                         shape: const RoundedRectangleBorder(
-                                            side: BorderSide(color: PaletaCores.corAdtlLetras),
-                                            borderRadius: BorderRadius.all(Radius.circular(10))),
+                                            side: BorderSide(
+                                                color:
+                                                    PaletaCores.corAdtlLetras),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
                                         onPressed: () async {
-                                          MetodosAuxiliares metodosAuxiliares = MetodosAuxiliares();
+                                          MetodosAuxiliares metodosAuxiliares =
+                                              MetodosAuxiliares();
                                           metodosAuxiliares.gravarDadosPadrao();
                                           recuperarValoresSharePreferences();
                                         },

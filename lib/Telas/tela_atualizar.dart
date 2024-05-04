@@ -73,7 +73,8 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
           height: altura,
           width: largura,
           child: FloatingActionButton(
-            heroTag: "${nomeBotao}att",
+              elevation: 0,
+              heroTag: "${nomeBotao}att",
               backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: corBotao),
@@ -582,7 +583,8 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
                                             textAlign: TextAlign.center),
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           botoesAcoes(Constantes.iconeDataCulto,
                                               PaletaCores.corAdtl, 60, 60),
@@ -716,10 +718,10 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      botoesAcoes(Constantes.iconeAtualizar,
-                                          PaletaCores.corVerdeCiano, 80, 70),
+                                      botoesAcoes(Constantes.iconeSalvar,
+                                          PaletaCores.corVerdeCiano, 90, 70),
                                       botoesAcoes(Constantes.iconeLista,
-                                          PaletaCores.corAdtlLetras, 80, 70),
+                                          PaletaCores.corAdtlLetras, 90, 70),
                                     ],
                                   ),
                                 )),

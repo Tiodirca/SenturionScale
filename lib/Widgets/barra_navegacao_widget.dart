@@ -8,7 +8,7 @@ class BarraNavegacao extends StatelessWidget {
 
   Widget botoesIcones(String tipoIcone, BuildContext context) => SizedBox(
       height: 65,
-      width: 100,
+      width: 110,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           side: const BorderSide(color: PaletaCores.corAdtl),
@@ -38,7 +38,7 @@ class BarraNavegacao extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.list_alt_outlined,
-                    size: 30, color:  Colors.white,
+                    size: 25, color:  Colors.white,
                   ),
                   Text(Textos.btnVerLista,
                       textAlign: TextAlign.center,
@@ -51,7 +51,7 @@ class BarraNavegacao extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.add_circle_outline_outlined,
-                    size: 30,
+                    size: 25,
                     color:  Colors.white,
                   ),
                   Text(Textos.btnCriarTabela,
@@ -65,7 +65,7 @@ class BarraNavegacao extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.settings,
-                    size: 30, color:  Colors.white,
+                    size: 25, color:  Colors.white,
                   ),
                   Text(Textos.btnConfiguracoes,
                       textAlign: TextAlign.center,
@@ -86,7 +86,7 @@ class BarraNavegacao extends StatelessWidget {
     return Card(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
-      elevation: 10,
+      elevation: 0,
       color: PaletaCores.corAdtl,
       child: SizedBox(
         width: larguraTela,

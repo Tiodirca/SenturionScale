@@ -183,7 +183,9 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
           height: altura,
           width: largura,
           child: FloatingActionButton(
-            heroTag: nomeBotao,
+
+              elevation: 0,
+              heroTag: nomeBotao,
               backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: corBotao),

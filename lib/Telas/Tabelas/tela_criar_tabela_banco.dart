@@ -138,8 +138,6 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
                                 width: 150,
                                 height: 70,
                                 child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white),
                                   child: Text(
                                     Textos.btnCriarTabela,
                                     textAlign: TextAlign.center,
