@@ -6,12 +6,16 @@ import '../Uteis/metodos_auxiliares.dart';
 
 class AcoesFireBase {
   static criarTabelas(String nomeTabela) {
-    CollectionReference colecao = FirebaseFirestore.instance
-        .collection(Constantes.fireBaseTabelasColecao);
-    colecao.add({
-      Constantes.fireBaseValorTabelas:
-          MetodosAuxiliares.removerEspacoNomeTabelas(nomeTabela)
-    });
+    try {
+      CollectionReference colecao = FirebaseFirestore.instance
+          .collection(Constantes.fireBaseTabelasColecao);
+      colecao.add({
+        Constantes.fireBaseValorTabelas:
+            MetodosAuxiliares.removerEspacoNomeTabelas(nomeTabela)
+      });
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   static Future consultarTabelas() async {

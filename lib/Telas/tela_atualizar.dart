@@ -718,7 +718,7 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      botoesAcoes(Constantes.iconeSalvar,
+                                      botoesAcoes(Constantes.iconeAtualizar,
                                           PaletaCores.corVerdeCiano, 90, 70),
                                       botoesAcoes(Constantes.iconeLista,
                                           PaletaCores.corAdtlLetras, 90, 70),

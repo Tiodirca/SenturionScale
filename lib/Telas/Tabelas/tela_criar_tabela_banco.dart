@@ -84,77 +84,79 @@ class _TelaCriarTabelaBancoState extends State<TelaCriarTabelaBanco> {
                     children: [
                       Expanded(
                           flex: 9,
-                          child: Column(
-                            children: [
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                width: larguraTela,
-                                child: Text(
-                                  textAlign: TextAlign.end,
-                                  Textos.versaoApp,
-                                  style: const TextStyle(fontSize: 16),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  width: larguraTela,
+                                  child: Text(
+                                    textAlign: TextAlign.end,
+                                    Textos.versaoApp,
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.all(10),
-                                width: larguraTela,
-                                child: Text(
-                                  textAlign: TextAlign.center,
-                                  Textos.descricaoCriarTabela,
-                                  style: const TextStyle(fontSize: 20),
+                                Container(
+                                  margin: const EdgeInsets.all(10),
+                                  width: larguraTela,
+                                  child: Text(
+                                    textAlign: TextAlign.center,
+                                    Textos.descricaoCriarTabela,
+                                    style: const TextStyle(fontSize: 20),
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.all(10),
-                                child: Form(
-                                  key: _formKeyTabela,
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 5.0,
-                                        top: 5.0,
-                                        right: 5.0,
-                                        bottom: 5.0),
-                                    width: MetodosAuxiliares
-                                        .ajustarTamanhoTextField(larguraTela),
-                                    child: TextFormField(
-                                      keyboardType: TextInputType.text,
-                                      controller: _controllerCadastrarTabela,
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return Textos.erroCampoVazio;
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        labelText: Textos.labelNomeTabela,
+                                Container(
+                                  margin: const EdgeInsets.all(10),
+                                  child: Form(
+                                    key: _formKeyTabela,
+                                    child: Container(
+                                      padding: const EdgeInsets.only(
+                                          left: 5.0,
+                                          top: 5.0,
+                                          right: 5.0,
+                                          bottom: 5.0),
+                                      width: MetodosAuxiliares
+                                          .ajustarTamanhoTextField(larguraTela),
+                                      child: TextFormField(
+                                        keyboardType: TextInputType.text,
+                                        controller: _controllerCadastrarTabela,
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return Textos.erroCampoVazio;
+                                          }
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                          labelText: Textos.labelNomeTabela,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.all(20),
-                                width: 150,
-                                height: 70,
-                                child: ElevatedButton(
-                                  child: Text(
-                                    Textos.btnCriarTabela,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        color: PaletaCores.corAzul,
-                                        fontWeight: FontWeight.bold),
+                                Container(
+                                  margin: const EdgeInsets.all(20),
+                                  width: 150,
+                                  height: 70,
+                                  child: ElevatedButton(
+                                    child: Text(
+                                      Textos.btnCriarTabela,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                          fontSize: 18,
+                                          color: PaletaCores.corAzul,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    onPressed: () async {
+                                      if (_formKeyTabela.currentState!
+                                          .validate()) {
+                                        criarTabelaBancoDados();
+                                      }
+                                    },
                                   ),
-                                  onPressed: () async {
-                                    if (_formKeyTabela.currentState!
-                                        .validate()) {
-                                      criarTabelaBancoDados();
-                                    }
-                                  },
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           )),
                       const Expanded(
                           flex: 1,
