@@ -81,6 +81,7 @@ class DefaultFirebaseOptions {
     appId: '1:776473338582:web:8566df35455ed263cadf77',
     messagingSenderId: '776473338582',
     projectId: 'scalesenturionback',
+
     authDomain: 'scalesenturionback.firebaseapp.com',
     storageBucket: 'scalesenturionback.appspot.com',
     measurementId: 'G-5W51577Z6T',

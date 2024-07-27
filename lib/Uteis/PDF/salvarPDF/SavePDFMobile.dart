@@ -7,5 +7,4 @@ Future<void> salvarPDF(List<int> bytes,String nomeArquivo) async{
   final file = File('$caminho/$nomeArquivo');
   await file.writeAsBytes(bytes,flush: true);
   OpenFile.open('$caminho/$nomeArquivo');
-
 }

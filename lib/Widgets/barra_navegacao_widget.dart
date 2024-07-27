@@ -7,7 +7,7 @@ class BarraNavegacao extends StatelessWidget {
   const BarraNavegacao({Key? key}) : super(key: key);
 
   Widget botoesIcones(String tipoIcone, BuildContext context) => SizedBox(
-      height: 65,
+      height: 60,
       width: 110,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -38,7 +38,7 @@ class BarraNavegacao extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.list_alt_outlined,
-                    size: 25, color:  Colors.white,
+                    size: 20, color:  Colors.white,
                   ),
                   Text(Textos.btnVerLista,
                       textAlign: TextAlign.center,
@@ -51,7 +51,7 @@ class BarraNavegacao extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.add_circle_outline_outlined,
-                    size: 25,
+                    size: 20,
                     color:  Colors.white,
                   ),
                   Text(Textos.btnCriarTabela,
@@ -65,7 +65,7 @@ class BarraNavegacao extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.settings,
-                    size: 25, color:  Colors.white,
+                    size: 20, color:  Colors.white,
                   ),
                   Text(Textos.btnConfiguracoes,
                       textAlign: TextAlign.center,

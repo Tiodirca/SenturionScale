@@ -171,69 +171,88 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
                       Expanded(
                           flex: 9,
                           child: Container(
-                            margin: const EdgeInsets.only(top: 10.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(bottom: 20.0),
-                                  width: larguraTela * 0.8,
-                                  child: Text(Textos.descricaoBtnDefinirHorario,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(fontSize: 20)),
+                              margin: const EdgeInsets.only(top: 10.0),
+                              child: SingleChildScrollView(
+                                child: SizedBox(
+
+                                  height: alturaTela * 0.8,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 20.0),
+                                        width: larguraTela * 0.8,
+                                        child: Text(
+                                            Textos.descricaoBtnDefinirHorario,
+                                            textAlign: TextAlign.center,
+                                            style:
+                                                const TextStyle(fontSize: 20)),
+                                      ),
+                                      Text(Textos.descricaoTrocaSemana,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18)),
+                                      botoesAcoes(
+                                          larguraTela,
+                                          horarioInicioSemana,
+                                          horarioTrocaSemana,
+                                          Constantes.trocarHorarioSemana),
+                                      Text(Textos.descricaoTrocaFimSemana,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18)),
+                                      botoesAcoes(
+                                          larguraTela,
+                                          horarioInicioFSemana,
+                                          horarioTrocaFSemana,
+                                          Constantes.trocarHorarioFimSemana),
+                                      Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 20.0),
+                                        width: larguraTela * 0.8,
+                                        child: Text(
+                                            Textos
+                                                .descricaoRedefinirValoresHorarioTroca,
+                                            textAlign: TextAlign.center,
+                                            style:
+                                                const TextStyle(fontSize: 20)),
+                                      ),
+                                      SizedBox(
+                                          height: 60,
+                                          width: 60,
+                                          child: FloatingActionButton(
+                                              elevation: 0,
+                                              backgroundColor: Colors.white,
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      side: BorderSide(
+                                                          color: PaletaCores
+                                                              .corAdtlLetras),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10))),
+                                              onPressed: () async {
+                                                MetodosAuxiliares
+                                                    metodosAuxiliares =
+                                                    MetodosAuxiliares();
+                                                metodosAuxiliares
+                                                    .gravarDadosPadrao();
+                                                recuperarValoresSharePreferences();
+                                              },
+                                              child: const Icon(
+                                                Icons.reset_tv,
+                                                color: PaletaCores.corAdtl,
+                                              )))
+                                    ],
+                                  ),
                                 ),
-                                Text(Textos.descricaoTrocaSemana,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
-                                botoesAcoes(
-                                    larguraTela,
-                                    horarioInicioSemana,
-                                    horarioTrocaSemana,
-                                    Constantes.trocarHorarioSemana),
-                                Text(Textos.descricaoTrocaFimSemana,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
-                                botoesAcoes(
-                                    larguraTela,
-                                    horarioInicioFSemana,
-                                    horarioTrocaFSemana,
-                                    Constantes.trocarHorarioFimSemana),
-                                Container(
-                                  margin: const EdgeInsets.only(bottom: 20.0),
-                                  width: larguraTela * 0.8,
-                                  child: Text(
-                                      Textos
-                                          .descricaoRedefinirValoresHorarioTroca,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(fontSize: 20)),
-                                ),
-                                SizedBox(
-                                    height: 60,
-                                    width: 60,
-                                    child: FloatingActionButton(
-                                        elevation: 0,
-                                        backgroundColor: Colors.white,
-                                        shape: const RoundedRectangleBorder(
-                                            side: BorderSide(
-                                                color:
-                                                    PaletaCores.corAdtlLetras),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                        onPressed: () async {
-                                          MetodosAuxiliares metodosAuxiliares =
-                                              MetodosAuxiliares();
-                                          metodosAuxiliares.gravarDadosPadrao();
-                                          recuperarValoresSharePreferences();
-                                        },
-                                        child: const Icon(
-                                          Icons.reset_tv,
-                                          color: PaletaCores.corAdtl,
-                                        )))
-                              ],
-                            ),
-                          )),
-                      const Expanded(flex: 1, child: BarraNavegacao())
+                              ))),
+                      const Expanded(
+                          flex: 1,
+                          child: SingleChildScrollView(
+                            child: BarraNavegacao(),
+                          ))
                     ],
                   ))),
         ));
