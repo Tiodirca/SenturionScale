@@ -439,6 +439,7 @@ class _TelaListagemItensState extends State<TelaListagemItens> {
                                           child: ListView(
                                             children: [
                                               SingleChildScrollView(
+                                                scrollDirection: Axis.horizontal,
                                                 child: DataTable(
                                                   columnSpacing: 10,
                                                   columns: [

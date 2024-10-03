@@ -36,7 +36,7 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
   bool exibirCampoServirSantaCeia = false;
   bool exibirSoCamposCooperadora = false;
   bool exbirCampoIrmaoReserva = false;
-  String complementoDataDepartamento = Textos.deparamentoCultoLivre;
+  String complementoDataDepartamento = Textos.departamentoCultoLivre;
   int valorRadioButton = 0;
   String horarioTroca = "";
 
@@ -255,7 +255,7 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
   }
 
   recuperarValorRadioButtonComplementoData(String data) {
-    if (data.toString().contains(Textos.deparamentoCultoLivre)) {
+    if (data.toString().contains(Textos.departamentoCultoLivre)) {
       valorRadioButton = 0;
     } else if (data.toString().contains(Textos.departamentoMissao)) {
       valorRadioButton = 1;
@@ -295,7 +295,7 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
       switch (valorRadioButton) {
         case 0:
           setState(() {
-            complementoDataDepartamento = Textos.deparamentoCultoLivre;
+            complementoDataDepartamento = Textos.departamentoCultoLivre;
           });
           break;
         case 1:
@@ -323,6 +323,26 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
             complementoDataDepartamento = Textos.departamentoInfantil;
           });
           break;
+        case 6:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoVaroes;
+          });
+          break;
+        case 7:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoCampanha;
+          });
+          break;
+        case 8:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoEbom;
+          });
+          break;
+        case 9:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoSede;
+          });
+          break;
       }
     });
   }
@@ -340,12 +360,16 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
           content: SingleChildScrollView(
             child: Column(
               children: [
-                radioButtonComplementoData(0, Textos.deparamentoCultoLivre),
+                radioButtonComplementoData(0, Textos.departamentoCultoLivre),
                 radioButtonComplementoData(1, Textos.departamentoMissao),
                 radioButtonComplementoData(2, Textos.departamentoCirculoOracao),
                 radioButtonComplementoData(3, Textos.departamentoJovens),
                 radioButtonComplementoData(4, Textos.departamentoAdolecentes),
-                radioButtonComplementoData(5, Textos.departamentoInfantil)
+                radioButtonComplementoData(5, Textos.departamentoInfantil),
+                radioButtonComplementoData(6, Textos.departamentoVaroes),
+                radioButtonComplementoData(7, Textos.departamentoCampanha),
+                radioButtonComplementoData(8, Textos.departamentoEbom),
+                radioButtonComplementoData(9, Textos.departamentoSede),
               ],
             ),
           ),
@@ -462,7 +486,7 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
     if (exibirCampoServirSantaCeia) {
       return dataFormatada = "$dataFormatada ( Santa Ceia )";
     } else if (complementoDataDepartamento.isNotEmpty &&
-        complementoDataDepartamento != Textos.deparamentoCultoLivre) {
+        complementoDataDepartamento != Textos.departamentoCultoLivre) {
       return "$dataFormatada ( $complementoDataDepartamento )";
     } else {
       return dataFormatada;

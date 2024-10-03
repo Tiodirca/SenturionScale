@@ -31,7 +31,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
   bool exibirSoCamposCooperadora = false;
   bool exbirCampoIrmaoReserva = false;
   String horarioTroca = "";
-  String complementoDataDepartamento = Textos.deparamentoCultoLivre;
+  String complementoDataDepartamento = Textos.departamentoCultoLivre;
   int valorRadioButton = 0;
   DateTime dataSelecionada = DateTime.now();
   final _formKeyFormulario = GlobalKey<FormState>();
@@ -317,7 +317,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
     if (exibirCampoServirSantaCeia) {
       return dataFormatada = "$dataFormatada ( Santa Ceia )";
     } else if (complementoDataDepartamento.isNotEmpty &&
-        complementoDataDepartamento != Textos.deparamentoCultoLivre) {
+        complementoDataDepartamento != Textos.departamentoCultoLivre) {
       return "$dataFormatada ( $complementoDataDepartamento )";
     } else {
       return dataFormatada;
@@ -385,7 +385,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
       switch (valorRadioButton) {
         case 0:
           setState(() {
-            complementoDataDepartamento = Textos.deparamentoCultoLivre;
+            complementoDataDepartamento = Textos.departamentoCultoLivre;
           });
           break;
         case 1:
@@ -413,6 +413,26 @@ class _TelaCadastroState extends State<TelaCadastro> {
             complementoDataDepartamento = Textos.departamentoInfantil;
           });
           break;
+        case 6:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoVaroes;
+          });
+          break;
+        case 7:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoCampanha;
+          });
+          break;
+        case 8:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoEbom;
+          });
+          break;
+        case 9:
+          setState(() {
+            complementoDataDepartamento = Textos.departamentoSede;
+          });
+          break;
       }
     });
   }
@@ -436,12 +456,16 @@ class _TelaCadastroState extends State<TelaCadastro> {
                     color: Colors.black,
                   ),
                 ),
-                radioButtonComplementoData(0, Textos.deparamentoCultoLivre),
+                radioButtonComplementoData(0, Textos.departamentoCultoLivre),
                 radioButtonComplementoData(1, Textos.departamentoMissao),
                 radioButtonComplementoData(2, Textos.departamentoCirculoOracao),
                 radioButtonComplementoData(3, Textos.departamentoJovens),
                 radioButtonComplementoData(4, Textos.departamentoAdolecentes),
-                radioButtonComplementoData(5, Textos.departamentoInfantil)
+                radioButtonComplementoData(5, Textos.departamentoInfantil),
+                radioButtonComplementoData(6, Textos.departamentoVaroes),
+                radioButtonComplementoData(7, Textos.departamentoCampanha),
+                radioButtonComplementoData(8, Textos.departamentoEbom),
+                radioButtonComplementoData(9, Textos.departamentoSede),
               ],
             ),
           ),

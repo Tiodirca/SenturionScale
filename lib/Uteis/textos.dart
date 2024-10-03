@@ -1,6 +1,6 @@
 class Textos {
   static String nomeAplicacao = "Senturion Scale";
-  static String versaoApp = "Versão : 1.3.10";
+  static String versaoApp = "Versão : 1.3.25";
 
   static String txtTelaCarregamento = "Aguarde Carregando";
 
@@ -46,7 +46,11 @@ class Textos {
   static String departamentoCirculoOracao = "Circulo de oração";
   static String departamentoJovens = "Jovens";
   static String departamentoAdolecentes = "Adolecentes";
-  static String deparamentoCultoLivre = "Culto Livre";
+  static String departamentoCultoLivre = "Culto Livre";
+  static String departamentoVaroes = "Varões";
+  static String departamentoCampanha = "Campanha";
+  static String departamentoEbom = "EBOM";
+  static String departamentoSede = "Evento Sede";
 
   // label dos switch
   static String labelSwitchCooperadora = "Cooperadora";
