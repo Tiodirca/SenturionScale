@@ -14,6 +14,7 @@ class EscalaModelo {
   String horarioTroca;
   String irmaoReserva;
 
+
   EscalaModelo(
       {this.id = "",
       required this.primeiraHoraPulpito,
