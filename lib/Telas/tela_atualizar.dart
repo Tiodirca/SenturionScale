@@ -267,6 +267,14 @@ class _TelaAtualizarState extends State<TelaAtualizar> {
       valorRadioButton = 4;
     } else if (data.toString().contains(Textos.departamentoInfantil)) {
       valorRadioButton = 5;
+    } else if (data.toString().contains(Textos.departamentoVaroes)) {
+      valorRadioButton = 6;
+    } else if (data.toString().contains(Textos.departamentoCampanha)) {
+      valorRadioButton = 7;
+    } else if (data.toString().contains(Textos.departamentoEbom)) {
+      valorRadioButton = 8;
+    } else if (data.toString().contains(Textos.departamentoSede)) {
+      valorRadioButton = 9;
     }
   }
 
